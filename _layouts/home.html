@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" slick-uniqueid="3">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Asciidoctor 1.5.1">
+    <meta name="author" content="Andrey Antukh, &lt;niwi@niwi.be&gt;">
+    <title>你看到的是你想看到的</title>
+    <link rel="stylesheet" href="{{site.CDN_PATH}}/css/simple/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{site.CDN_PATH}}/css/simple/simple.css?v=20151111"/>
+    <link rel="stylesheet" href="{{site.CDN_PATH}}/css/simple/highliight.css"/>
+    <script src="/js/min/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var style = getUrlParam("style");
+        if(style == null || style == undefined){
+            document.write("<link rel='stylesheet' href='{{site.CDN_PATH}}/css/simple/highliight.css'/>");
+        }else{
+            document.write("<link rel='stylesheet' href='{{site.CDN_PATH}}/css/pygmentscss/" + style + ".css'/>");
+        }
+    </script>
+    <style>
+        h1 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body class="article toc2 toc-left">
+<div id="toc" class="toc2">
+    <div class="headerpic">
+        <div>yīfān</div>
+        <a href="/">
+            <img id="_home" src="{{site.CDN_PATH}}/img/head.jpg" alt="Profile Picture" style="width: 100px;" title="返回首页">
+        </a>
+        <hr style="FILTER: progid:DXImageTransform.Microsoft.Shadow(color:#987cb9,direction:145,strength:15)"
+            width="90%" color="#ccc" size="1/">
+
+        <p class="post-meta">
+            <a class="pure-button" href="/Timing">时间轴</a>
+            <a class="pure-button" href="/tag">标签库</a>
+            <a class="pure-button" href="/type">分类库</a>
+        </p>
+        <p class="post-meta">
+            <form action="/search">
+                <input type="search" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索">
+            </form>
+        </p>
+        <div>
+            <img src="/img/qrcode.jpg" title="微信关注" width="170">
+        </div>
+    </div>
+</div>
+<div id="content">
+    {{ content }}
+</div>
+
+<div id="footer">
+    <div id="footer-text">
+        <a href="/about.html">About</a>
+        <a href="tencent://message/?uin=561802774">QQ</a>
+        <a href="https://github.com/ivanpig">GitHub</a><br>
+        © 2015 IvanEye
+    </div>
+</div>
+
+<script src="/js/simplecode.js" ></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+@startuml
+:Acceptor(a1): as Admin1
+:Acceptor(a2): as Admin2
+:Acceptor(a3): as Admin3
+:Acceptor(a4): as Admin4
+:Acceptor(a5): as Admin5
+:Proposer(p1): as User1
+:Proposer(p2): as User2
+:Proposer(p3): as User3
+(全局计数器) as (use)
+
+User1 --> Admin1
+User1 --> Admin2
+User1 --> Admin3
+
+User2 --> Admin2
+User2 --> Admin3
+User2 --> Admin4
+
+User3 --> Admin3
+User3 --> Admin4
+User3 --> Admin5
+
+(use) --> User1:提供全局计数
+(use) --> User2:提供全局计数
+(use) --> User3:提供全局计数
+@enduml

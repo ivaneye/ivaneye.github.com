@@ -1,0 +1,10 @@
+---
+title: robots
+permalink: robots.txt
+---
+Sitemap: {{site.production_url}}/sitemap.xml
+User-agent: *
+Disallow: /_drafts
+Disallow: /_include
+Disallow: /_layouts
+Disallow: /_posts

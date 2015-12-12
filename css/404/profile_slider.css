@@ -1,0 +1,8 @@
+#profile_scrollbar { width: 707px; margin-left:13px; margin-top:8px; }
+#profile_scrollbar .viewport { width: 690px; height: 38px; overflow: hidden; position: relative; }
+#profile_scrollbar .overview { list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0; }
+#profile_scrollbar .scrollbar{ background: transparent url(/img/profile_scrollbar/bg-scrollbar-track-y.png) no-repeat 0 0; position: relative; background-position: 0 0; float: right; width: 12px; }
+#profile_scrollbar .track { background: transparent url(/img/profile_scrollbar/bg-scrollbar-trackend-y.png) no-repeat 0 100%; height: 100%; width:13px; position: relative; }
+#profile_scrollbar .thumb { background: transparent url(/img/profile_scrollbar/bg-scrollbar-thumb-y.png) no-repeat 50% 100%; height: 17px; width: 12px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+#profile_scrollbar .thumb .end { background: transparent url(/img/profile_scrollbar/bg-scrollbar-thumb-y.png) no-repeat 50% 0; overflow: hidden; height: 7px; width: 12px; }
+#profile_scrollbar .disable { display: none; }

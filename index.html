@@ -1,0 +1,148 @@
+---
+layout: home
+description: ""
+---
+
+{% for post in paginator.posts %}
+
+{% if post.istop %}
+{% else %}
+{% continue %}
+{% endif %}
+
+
+<section class="post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h2>
+
+        <p class="post-meta">By {{post.author}}   {{ post.date | date: "%Y" }}年{{ post.date | date: "%m" }}月{{ post.date | date: "%d" }}日
+            {% unless post.categories == empty %}
+            {% assign categories_list = post.categories %}
+            {% if categories_list.first[0] == null %}
+            {% for category in categories_list %}
+            <a class="post-categorybut " href="/type/#{{ post.categories  }}"><i class="fa fa-folder-open">{{ category | join: "/" }} ({{ site.categories[category].size }})</i></a>
+            {% endfor %}
+            {% else %}
+            {% for category in categories_list %}
+            <a class="post-categorybut " href="/type/#{{ post.categories  }}"><i class="fa fa-folder-open">{{ category[0] | join: "/" }} ({{ category[1].size }})</i></a>
+            {% endfor %}
+            {% endif %}
+            {% endunless %}
+
+            {% unless post.tags == empty %}
+            {% assign tags_list = post.tags %}
+            {% if tags_list.first[0] == null %}
+            {% for tag in tags_list %}
+            <a class="post-category " href="/tag/#{{ tag }}"><i class="fa fa-tags">{{ tag }} ({{ site.tags[tag].size }})</i></a>
+            {% endfor %}
+            {% else %}
+            {% for tag in tags_list %}
+            <a class="post-category " href="/tag/#{{ tag[0] }}"><i class="fa fa-tags">{{ tag[0] }} ({{ tag[1].size }})</i></a>
+        </p>
+        {% endfor %}
+        {% endif %}
+        {% assign tags_list = nil %}
+        {% endunless %}
+
+        </p>
+    </header>
+
+    <div class="post-description">
+        {{ post.content | split:'<!-- more -->'| first }}
+
+
+        <a href="{{ post.url }}" class="post-readmore">阅读全文</a>
+        <hr style="FILTER: progid:DXImageTransform.Microsoft.Shadow(color:#987cb9,direction:145,strength:15)" width="90%" color="#ccc" size="1/">
+    </div>
+</section>
+{% endfor %}
+
+
+{% for post in paginator.posts %}
+
+{% if post.istop %}
+    {% continue %}
+{% endif %}
+
+
+<section class="post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="{{ site.BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h2>
+
+        <p class="post-meta">By {{post.author}}   {{ post.date | date: "%Y" }}年{{ post.date | date: "%m" }}月{{ post.date | date: "%d" }}日
+            {% unless post.categories == empty %}
+            {% assign categories_list = post.categories %}
+            {% if categories_list.first[0] == null %}
+            {% for category in categories_list %}
+            <a class="post-categorybut " href="/type/#{{ post.categories  }}"><i class="fa fa-folder-open">{{ category | join: "/" }} ({{ site.categories[category].size }})</i></a>
+            {% endfor %}
+            {% else %}
+            {% for category in categories_list %}
+            <a class="post-categorybut " href="/type/#{{ post.categories  }}"><i class="fa fa-folder-open">{{ category[0] | join: "/" }} ({{ category[1].size }})</i></a>
+            {% endfor %}
+            {% endif %}
+            {% endunless %}
+
+            {% unless post.tags == empty %}
+            {% assign tags_list = post.tags %}
+            {% if tags_list.first[0] == null %}
+            {% for tag in tags_list %}
+            <a class="post-category " href="/tag/#{{ tag }}"><i class="fa fa-tags">{{ tag }} ({{ site.tags[tag].size }})</i></a>
+            {% endfor %}
+            {% else %}
+            {% for tag in tags_list %}
+            <a class="post-category " href="/tag/#{{ tag[0] }}"><i class="fa fa-tags">{{ tag[0] }} ({{ tag[1].size }})</i></a>
+        </p>
+        {% endfor %}
+        {% endif %}
+        {% assign tags_list = nil %}
+        {% endunless %}
+
+    </p>
+</header>
+
+<div class="post-description">
+    {{ post.content | split:'<!-- more -->'| first }}
+
+
+    <a href="{{ post.url }}" class="post-readmore">阅读全文</a>
+    <hr style="FILTER: progid:DXImageTransform.Microsoft.Shadow(color:#987cb9,direction:145,strength:15)" width="90%" color="#ccc" size="1/">
+</div>
+</section>
+
+{% endfor %}
+
+
+<table class="tableblock frame-all grid-all spread">
+    <colgroup>
+        <col style="width: 50%;">
+        <col style="width: 50%;">
+    </colgroup>
+    <tbody>
+    <tr>
+        <td class="tableblock valign-middle halign-center valign-top disablelink">
+        {% if paginator.previous_page %}
+        {% if paginator.page == 2 %}
+        <a class="pure-u-1-2 pagination-item" href="/"><i class="fa fa-mail-reply"></i> Newer</a>
+        {% else %}
+        <a class=" pure-u-1-2 pagination-item" href="/page/{{paginator.previous_page}}"><i class="fa fa-mail-reply"></i> Newer</a>
+        {% endif %}
+        {% else %}
+        <span class=" pure-u-1-2 pagination-item"><i class="fa fa-mail-reply"></i> Newer</span>
+        {% endif %}
+            </td>
+
+        <td class="tableblock valign-middle halign-center valign-top disablelink">
+        {% if paginator.next_page %}
+        <a class=" pure-u-1-2 pagination-item" href="/page/{{paginator.next_page}}">Older <i class="fa fa-mail-forward"></i></a>
+        {% else %}
+        <span class=" pure-u-1-2 pagination-item">Older <i class="fa fa-mail-forward"></i></span>
+        {% endif %}
+            </td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+

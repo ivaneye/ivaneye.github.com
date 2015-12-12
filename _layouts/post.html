@@ -1,0 +1,69 @@
+---
+layout: blog
+---
+
+<div class="qrcodeTable"></div>
+<div class="article pure-u-22-24">
+    {{ content }}
+</div>
+
+
+<table class="tableblock frame-all grid-all spread">
+    <colgroup>
+        <col style="width: 50%;">
+        <col style="width: 50%;">
+    </colgroup>
+    <tbody>
+    <tr>
+        {% if page.istop %}
+        <td class="tableblock valign-middle halign-center valign-top disablelink"><p>上一篇&nbsp;<i class="fa fa-chain-broken"></i></p></td>
+        {% assign _post = page %}
+        {% for post in paginator.posts %}
+        {% assign _post = post %}
+        {% break %}
+        {% endfor %}
+        <td class="tableblock valign-middle halign-center valign-top"><a class="pure-u-1-2 pagination-item " href="{{ BASE_PATH }}{{ _post.next.url }}" title="{{ _post.next.title }}"><p> {{ _post.next.title }}&nbsp;<i class="fa fa-mail-forward"></i></p></a></td>
+        {% else %}
+        {% if page.previous %}
+        {% assign _pre = page.previous %}
+        {% if page.previous.istop %}
+        {% assign _pre = page.previous.previous %}
+        {% endif%}
+        <td class="tableblock valign-middle halign-center valign-top"><a class="pure-u-1-2 pagination-item " href="{{ BASE_PATH }}{{ _pre.url }}" title="{{ _pre.title }} "><p> <i class="fa fa-mail-reply"></i>&nbsp;{{ _pre.title }}</a></p></td>
+        {% else %}
+        <td class="tableblock valign-middle halign-center valign-top disablelink"><p>上一篇&nbsp;<i class="fa fa-chain-broken"></i></p></span></td>
+        {% endif %}
+        {% if page.next %}
+        {% assign _next = page.next %}
+        {% if page.next.istop %}
+        {% assign _next = page.next.next %}
+        {% endif%}
+        <td class="tableblock valign-middle halign-center valign-top"><a class="pure-u-1-2 pagination-item " href="{{ BASE_PATH }}{{ _next.url }}" title="{{ _next.title }}">{{ _next.title }}&nbsp;<i class="fa fa-mail-forward"></i></a></td>
+        {% else %}
+        <td class="tableblock valign-middle halign-center valign-top disablelink"><p>下一篇&nbsp;<i class="fa fa-chain-broken"></i></p></span></td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    </tbody>
+</table>
+
+<!--<span>
+    <h4 style="display: inline-block;">(^_^)如果您觉得此文对您有帮助，打个赏喝个咖啡(^_^)</h4><br>
+    <img src="{{site.CDN_PATH}}/img/alipay.png" height="156" width="156"/>
+    &nbsp;
+    <img src="{{site.CDN_PATH}}/img/weipay.jpg" height="156" width="156"/>
+</span>-->
+
+<script src="/js/simplecode.js" ></script>
+<script src="/js/simplepage.js" ></script>
+
+{% if  page.sharing != false %}
+{% include sharing.html %}
+{% endif %}
+{% if  page.duoshuo != false %}
+{% include duoshuo.html %}
+{% endif %}
+
+
+
+
