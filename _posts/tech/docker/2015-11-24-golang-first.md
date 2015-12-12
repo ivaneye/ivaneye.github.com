@@ -16,7 +16,7 @@ author: Ivan
 
 这次先简单梳理一下个人感觉比较有新意的地方！
 
-# Less is more
+# less is more
 
 golang推崇少即是多理念，语法简单，关键字就20多个，半天过一遍语法绰绰有余！
 
