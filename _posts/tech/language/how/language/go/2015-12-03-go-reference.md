@@ -367,7 +367,7 @@ TypeLit   = ArrayType | StructType | PointerType | FunctionType | InterfaceType 
 
 Go语言中具名的类型有：布尔类型、数值类型和字符串类型，这些都是内置的。 复合类型 — 比如数组、结构体、指针、函数、接口、切片、映射和管道类型 — 需要通过类型字面量构造。
 
-Each type T has an underlying type: If T is one of the predeclared boolean, numeric, or string types, or a type literal, the corresponding underlying type is T itself. Otherwise, T's underlying type is the underlying type of the type to which T refers in its type declaration.
+每一个类型T 都有一个底层类型：如果类型T是预定义的布尔、数值、字符串类型或是类型字面量，那么它对应的底层类型就是T本身。 否则， T的底层类型就是它在类型声明时所指定的类型的底层类型。
 
 ```
    type T1 string
@@ -376,64 +376,64 @@ Each type T has an underlying type: If T is one of the predeclared boolean, nume
    type T4 T3
 ```
 
-The underlying type of string, T1, and T2 is string. The underlying type of []T1, T3, and T4 is []T1.
+string、T1和T2的底层类型是string。而[]T1、T3和T4的底层类型是[]T1。
 
-## Method sets
+## 方法集
 
-A type may have a method set associated with it. The method set of an interface type is its interface. The method set of any other type T consists of all methods declared with receiver type T. The method set of the corresponding pointer type \*T is the set of all methods declared with receiver \*T or T (that is, it also contains the method set of T). Further rules apply to structs containing anonymous fields, as described in the section on struct types. Any other type has an empty method set. In a method set, each method must have a unique non-blank method name.
+每一种类型都有其对应的方法集。接口类型的方法集就是它的接口。任何其它类型的方法集是以该类型作为receiver所声明的所有方法。指针类型的方法集，是所有以该类型(T)以及该类型的指针(\*T)作为receiver所声明的方法(也就是说，指针的方法集包含了该类型的方法集)。适用于包含匿名字段的结构体的一些规则，将在结构体类型章节描述。其他类型则有一个空的方法集。在一个方法集中，每一个方法必须有唯一的非空方法名。
 
-The method set of a type determines the interfaces that the type implements and the methods that can be called using a receiver of that type.
+一个类型的方法集决定了该类型所实现的接口以及该类型的receiver可以调用的方法。
 
-## Boolean types
+## 布尔类型
 
-A boolean type represents the set of Boolean truth values denoted by the predeclared constants true and false. The predeclared boolean type is bool.
+布尔类型只能在预声明的常量true和false中取值，它对应的预声明类型是bool。
 
-## Numeric types
+## 数值类型
 
-A numeric type represents sets of integer or floating-point values. The predeclared architecture-independent numeric types are:
-
-```
-uint8       the set of all unsigned  8-bit integers (0 to 255)
-uint16      the set of all unsigned 16-bit integers (0 to 65535)
-uint32      the set of all unsigned 32-bit integers (0 to 4294967295)
-uint64      the set of all unsigned 64-bit integers (0 to 18446744073709551615)
-
-int8        the set of all signed  8-bit integers (-128 to 127)
-int16       the set of all signed 16-bit integers (-32768 to 32767)
-int32       the set of all signed 32-bit integers (-2147483648 to 2147483647)
-int64       the set of all signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
-
-float32     the set of all IEEE-754 32-bit floating-point numbers
-float64     the set of all IEEE-754 64-bit floating-point numbers
-
-complex64   the set of all complex numbers with float32 real and imaginary parts
-complex128  the set of all complex numbers with float64 real and imaginary parts
-
-byte        alias for uint8
-rune        alias for int32
-```
-
-The value of an n-bit integer is n bits wide and represented using two's complement arithmetic.
-
-There is also a set of predeclared numeric types with implementation-specific sizes:
+数值 type包括整数值和浮点数值。预声明的与机器无关的数值类型有下面这些：
 
 ```
-uint     either 32 or 64 bits
-int      same size as uint
-uintptr  an unsigned integer large enough to store the uninterpreted bits of a pointer value
+uint8       无符号的 8 位整数 (0 to 255)
+uint16      无符号的 16 位整数 (0 to 65535)
+uint32      无符号的 32 位整数 (0 to 4294967295)
+uint64      无符号的 64 位整数 (0 to 18446744073709551615)
+
+int8        带符号的 8 位整数 (-128 to 127)
+int16       带符号的 16 位整数 (-32768 to 32767)
+int32       带符号的 32 位整数 (-2147483648 to 2147483647)
+int64       带符号的 64 位整数 (-9223372036854775808 to 9223372036854775807)
+
+float32     IEEE-754 32 位浮点数
+float64     IEEE-754 64 位浮点数
+
+complex64   由 float32 实部和虚部所能组成的复数
+complex128  由 float64 实部和虚部所能组成的复数
+
+byte        和 uint8 一样
+rune        和 int32 一样
 ```
 
-To avoid portability issues all numeric types are distinct except byte, which is an alias for uint8, and rune, which is an alias for int32. Conversions are required when different numeric types are mixed in an expression or assignment. For instance, int32 and int are not the same type even though they may have the same size on a particular architecture.
+一个有n位的整数意思是有n个比特位宽，并且采用二进制补码表示。
 
-## String types
+下面还有一些预声明的类型，但是它们的长度/尺寸与具体实现有关：
 
-A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. Strings are immutable: once created, it is impossible to change the contents of a string. The predeclared string type is string.
+```
+uint     32 位或是 64位
+int      和 uint 长度一样
+uintptr  一个无符号整数类型，它的长度可以容纳下一个指针值
+```
 
-The length of a string s (its size in bytes) can be discovered using the built-in function len. The length is a compile-time constant if the string is a constant. A string's bytes can be accessed by integer indices 0 through len(s)-1. It is illegal to take the address of such an element; if s[i] is the i'th byte of a string, &s[i] is invalid.
+为了避免移植性的问题，除了byte和uint8类型一样、rune和int32类型一样之外，其他的任意两种类型都是互相区分的。所以，在表达式中或是赋值的时候，只要类型不同就要使用强制转换；比如说，即使在一个机器上的实现中,int32和int即使拥有相同的长度，在使用的时候也必须进行强制转换。
 
-## Array types
+## 字符串类型
 
-An array is a numbered sequence of elements of a single type, called the element type. The number of elements is called the length and is never negative.
+字符串类型表示字符串值的集合。字符串值实际上就是是字符序列(可能是空字符序列)。字符串是不可变的：一旦被创建，就不能修改字符串的内容。预声明的字符串类型名字是string。
+
+字符串s的长度可以使用内置的函数len获得(字符的长度)。如果这个字符串是个常量，则其长度值是个编译期常量。字符串中的字符可以通过下标来访问，下标从0开始，到len(s)-1结束。对字符串的某个元素取地址是非法的，比如s[i]是第i个元素，而&s[i]是无效的。
+
+## 数组类型
+
+数组就是某种类型的一个序列，只不过序列中的每个元素都有一个编号。序列的元素的个数叫做长度，不能为负。
 
 ```
 ArrayType   = "[" ArrayLength "]" ElementType .
@@ -441,7 +441,7 @@ ArrayLength = Expression .
 ElementType = Type .
 ```
 
-The length is part of the array's type; it must evaluate to a non-negative constant representable by a value of type int. The length of array a can be discovered using the built-in function len. The elements can be addressed by integer indices 0 through len(a)-1. Array types are always one-dimensional but may be composed to form multi-dimensional types.
+长度是数组类型的一部分;而且必须是能求出非负整数值的常量表达式。数组a的长度可以通过内置函数 len(a)求得。数组的元素下标从 0 开始计算一直到len(a)-1 。 一个数组通常是一维的，但是也可以组成多维。
 
 ```
 [32]byte
@@ -451,38 +451,38 @@ The length is part of the array's type; it must evaluate to a non-negative const
 [2][2][2]float64  // same as [2]([2]([2]float64))
 ```
 
-## Slice types
+## 切片(Slice)类型
 
-A slice is a descriptor for a contiguous segment of an underlying array and provides access to a numbered sequence of elements from that array. A slice type denotes the set of all slices of arrays of its element type. The value of an uninitialized slice is nil.
+切片用来描述一个数组上的一段连续元素，并提供了访问这些元素的方法。一个切片类型指代的是对应元素类型的数组的所有切片。一个未初始化的切片的值是nil.
 
 ```
 SliceType = "[" "]" ElementType .
 ```
 
-Like arrays, slices are indexable and have a length. The length of a slice s can be discovered by the built-in function len; unlike with arrays it may change during execution. The elements can be addressed by integer indices 0 through len(s)-1. The slice index of a given element may be less than the index of the same element in the underlying array.
+如同数组，切片有个长度，也是通过下标访问。切片s的长度可以通过内置的函数len(s)取得；和数组不同的是，长度在执行的过程中可以改变。元素可以通过下标索引访问，索引的范围从 0 到len(s)-1 。对于同一个元素来说，在切片中的索引可能会比对应的底层数组的索引要小。
 
-A slice, once initialized, is always associated with an underlying array that holds its elements. A slice therefore shares storage with its array and with other slices of the same array; by contrast, distinct arrays always represent distinct storage.
+一个切片，一旦初始化以后，它总是关联着一个容纳其元素的底层数组。所以一个切片和它的数组共享存储空间，当然也和该数组的其他切片共享存储空间；相对的是，两个不同的数组总是代表不同的存储空间。
 
-The array underlying a slice may extend past the end of the slice. The capacity is a measure of that extent: it is the sum of the length of the slice and the length of the array beyond the slice; a slice of length up to that capacity can be created by slicing a new one from the original slice. The capacity of a slice a can be discovered using the built-in function cap(a).
+一个切片对应的底层数组可以超出切片的范围。"容量"可以用来说明这种扩展：它是切片的长度与超过切片的范围但是又在数组范围以内的部分的长度的总和；可以在原来切片的基础上通过“再切片” 获取一个扩大到数组容量的切片。一个切片a的容量可以通过内置的函数 cap(a)取得。
 
-A new, initialized slice value for a given element type T is made using the built-in function make, which takes a slice type and parameters specifying the length and optionally the capacity. A slice created with make always allocates a new, hidden array to which the returned slice value refers. That is, executing
+通过内置函数make和给定类型T，可以创建一个新的并且初始化过的切片。make函数接收切片类型作为第一个参数，长度和容量为可选参数。对make的调用会创建一个新的隐含的数组，切片就是引用的这个数组。这也意味着，执行。
 
 ```
 make([]T, length, capacity)
 ```
 
-produces the same slice as allocating an array and slicing it, so these two expressions are equivalent:
+下面两行代码执行逻辑相同，都是分配一个数组，并在其上进行切片:
 
 ```
 make([]int, 50, 100)
 new([100]int)[0:50]
 ```
 
-Like arrays, slices are always one-dimensional but may be composed to construct higher-dimensional objects. With arrays of arrays, the inner arrays are, by construction, always the same length; however with slices of slices (or arrays of slices), the inner lengths may vary dynamically. Moreover, the inner slices must be initialized individually.
+如同数组，切片通常是一维的，但是也可以复合构造更高维的对象。对于数组的数组来说，内层的数组的长度在构造的时候总是一样的，然而切片的切片(切片的数组)的长度却是可以变化的。 更进步一地说，内层的切片是单独创建的 (使用make)。
 
-## Struct types
+## 结构体类型
 
-A struct is a sequence of named elements, called fields, each of which has a name and a type. Field names may be specified explicitly (IdentifierList) or implicitly (AnonymousField). Within a struct, non-blank field names must be unique.
+一个结构体就是一个命名的元素序列，每个元素又叫做字段，每个字段都有一个类型和名字。字段的名字可以是明确指定的（标识符列表），也可以能是隐含的（匿名字段）。 在一个结构体内部，只要是非空白字段的名字就必须是唯一的。
 
 ```
 StructType     = "struct" "{" { FieldDecl ";" } "}" .
@@ -492,10 +492,10 @@ Tag            = string_lit .
 ```
 
 ```
-// An empty struct.
+// 空结构体
 struct {}
 
-// A struct with 6 fields.
+// 有 6 个字段的结构体
 struct {
 	x, y int
 	u float32
@@ -505,10 +505,10 @@ struct {
 }
 ```
 
-A field declared with a type but no explicit field name is an anonymous field, also called an embedded field or an embedding of the type in the struct. An embedded type must be specified as a type name T or as a pointer to a non-interface type name \*T, and T itself may not be a pointer type. The unqualified type name acts as the field name.
+一个字段声明的时候只有类型却没有名字，我们叫它为匿名字段，或是嵌入字段或是类型嵌入。一个嵌入的类型必须指定一个类型名T或是一个非接口的指针*T，而且T本身不能是指针类型。这些嵌入类型的类型名作为对应的字段名。
 
 ```
-// A struct with four anonymous fields of type T1, *T2, P.T3 and *P.T4
+// 带有四个匿名字段 T1， *T2， P.T3 和 *P.T4 的结构体
 struct {
 	T1        // field name is T1
 	*T2       // field name is T2
@@ -517,29 +517,32 @@ struct {
 	x, y int  // field names are x and y
 }
 ```
-The following declaration is illegal because field names must be unique in a struct type:
+
+下面的声明是不合法的，因为字段名在结构体中并不唯一：
 
 ```
 struct {
-	T     // conflicts with anonymous field *T and *P.T
-	*T    // conflicts with anonymous field T and *P.T
-	*P.T  // conflicts with anonymous field T and *T
+    T     // 和匿名字段 *T , *P.T 冲突
+	*T    // 和匿名字段 T ,*P.T 冲突
+	*P.T  // 和匿名字段 T , *T 冲突
 }
 ```
 
-A field or method f of an anonymous field in a struct x is called promoted if x.f is a legal selector that denotes that field or method f.
+假设对于结构体x，其包含一个匿名字段，该字段有一个字段或方法f，那么该方法可以被提升调用。即可以通过x.f的方式来进行调用。
 
+提升后的字段用起来就像是结构体的普通字段，只不过它们在结构体的复合表示中不能用作字段名。
 Promoted fields act like ordinary fields of a struct except that they cannot be used as field names in composite literals of the struct.
 
-Given a struct type S and a type named T, promoted methods are included in the method set of the struct as follows:
+给一个结构体类型S和一个命名类型T，提升了的方法按照下面所说的包括在结构体的方法集中：
 
-If S contains an anonymous field T, the method sets of S and \*S both include promoted methods with receiver T. The method set of \*S also includes promoted methods with receiver \*T.
-If S contains an anonymous field \*T, the method sets of S and \*S both include promoted methods with receiver T or \*T.
-A field declaration may be followed by an optional string literal tag, which becomes an attribute for all the fields in the corresponding field declaration. The tags are made visible through a reflection interface and take part in type identity for structs but are otherwise ignored.
+- 如果S包括一个匿名字段T，那么S和*S的方法集都包括以T作为接收器而提升的方法. 而*S的方法集又包括以*T为接收器提升的方法。
+- 如果S包括一个匿名字段*T，那么S和*S的方法集都包括以T或是*T作为接收器而提升的方法.
+
+一个字段的声明中可以跟着一个可选的字符串标签，它在相应的字段声明中会算做字段的一种属性/性质。这些标签在反射接口和类型一致性判定时是有效的，其他的时候则是被忽略的。
 
 ```
-// A struct corresponding to the TimeStamp protocol buffer.
-// The tag strings define the protocol buffer field numbers.
+// 一个用于时间戳协议缓冲区的结构体
+// 标签字符串定义了协议缓冲区字段号
 struct {
 	microsec  uint64 "field 1"
 	serverIP6 uint64 "field 2"
@@ -547,7 +550,9 @@ struct {
 }
 ```
 
-## Pointer types
+## 指针类型
+
+指针类型表示指向给定类型变量的所有指针的集合，称为指针的基类型。如果没有初始化的话，指针值是nil。
 
 A pointer type denotes the set of all pointers to variables of a given type, called the base type of the pointer. The value of an uninitialized pointer is nil.
 
