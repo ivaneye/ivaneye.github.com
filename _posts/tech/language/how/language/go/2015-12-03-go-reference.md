@@ -531,6 +531,7 @@ struct {
 假设对于结构体x，其包含一个匿名字段，该字段有一个字段或方法f，那么该方法可以被提升调用。即可以通过x.f的方式来进行调用。
 
 提升后的字段用起来就像是结构体的普通字段，只不过它们在结构体的复合表示中不能用作字段名。
+<!-- TODO review -->
 Promoted fields act like ordinary fields of a struct except that they cannot be used as field names in composite literals of the struct.
 
 给一个结构体类型S和一个命名类型T，提升了的方法按照下面所说的包括在结构体的方法集中：
@@ -553,7 +554,7 @@ struct {
 ## 指针类型
 
 指针类型表示指向给定类型变量的所有指针的集合，称为指针的基类型。如果没有初始化的话，指针值是nil。
-
+<!-- TODO review -->
 A pointer type denotes the set of all pointers to variables of a given type, called the base type of the pointer. The value of an uninitialized pointer is nil.
 
 ```
@@ -567,7 +568,7 @@ BaseType    = Type .
 
 ## Function types
 
-A function type denotes the set of all functions with the same parameter and result types. The value of an uninitialized variable of function type is nil.
+函数类型指的是带有相同参数和返回值类型的一类函数。一个未初始化的函数变量的值是nil。
 
 ```
 FunctionType   = "func" Signature .
@@ -577,6 +578,8 @@ Parameters     = "(" [ ParameterList [ "," ] ] ")" .
 ParameterList  = ParameterDecl { "," ParameterDecl } .
 ParameterDecl  = [ IdentifierList ] [ "..." ] Type .
 ```
+
+在函数的参数/结果列表中，名字（标识符列表）可以都有也可以都么有。如果有的话，一个名字代表对应类型的一项（参数/结果）；如果没有，一个类型代表该类型的一项。参数/结果列表通常 用小括号括起来，不过当只有一个返回值且没有名字的情况下，这个括号可以省略掉。
 
 Within a list of parameters or results, the names (IdentifierList) must either all be present or all be absent. If present, each name stands for one item (parameter or result) of the specified type and all non-blank names in the signature must be unique. If absent, each type stands for one item of that type. Parameter and result lists are always parenthesized except that if there is exactly one unnamed result it may be written as an unparenthesized type.
 
