@@ -1,9 +1,5 @@
-#production_url是sitemap.txt生成的url,方便百度谷歌收录
-production_url: http://ivaneye.com
-#
-# Jekyll Settings
-#
-markdown: redcarpet   # [ maruku | rdiscount | kramdown | redcarpet ]
+permalink   : /:year/:month/:day/:title.html
+markdown    : redcarpet
 redcarpet:
   extensions:
     - fenced_code_blocks
@@ -12,17 +8,69 @@ redcarpet:
     - autolink
     - tables
 markdown_ext:  markdown,mkd,mkdn,md
-highlighter: pygments
-permalink: /:year/:month/:day/:title.html
-paginate: 7
+highlighter : pygments
+
+paginate: 7 #6
 paginate_path: "page/:num"
 exclude: [ "README.md",".idea",".iml",".name",".Node"]
 encoding: "utf-8"
-#在发布文章时使用一个未来的日期
-future: true
-#产生相关页面的索引
-lsi:      false
-#禁用定制插件
-safe:     false
+comments: true
 
-CDN_PATH:  
+baseurl: "" # change to empty string ""
+domain_name: ivaneye.com
+google_analytics: UA-52446115-1
+
+source:      source
+destination: _site
+
+# cover: /assets/images/header-cover.png
+
+# site title, description, meta_description, meta_keywords
+# Details for the RSS feed generator
+name: wangyifan
+title: 从0到1
+description: "世界因偷懒而进步"
+meta_description: "Architecturer"
+meta_keywords: "blog,java,clojure,golang,go,architectures"
+url: http://ivaneye.com
+production_url: http://ivaneye.com
+repo:
+disqus_shortname: ""
+rss_path: source/
+author:
+  name      : Ivan
+  image     : /img/head.jpg
+  email     : wangyifan@ivaneye.com
+  url       : http://ivaneye.com
+  facebook  : http://facebook.com/ivan.pig.73
+  twitter   : http://twitter.com/ivanpig
+  github    : http://github.com/ivaneye
+  linkedin  : https://cn.linkedin.com/in/ivan-wang-a6259b59
+
+# thought
+thought:
+  text: I have no special talent. I am only passionately curious.
+  author: Albert Einstein
+
+# Plugin: jekyll-assets
+assets:
+  dirname: /assets
+  baseurl: /assets/ # change to /assets/
+  sources:
+    - assets/images
+    - assets/fonts
+    - assets/css
+    - assets/js
+  cache: true
+  gzip: [ text/css, application/javascript ]
+
+# Compress HTML
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  ignore:
+    envs: all
+
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
