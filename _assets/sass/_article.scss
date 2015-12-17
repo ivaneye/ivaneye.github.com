@@ -67,17 +67,6 @@ $post-small-spacing: 15px;
     padding-top: 2em;
   }
 
-  .disqus,
-  .highlight pre {
-    padding-left: $post-spacing-x;
-    padding-right: $post-spacing-x;
-  }
-
-  .highlight pre {
-    padding-top: $post-spacing-y;
-    padding-bottom: $post-spacing-y;
-  }
-
   p:last-child {
     margin-bottom: 0;
   }

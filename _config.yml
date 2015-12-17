@@ -18,7 +18,7 @@ comments: true
 
 baseurl: "" # change to empty string ""
 domain_name: ivaneye.com
-google_analytics: UA-52446115-1
+google_analytics: 
 
 source:      source
 destination: _site
