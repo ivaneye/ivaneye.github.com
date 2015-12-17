@@ -4,3 +4,7 @@ title: Home
 post_class: page-template
 slug: home
 ---
+
+{% for post in paginator.posts %}
+  {% include article.html %}
+{% endfor %}
