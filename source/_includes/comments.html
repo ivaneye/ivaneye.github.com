@@ -5,8 +5,8 @@
   <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
   <hr>
 
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
     var disqus_identifier = '{{ page.id }}';
     var disqus_title = '{{ page.title }}';
     var disqus_url = '{{ site.url }}{{ post.url }}';
@@ -17,7 +17,23 @@
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
-  </script>
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="{{ page.id }}" data-title="{{ page.title }}" data-url="{{ site.url }}{{ post.url }}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
   <noscript>
     Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
   </noscript>
