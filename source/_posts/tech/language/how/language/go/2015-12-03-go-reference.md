@@ -566,7 +566,7 @@ BaseType    = Type .
 *[4]int
 ```
 
-## Function types
+## 函数类型
 
 函数类型指的是带有相同参数和返回值类型的一类函数。一个未初始化的函数变量的值是nil。
 
@@ -579,9 +579,9 @@ ParameterList  = ParameterDecl { "," ParameterDecl } .
 ParameterDecl  = [ IdentifierList ] [ "..." ] Type .
 ```
 
-在函数的参数/结果列表中，名字（标识符列表）可以都有也可以都么有。如果有的话，一个名字代表对应类型的一项（参数/结果）；如果没有，一个类型代表该类型的一项。参数/结果列表通常 用小括号括起来，不过当只有一个返回值且没有名字的情况下，这个括号可以省略掉。
+函数参数/结果列表中名字（标识符列表）要么都有要么都没有。如果有的话，一个名字代表对应类型的一项（参数/结果），且名字必须唯一；如果没有，一个类型代表该类型的一项。参数/结果列表通常用小括号括起来，不过当只有一个返回值且没有名字的情况下，这个括号可以省略掉。
 
-Within a list of parameters or results, the names (IdentifierList) must either all be present or all be absent. If present, each name stands for one item (parameter or result) of the specified type and all non-blank names in the signature must be unique. If absent, each type stands for one item of that type. Parameter and result lists are always parenthesized except that if there is exactly one unnamed result it may be written as an unparenthesized type.
+ If absent, each type stands for one item of that type. Parameter and result lists are always parenthesized except that if there is exactly one unnamed result it may be written as an unparenthesized type.
 
 The final parameter in a function signature may have a type prefixed with .... A function with such a parameter is called variadic and may be invoked with zero or more arguments for that parameter.
 
@@ -605,7 +605,7 @@ InterfaceType      = "interface" "{" { MethodSpec ";" } "}" .
 MethodSpec         = MethodName Signature | InterfaceTypeName .
 MethodName         = identifier .
 InterfaceTypeName  = TypeName .
-````
+```
 
 As with all method sets, in an interface type, each method must have a unique non-blank name.
 
@@ -632,7 +632,7 @@ A type implements any interface comprising any subset of its methods and may the
 
 ```
 interface{}
-`
+```
 
 Similarly, consider this interface specification, which appears within a type declaration to define an interface called Locker:
 
