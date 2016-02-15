@@ -4,7 +4,7 @@ title: Go语言手册（Version of August 5, 2015）
 categories: train
 tags: [how,language,go]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

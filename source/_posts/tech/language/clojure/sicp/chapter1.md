@@ -4,7 +4,7 @@ title: SICP概要及习题解答-第一章
 categories: [sicp,clojure]
 tags: [sicp,clojure]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

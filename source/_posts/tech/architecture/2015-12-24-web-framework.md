@@ -4,7 +4,7 @@ title: Web架构
 categories: [architecture]
 tags: [architecture,rpc,distributed]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

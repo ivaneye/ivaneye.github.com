@@ -3,7 +3,7 @@ layout: post
 title: 快学Scala习题解答—第二章 控制结构和函数
 categories: scala
 tags: [java,scala]
-author: Ivan
+author: wangyifan
 
 ---
 

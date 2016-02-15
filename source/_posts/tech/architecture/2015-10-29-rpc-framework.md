@@ -4,7 +4,7 @@ title: 分布式服务框架的架构思路
 categories: [architecture]
 tags: [architecture,rpc,distributed]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

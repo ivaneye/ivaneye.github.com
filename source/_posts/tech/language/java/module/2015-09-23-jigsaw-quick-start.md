@@ -4,7 +4,7 @@ title: Java模块化:jigsaw初体验
 categories: module
 tags: [jigsaw,java,module]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

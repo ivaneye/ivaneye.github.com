@@ -4,7 +4,7 @@ title: 读源码-Velocity使用
 categories: [velocity]
 tags: [opensource,velocity,java]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

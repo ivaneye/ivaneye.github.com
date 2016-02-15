@@ -4,7 +4,7 @@ title: 实时发布-嵌入式OSGi的应用
 categories: [architecture]
 tags: [architecture,osgi]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

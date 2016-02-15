@@ -4,7 +4,7 @@ title: Groovy环境与语法
 categories: train
 tags: [how,language,Groovy]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

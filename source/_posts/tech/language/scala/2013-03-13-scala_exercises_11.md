@@ -4,7 +4,7 @@ title: 快学Scala习题解答—第十一章 操作符
 categories: scala
 tags: [java,scala]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

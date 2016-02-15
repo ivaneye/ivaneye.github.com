@@ -4,7 +4,7 @@ title: Java环境与语法
 categories: train
 tags: [how,language,java]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

@@ -4,7 +4,7 @@ title: 自用Java开发框架
 categories: [mycode]
 tags: [java,framework]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

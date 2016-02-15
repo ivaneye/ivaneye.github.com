@@ -4,7 +4,7 @@ title: Go语言初探
 categories: [golang]
 tags: [golang,language]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

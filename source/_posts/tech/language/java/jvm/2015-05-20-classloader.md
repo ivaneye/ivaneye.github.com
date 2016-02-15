@@ -4,7 +4,7 @@ title: ClassLoader
 categories: jvm
 tags: [classloader,tomcat,osgi]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

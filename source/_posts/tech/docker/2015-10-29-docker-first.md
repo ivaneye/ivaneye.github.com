@@ -4,7 +4,7 @@ title: Docker初探
 categories: [docker]
 tags: [docker]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 ---
 
 # Docker的用途

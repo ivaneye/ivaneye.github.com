@@ -4,7 +4,7 @@ title: Clojure Web栈
 categories: clojure
 tags: [clojure,framework,mycode]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 

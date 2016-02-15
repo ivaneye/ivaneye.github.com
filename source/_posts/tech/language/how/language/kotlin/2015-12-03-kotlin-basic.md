@@ -4,7 +4,7 @@ title: Kotlin环境与语法
 categories: train
 tags: [how,language,kotlin]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 published: false
 
 ---

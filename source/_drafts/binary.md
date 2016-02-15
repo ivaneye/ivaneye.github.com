@@ -4,7 +4,7 @@ title: 从1到n:是非题
 categories: 从1到n
 tags: [从1到n]
 avatarimg: "/img/head.jpg"
-author: Ivan
+author: wangyifan
 
 ---
 
