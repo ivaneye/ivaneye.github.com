@@ -18,7 +18,7 @@ comments: true
 
 baseurl: "" # change to empty string ""
 domain_name: ivaneye.com
-google_analytics: 
+google_analytics:
 
 source:      source
 destination: _site
@@ -38,7 +38,7 @@ repo:
 disqus_shortname: ""
 rss_path: source/
 author:
-  name      : Ivan
+  name      : wangyifan
   image     : /img/head.jpg
   email     : wangyifan@ivaneye.com
   url       : http://ivaneye.com
