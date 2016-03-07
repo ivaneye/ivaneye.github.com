@@ -2,6 +2,19 @@
 % 王一帆
 
 ## 虚拟机
+
+- VMware
+- VirtualBox
+
+## 虚拟机的问题
+
+- 速度慢
+- 占用资源高
+
+## 容器
+
+
+
 ## 简介
 ## Docker架构
 
@@ -12,6 +25,18 @@
 ## Linux
 
 ![](file/linux_docker_host.svg)
+
+## 安装Docker
+
+[官方文档](https://docs.docker.com/engine/installation/linux/ubuntulinux/)
+
+- Ubuntu apt-get
+- Windows [Docker Toolbox](https://www.docker.com/toolbox)
+
+## 系统要求
+
+- kernel >= 3.10
+- 64位操作系统
 
 ## Docker操作
 ## 服务化
