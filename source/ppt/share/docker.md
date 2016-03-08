@@ -11,7 +11,58 @@
 - 速度慢
 - 占用资源高
 
+- 发布流程繁琐
+
 ## 容器
+
+- 1979年 — chroot
+- 2000年 — FreeBSD Jails
+- 2001年 — Linux VServer
+- 2004年 — Solaris容器
+- 2005年 — OpenVZ
+- 2006年 — Process容器
+- 2007年 — Control Groups
+- 2008年 — LXC
+- 2011年 — Warden
+- 2013年 — LMCTFY
+- 2013年 — Docker
+- 2014年 — Rocket
+- 2016年 — Windows容器
+
+## 虚拟机与容器
+
+![](file/containers_vms.png)
+
+## 性能对比
+
+|特性	|容器	|虚拟机|
+|----|----|----|
+|启动	|秒级|分钟级|
+|磁盘容量|	一般为 MB|	一般为 GB|
+|效能	|接近原生|	比较慢|
+|系统支持量	|单机上千个容器	|一般几十个|
+
+## 容器的工作
+
+- 文件系统隔离
+- 进程隔离
+- 网络隔离
+- 资源隔离和分组
+
+## Docker是如何做的?
+
+- libcontainer/lxc
+- namespace
+- cgroups
+- 写时复制
+- 日志
+- 交互式shell
+
+## Why Docker?
+
+<!-- todo -->
+
+## Docker的历史
 
 
 
@@ -40,10 +91,6 @@
 
 ## Docker操作
 ## 服务化
-
-![](file/containers_vms.png)
-
-
 
 ## 待整理
 
