@@ -64,6 +64,10 @@
 
 ## Docker的历史
 
+Docker项目始于2013年3月，由当时的PaaS服务提供商dotCloud开发，dotClound也是YCombinator S10的毕业生。
+
+2013年10月dotCloud公司名字也由dotCloud, Inc.改为Docker, Inc.，集中更多的精力放到了Docker相关的研发上。
+
 
 ## Docker能做什么?
 
