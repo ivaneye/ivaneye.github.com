@@ -160,10 +160,17 @@ sudo docker run -i -t ubuntu /bin/bash
 
 https://docs.docker.com/engine/understanding-docker/
 
+## Image
+
+![](file/image.png)
+
 ## 查看容器
 
 ```
 sudo docker ps
+```
+```
+sudo docker ps -a
 ```
 
 ![](file/ps.jpg)
@@ -176,28 +183,92 @@ apt-get install vim
 
 ## 停止容器
 
+```
+exit
+```
+
 ## 重启容器
 
-##
+```
+sudo docker start 5fb7ae2e9ed4
+```
+```
+sudo docker start grave_archimedes
+```
+
+## 连接到容器
+
+```
+sudo docker attach grave_archimedes
+```
+
+## 创建镜像
+
+```
+sudo docker commit 5fb7ae2e9ed4 repo/imageName
+```
 
 ## Dockerfile
 
+```
+FROM ubuntu:14.04
+MAINTAINER wangyifan "wangyifan@made-in-china.com"
+RUN apt-get install -y vim
+```
+```
+sudo docker build -t="repo/myimage:v1" .
+```
+
+## 做了什么
+
+<!-- todo -->
+
+## Dockerfile指令
+
+- CMD:指定容器启动时要运行的命令
+- ENTRYPOINT:与CMD类似，启动时不会被docker run覆盖
+- WORKDIR:设置容器内部的工作目录
+- ENV:镜像构建过程中设置环境变量
+- USER:镜像会以什么样的用户去运行
+- VOLUME:向容器添加卷
+- ADD:将构建环境下的文件和目录复制到镜像中
+- COPY:与ADD类似，只关心在构建上下文中复制本地文件
+- ONBUILD:为镜像添加触发器
+
 ## 应用
 
+- 构建一个JavaWeb环境
 
+## 方案一
+
+```
+FROM ubuntu
+MAINTAINER wangyifan <wangyifan@ivaneye.com>
+ENV REFRESHED_AT 2014-06-01
+
+RUN apt-get -yqq update
+RUN apt-get -yqq install tomcat7 default-jdk
+
+ENV CATALINA_HOME /usr/share/tomcat7
+ENV CATALINA_BASE /var/lib/tomcat7
+ENV CATALINA_PID /var/run/tomcat7.pid
+ENV CATALINA_SH /usr/share/tomcat7/bin/catalina.sh
+ENV CATALINA_TMPDIR /tmp/tomcat7-tomcat7-tmp
+
+RUN mkdir -p $CATALINA_TMPDIR
+
+VOLUME ["/var/lib/tomcat7/webapps/"]
+
+EXPOSE 8080
+
+ENTRYPOINT ["/usr/share/tomcat7/bin/catalina.sh","run"]
+```
+
+## 方案二
+
+<!-- 数据卷 -->
 
 ## Docker与Hydra
 
 - Docker作为Hydra的环境
 - Docker作为Hydra的容器
-
-## 待整理
-
-## cgroups
-cgroups的一个设计目标是为不同的应用情况提供统一的接口，从控制单一进程(像nice)到操作系统层虚拟化(像opeNVZ，Linux-VServer，LXC)。cgroups提供：
-
-资源限制：组可以被设置不超过设定的内存限制；这也包括虚拟内存。[3] 原来的分页机制是在Linux研讨会的Containers: Challenges with the memory resource controller and its performance报告中提出的。[4]
-优先化：一些组可能会得到大量的CPU[5] 或磁盘输入输出通量。[6]
-报告：用来衡量系统确实把多少资源用到适合的目的上。[7]
-分离：为组分离命名空间，这样一个组不会看到另一个组的进程、网络连接和文件。[2]
-控制：冻结组或检查点和重启动。[7]
