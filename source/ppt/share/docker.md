@@ -10,10 +10,9 @@
 
 - 速度慢
 - 占用资源高
-
 - 发布流程繁琐
 
-## 容器
+## 容器一
 
 - 1979年 — chroot
 - 2000年 — FreeBSD Jails
@@ -22,6 +21,9 @@
 - 2005年 — OpenVZ
 - 2006年 — Process容器
 - 2007年 — Control Groups
+
+## 容器二
+
 - 2008年 — LXC
 - 2011年 — Warden
 - 2013年 — LMCTFY
@@ -68,7 +70,6 @@ Docker项目始于2013年3月，由当时的PaaS服务提供商dotCloud开发，
 
 2013年10月dotCloud公司名字也由dotCloud, Inc.改为Docker, Inc.，集中更多的精力放到了Docker相关的研发上。
 
-
 ## Docker能做什么?
 
 - 加速本地开发和构建流程，使其更加高效、更加轻量化
@@ -82,6 +83,16 @@ Docker项目始于2013年3月，由当时的PaaS服务提供商dotCloud开发，
 - 解决了“在我机器上/内网/本地是好的呀！”
 
 ## Docker架构
+
+![](file/docker_architecture.svg)
+
+## Docker组件
+
+- Client
+- Daemon
+- Image: a read-only template
+- Container: a running image
+- Registry: place where images are hosted/shared---Docker Hub
 
 ## Linux
 
@@ -102,9 +113,83 @@ Docker项目始于2013年3月，由当时的PaaS服务提供商dotCloud开发，
 
 - kernel >= 3.10
 - 64位操作系统
+- 内核必须支持一种适合的存储驱动
+- 内核必须支持开启cgroup和namespace功能
 
-## Docker操作
-## 服务化
+## 启动/停止Docker
+
+```sh
+sudo start docker
+sudo stop docker
+```
+
+## Docker Info
+
+```sh
+sudo docker info
+```
+
+##
+
+```
+Containers: 2
+Images: 22
+Server Version: 1.9.1
+Storage Driver: aufs
+ Root Dir: /var/lib/docker/aufs
+ Backing Filesystem: extfs
+ Dirs: 26
+ Dirperm1 Supported: false
+Execution Driver: native-0.2
+Logging Driver: json-file
+Kernel Version: 3.13.0-24-generic
+Operating System: Ubuntu 14.04.1 LTS
+CPUs: 4
+Total Memory: 5.693 GiB
+```
+
+## 运行第一个容器
+
+```sh
+sudo docker run -i -t ubuntu /bin/bash
+```
+
+![](file/first_run.jpg)
+
+## 做了什么?
+
+https://docs.docker.com/engine/understanding-docker/
+
+## 查看容器
+
+```
+sudo docker ps
+```
+
+![](file/ps.jpg)
+
+## 安装软件
+
+```
+apt-get install vim
+```
+
+## 停止容器
+
+## 重启容器
+
+##
+
+## Dockerfile
+
+## 应用
+
+
+
+## Docker与Hydra
+
+- Docker作为Hydra的环境
+- Docker作为Hydra的容器
 
 ## 待整理
 
@@ -116,10 +201,3 @@ cgroups的一个设计目标是为不同的应用情况提供统一的接口，�
 报告：用来衡量系统确实把多少资源用到适合的目的上。[7]
 分离：为组分离命名空间，这样一个组不会看到另一个组的进程、网络连接和文件。[2]
 控制：冻结组或检查点和重启动。[7]
-
-
-
-Image: a package with filesystem and data
-Container: a running image
-Repository: place where images are hosted/shared
-Registry: locally available images
