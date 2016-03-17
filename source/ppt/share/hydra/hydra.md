@@ -1,9 +1,9 @@
 % Hydra3架构
 % 王一帆
 
-## Hydra2架构
+##
 
-<img src="_hydra/hydra2.png" height="700px"/>
+<img src="_hydra/hydra2.png" height="720px"/>
 
 ## Hydra2问题
 
