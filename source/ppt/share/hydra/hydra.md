@@ -3,30 +3,52 @@
 
 ## RPC
 
-![](_hydra/rpc.png)
+. . .
 
-## 多个客户端，多个服务端
+![](_hydra/RPC1.png)
 
-RPC演进为服务的过程
+##
 
-## 服务
+![](_hydra/RPC2.png)
 
-![](_hydra/service_arch.jpg)
+. . .
+
+- Client需要知道Server地址
+
+##
+
+![](_hydra/RPC3.png)
+
+##
+
+![](_hydra/RPC4.png)
+
+##
+
+![](_hydra/service.png)
 
 ##
 
 ![](_hydra/function.png)
-
-##
-
-<img src="_hydra/hydra2.png" height="750px"/>
 
 ## Hydra2技术栈
 
 - Netty(Pigeon)
 - OSGi
 
-## Hydra2问题
+## ClassLoader
+
+![](_hydra/classloader.png)
+
+## OSGi ClassLoader
+
+![](_hydra/OSGi_ClassLoader.png)
+
+##
+
+<img src="_hydra/hydra2.png" height="730px"/>
+
+## Hydra2的缺陷
 
 - 增加开发及部署难度
 - 运行时错误提示
@@ -38,11 +60,9 @@ RPC演进为服务的过程
 - OSGi(屏蔽OSGi可见性)
 - 自定义ClassLoader
 
-## 运行时与多版本
+##
 
-<img src="_hydra/servicenode.png" height="750px"/>
-
-## 如何解决反序列化问题?
+<img src="_hydra/servicenode.png" height="730px"/>
 
 ## Netty4架构
 
@@ -50,4 +70,6 @@ RPC演进为服务的过程
 
 ##
 
-<img src="_hydra/hydra3.png" height="750px"/>
+<img src="_hydra/hydra3.png" height="730px"/>
+
+# 谢谢
