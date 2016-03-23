@@ -1,0 +1,6 @@
+[submodule "source/_posts/tech/design-pattern"]
+	path = source/_posts/tech/design-pattern
+	url = https://github.com/ivaneye/design-pattern.git
+[submodule "source/_posts/tech/luminus-reference"]
+	path = source/_posts/tech/luminus-reference
+	url = https://github.com/ivaneye/luminus-reference.git
