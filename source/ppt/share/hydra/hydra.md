@@ -5,11 +5,11 @@
 
 . . .
 
-![](_hydra/RPC1.png)
+![](hydra/RPC1.png)
 
 ##
 
-![](_hydra/RPC2.png)
+![](hydra/RPC2.png)
 
 . . .
 
@@ -17,19 +17,19 @@
 
 ##
 
-![](_hydra/RPC3.png)
+![](hydra/RPC3.png)
 
 ##
 
-![](_hydra/RPC4.png)
+![](hydra/RPC4.png)
 
 ##
 
-![](_hydra/service.png)
+![](hydra/service.png)
 
 ##
 
-![](_hydra/function.png)
+![](hydra/function.png)
 
 ## Hydra2技术栈
 
@@ -38,15 +38,15 @@
 
 ## ClassLoader
 
-![](_hydra/classloader.png)
+![](hydra/classloader.png)
 
 ## OSGi ClassLoader
 
-![](_hydra/OSGi_ClassLoader.png)
+![](hydra/OSGi_ClassLoader.png)
 
 ##
 
-<img src="_hydra/hydra2.png" height="730px"/>
+<img src="hydra/hydra2.png" height="730px"/>
 
 ## Hydra2的缺陷
 
@@ -62,14 +62,14 @@
 
 ##
 
-<img src="_hydra/servicenode.png" height="730px"/>
+<img src="hydra/servicenode.png" height="730px"/>
 
 ## Netty4架构
 
-![](_hydra/netty.png)
+![](hydra/netty.png)
 
 ##
 
-<img src="_hydra/hydra3.png" height="730px"/>
+<img src="hydra/hydra3.png" height="730px"/>
 
 # 谢谢
