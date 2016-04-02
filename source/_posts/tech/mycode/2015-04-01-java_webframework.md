@@ -10,6 +10,6 @@ author: wangyifan
 
 框架结构图
 
-![]({{site.CDN_PATH}}/mind/framework.png)
+![](/mind/framework.png)
 
 [源码下载](https://github.com/ivanpig/pig-template)

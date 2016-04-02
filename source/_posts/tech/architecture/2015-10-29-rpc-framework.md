@@ -68,7 +68,7 @@ webservice没有这个限制，webservice是在http协议上传递xml文本文�
 
 ## RPC
 
-![]({{site.CDN_PATH}}/assets/tech/architecture/rpc.png)
+![](/assets/tech/architecture/rpc.png)
 
 1）服务消费方（client）调用以本地调用方式调用服务；
 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；

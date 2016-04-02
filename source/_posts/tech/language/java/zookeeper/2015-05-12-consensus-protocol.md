@@ -32,7 +32,7 @@ author: wangyifan
 
 二阶段提交主要是引入了协调者来协调各个节点。
 
-![]({{site.CDN_PATH}}/assets/zookeeper/consensus/2pc.png)
+![](/assets/zookeeper/consensus/2pc.png)
 
 ## 阶段一:提交事务请求
 
@@ -207,7 +207,7 @@ Paxos算法中主要有三个角色，Proposer,Acceptor和Learner。而其中最
 
 ## 示例一
 
-![]({{site.CDN_PATH}}/assets/zookeeper/consensus/paxos.png)
+![](/assets/zookeeper/consensus/paxos.png)
 
 参照上图，以一个相对较简单的流程先来描述Paxos算法过程。
 
@@ -244,7 +244,7 @@ Paxos算法中主要有三个角色，Proposer,Acceptor和Learner。而其中最
 
 ## 示例二
 
-![]({{site.CDN_PATH}}/assets/zookeeper/consensus/paxos2.png)
+![](/assets/zookeeper/consensus/paxos2.png)
 
 下面再描述一个较为复杂的流程
 

@@ -190,7 +190,7 @@ destroy()方法只会被调用一次，在Servlet生命周期结束时被调用�
 ```
 
 ## 架构图
-![]({{site.CDN_PATH}}/home/ivan/my/teach/javaee/file/02.jpg)
+![](/home/ivan/my/teach/javaee/file/02.jpg)
 
 ## 示例
 ```java

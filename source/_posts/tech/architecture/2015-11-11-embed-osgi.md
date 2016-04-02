@@ -447,7 +447,7 @@ Bundle项目不需要做任何导入导出！
 
 第二种方式的ClassLoader结构图如下:
 
-![]({{site.CDN_PATH}}/assets/tech/architecture/osgi.png)
+![](/assets/tech/architecture/osgi.png)
 
 HelloImpl在遇到HostHello类时，发现配置了org.osgi.framework.bootdelegation，那么直接委托给AppClassLoader来加载。
 
@@ -493,5 +493,4 @@ OSGi支持多版本发布，即可以在一个OSGi容器内发布多个不同版
 
 同时也可实现如服务框架，结合MVVM模式，可实现易扩展的Web应用。想象空间还是很大的。
 
-最后给出[项目代码]({{site.CDN_PATH}}/assets/tech/architecture/embedosgi.zip)
-
+最后给出[项目代码](/assets/tech/architecture/embedosgi.zip)

@@ -23,7 +23,7 @@ Java程序都是由若干个.class文件组成，程序的运行过程即是对c
 - Extension ClassLoader：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。
 - App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/classloader.jpg)
+![](/assets/jvm/classloader/classloader.jpg)
 
 示例:
 
@@ -111,15 +111,15 @@ Java中提供的默认ClassLoader，只加载指定目录下的jar和class，如
 
 Tomcat5 ClassLoader:
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/tomcat5.jpg)
+![](/assets/jvm/classloader/tomcat5.jpg)
 
 Tomcat6 ClassLoader:
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/tomcat6.jpg)
+![](/assets/jvm/classloader/tomcat6.jpg)
 
 Tomcat7 ClassLoader:
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/tomcat7.png)
+![](/assets/jvm/classloader/tomcat7.png)
 
 Tomcat5,6,7的ClassLoader结构略有不同。
 
@@ -204,11 +204,11 @@ public synchronized void reload() {
 - 通过自定义ClassLoader实现多版本控制(一个bundle可以发布多个版本，而jar不能多版本共存)
 - 可独立部署和卸载
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/osgi01.png)
+![](/assets/jvm/classloader/osgi01.png)
 
 其Class加载流程如下:
 
-![]({{site.CDN_PATH}}/assets/jvm/classloader/osgi02.gif)
+![](/assets/jvm/classloader/osgi02.gif)
 
 - Step 1: 检查是否java.*，或者在bootdelegation中定义
         当bundle类加载器需要加载一个类时，首先检查包名是否以java.*开头，或者是否在一个特定的配置文件（org.osgi.framework.bootdelegation）中定义。

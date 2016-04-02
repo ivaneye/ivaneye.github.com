@@ -23,7 +23,7 @@ author: wangyifan
 
 上篇最后给出了测试UML图
 
-![]({{site.CDN_PATH}}/assets/opensource/junit3/diagram2.png)
+![](/assets/opensource/junit3/diagram2.png)
 
 我们可以看出
 
@@ -360,9 +360,9 @@ private boolean isTestMethod(Method m) {
 
 # 时序图
 
-![]({{site.CDN_PATH}}/assets/opensource/junit3/seq.png)
+![](/assets/opensource/junit3/seq.png)
 
 
 # UML
 
-![]({{site.CDN_PATH}}/assets/opensource/junit3/diagram.png)
+![](/assets/opensource/junit3/diagram.png)

@@ -160,7 +160,7 @@ object Hello {
 
 --------------
 
-![]({{site.CDN_PATH}}/assets/how/language/javase/javabasic/4.jpg)
+![](/assets/how/language/javase/javabasic/4.jpg)
 
 ## 使用递归来计算基本类型的范围
 

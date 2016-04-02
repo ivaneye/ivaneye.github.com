@@ -79,7 +79,7 @@ public void endTest(Test test) {
 
 这实际上是观察者模式。
 
-![]({{site.CDN_PATH}}/assets/designpattern/observer.jpg)
+![](/assets/designpattern/observer.jpg)
 
 - TestResult是ConceteSubject
 - TestListener为Observer
@@ -114,7 +114,7 @@ runBare()方法定义了测试执行的整体框架，而对应的实现都由�
 
 这里实际上是模板方法模式。看下模板方法的UML图
 
-![]({{site.CDN_PATH}}/assets/designpattern/template.jpg)
+![](/assets/designpattern/template.jpg)
 
 - 这里TestCase就相当于这里的AbstractClass
 - 而PersonTest,AnimalTest就相当于ConcreteClass
@@ -158,7 +158,7 @@ protected void runTest() throws Throwable {
 
 上篇提到了，对于TestCase来说，在执行时，JUnit框架会自动将其封装为TestSuite后执行，TestSuite实际上是TestCase的集合。很显然的组合模式。
 
-![]({{site.CDN_PATH}}/assets/designpattern/composite.jpg)
+![](/assets/designpattern/composite.jpg)
 
 - 这里TestSuite就是Composite
 - TestCase就是Leaf
@@ -171,7 +171,7 @@ protected void runTest() throws Throwable {
 
 看下装饰模式的UML图
 
-![]({{site.CDN_PATH}}/assets/designpattern/decorator.jpg)
+![](/assets/designpattern/decorator.jpg)
 
 - 很明显TestDecorator就是Decorator
 - RepaetedTest和TestSetup就是其子类
@@ -182,7 +182,7 @@ protected void runTest() throws Throwable {
 
 JUnit通过继承TestCase来实现具体的测试，执行测试则是执行具体实现的test*()方法
 
-![]({{site.CDN_PATH}}/assets/designpattern/command.jpg)
+![](/assets/designpattern/command.jpg)
 
 - TestRunner相当于命令模式中的客户（Client）角色
 - TestCase担当Command和Reciver两个角色
@@ -226,7 +226,7 @@ protected void runTest() throws Throwable {
 
 这里网上不少文章分析这里是适配器模式，个人认为比较牵强。
 
-![]({{site.CDN_PATH}}/assets/designpattern/adapter.jpg)
+![](/assets/designpattern/adapter.jpg)
 
 从上图可以看出，标准适配器模式Adapter与Adaptee是两个不同的对象。这里是实际上是一个类，可能有人说这是适配器模式的变体，那照这么说，方法委托就是适配器模式咯？！
 

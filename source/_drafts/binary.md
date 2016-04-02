@@ -26,7 +26,7 @@ author: wangyifan
 
 回忆自己学数字，或者电视里，或者教自己的小孩数字，应该都是从数手指头开始的。然后就出现了如下奇葩图:
 
-![]({{site.CDN_PATH}}/assets/my/1n/binary/01.jpg)
+![](/assets/my/1n/binary/01.jpg)
 
 这样数数很方便，伸手就能数，十个手指头不够还能数脚趾头，不够再借别人的接着数。
 

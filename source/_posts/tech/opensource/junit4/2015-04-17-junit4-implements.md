@@ -23,7 +23,7 @@ author: wangyifan
 
 上篇最后给出了测试UML图
 
-![]({{site.CDN_PATH}}/assets/opensource/junit4/diagram.png)
+![](/assets/opensource/junit4/diagram.png)
 
 在JUnit3中
 

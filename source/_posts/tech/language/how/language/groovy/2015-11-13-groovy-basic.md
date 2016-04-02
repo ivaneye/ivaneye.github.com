@@ -130,7 +130,7 @@ public class Hello{
 
 ## 关键字
 
-![]({{site.CDN_PATH}}/assets/how/language/Groovyse/Groovybasic/3.jpg)
+![](/assets/how/language/Groovyse/Groovybasic/3.jpg)
 
 ## 字面量
 
@@ -174,7 +174,7 @@ public class Hello{
 
 --------------
 
-![]({{site.CDN_PATH}}/assets/how/language/Groovyse/Groovybasic/4.jpg)
+![](/assets/how/language/Groovyse/Groovybasic/4.jpg)
 
 ## 使用递归来计算基本类型的范围
 

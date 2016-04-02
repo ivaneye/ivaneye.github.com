@@ -82,7 +82,7 @@ lein repl
 
 结果如图
 
-![]({{site.CDN_PATH}}/assets/clojure/repl.png)
+![](/assets/clojure/repl.png)
 
 运行单个文件
 ------------
@@ -103,7 +103,7 @@ IDE的话，Intellij IDEA有Clojure环境，不过速度太慢了。一般编写
 
 界面如图
 
-![]({{site.CDN_PATH}}/assets/clojure/emacs.png)
+![](/assets/clojure/emacs.png)
 
 另外还有lighttable，详细介绍可见[这里](http://lighttable.com/)
 
