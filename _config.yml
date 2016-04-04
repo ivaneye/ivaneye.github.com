@@ -29,7 +29,7 @@ destination: _site
 # Details for the RSS feed generator
 name: wangyifan
 title: 从0到1
-description: "世界因偷懒而进步"
+description: "懒是一种态度"
 meta_description: "Architecturer"
 meta_keywords: "blog,java,clojure,golang,go,architectures"
 url: http://ivaneye.com
