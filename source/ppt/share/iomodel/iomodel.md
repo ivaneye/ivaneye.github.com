@@ -12,19 +12,22 @@
 
 ## 相关概念
 
-- Socket
+- 客户端-服务端模型
+- Socket(套接字)
 - 阻塞IO/非阻塞IO
 - 同步IO/异步IO
 
 ## BIO模型
 
-- 图示
 - 代码
+- 图示
+- 优缺点
 
 ## NIO模型
 
 - 图示
 - 代码
+- 优缺点
 - poll/select/epoll
 - 拆包/粘包(半包问题)
 
@@ -44,3 +47,10 @@
 - Pigeon的目标
 - Pigeon的实现
 - RingBuffer
+
+## 参考资料
+
+[Reactor论文](http://www.dre.vanderbilt.edu/~schmidt/PDF/reactor-siemens.pdf)
+[Doug Lea《Scalable IO in Java》](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
+
+# 谢谢
