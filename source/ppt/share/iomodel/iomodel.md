@@ -47,10 +47,12 @@
 - Pigeon的目标
 - Pigeon的实现
 - RingBuffer
+- 后续规划
 
 ## 参考资料
 
 [Reactor论文](http://www.dre.vanderbilt.edu/~schmidt/PDF/reactor-siemens.pdf)
 [Doug Lea《Scalable IO in Java》](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
+[Netty源码](https://github.com/netty/netty)
 
 # 谢谢
