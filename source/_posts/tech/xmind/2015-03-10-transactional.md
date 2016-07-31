@@ -13,4 +13,4 @@ author: wangyifan
 
 <!-- more -->
 
-![](/mind/transaction.png)
+![](/assets/mind/transaction.png)
