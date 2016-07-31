@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> ZooKeeper安装与Java调用 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2015/04/22/zookeeper-begin.html">
+<meta property="og:title" content=" ZooKeeper安装与Java调用 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" ZooKeeper安装与Java调用 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2015/04/22/zookeeper-begin.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>ZooKeeper安装与Java调用</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2015-04-22"> 2015-04-22
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2015/04/22/zookeeper-begin.html#disqus_thread" data-disqus-identifier="/2015/04/22/zookeeper-begin">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>下载</h1>
+<p>ZooKeeper目前是Apache顶级项目，可从<a href="http://zookeeper.apache.org/releases.html">此处下载</a></p>
+<h1>安装</h1>
+<ul>
+<li>将下载的压缩包，解压缩到任意路径下.(例如:d:/soft)</li>
+<li>至ZooKeeper目录/conf下，会发现有一个zoo_sample.cfg，在当前目录拷贝一份，并重命名为zoo.cfg</li>
+<li>进入ZooKeeper目录/bin下，通过zkServer.cmd或zkServer.sh启动ZooKeeper</li>
+</ul>
+<h1>客户端操作</h1>
+<ul>
+<li>在ZooKeeper目录/bin下，使用命令行启动zkCli.cmd或者zkCli.sh即可启动ZooKeeper客户端</li>
+<li>在客户端可以执行: ls,get,set等命令，来展示，获取或设置值</li>
+</ul>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">ls /                        //列出/下的内容
+<span class="nb">set</span> /test <span class="nb">test</span>              //给/test目录设值
+get /test                   //获取/test目录的值
+</code></pre></div>
+<!-- more -->
+<h1>Java操作</h1>
+<ul>
+<li>新建一个Maven项目</li>
+<li>在pom.xml中添加ZooKeeper依赖</li>
+<li>新建一个类，这里叫ZookeeperTest，编写如下代码</li>
+</ul>
+<p>pom.xml添加依赖:</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.zookeeper<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>zookeeper<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>3.4.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div>
+<p>ZookeeperTest代码:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.zookeeper.CreateMode</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.WatchedEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.Watcher</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.ZooDefs.Ids</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.zookeeper.ZooKeeper</span><span class="o">;</span>
+<span class="cm">/**</span>
+<span class="cm"> * Created by wangyifan on 2015/4/22.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZookeeperTest</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">ZooKeeper</span> <span class="n">zk</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">ZookeeperTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">zk</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ZooKeeper</span><span class="o">(</span><span class="s">&quot;127.0.0.1:2181&quot;</span><span class="o">,</span> <span class="mi">500000</span><span class="o">,</span> <span class="k">new</span> <span class="nf">Watcher</span><span class="o">()</span> <span class="o">{</span>
+                <span class="c1">// 监控所有被触发的事件</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">process</span><span class="o">(</span><span class="n">WatchedEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getPath</span><span class="o">());</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">name</span><span class="o">());</span>
+                    <span class="c1">//System.out.println(event.getState().getIntValue());</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">exists</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span><span class="c1">//观察这个节点发生的事件</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// TODO Auto-generated catch block</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">createNodes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//创建一个节点root，数据是mydata,不进行ACL权限控制，节点为永久性的(即客户端shutdown了也不会消失)</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&quot;/root&quot;</span><span class="o">,</span> <span class="s">&quot;mydata&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> <span class="n">Ids</span><span class="o">.</span><span class="na">OPEN_ACL_UNSAFE</span><span class="o">,</span> <span class="n">CreateMode</span><span class="o">.</span><span class="na">PERSISTENT</span><span class="o">);</span>
+            <span class="c1">//在root下面创建一个childone znode,数据为childone,不进行ACL权限控制，节点为永久性的</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="s">&quot;childone&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> <span class="n">Ids</span><span class="o">.</span><span class="na">OPEN_ACL_UNSAFE</span><span class="o">,</span> <span class="n">CreateMode</span><span class="o">.</span><span class="na">PERSISTENT</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateNodes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//取得/root/childone节点下的数据,返回byte[]</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">zk</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">null</span><span class="o">)));</span>
+            <span class="c1">//修改节点/root/childone下的数据，第三个参数为版本，如果是-1，那会无视被修改的数据版本，直接改掉</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="s">&quot;childonemodify2&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">zk</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">null</span><span class="o">)));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteNodes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//第二个参数为版本，－1的话直接删除，无视版本</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">&quot;/root/childone&quot;</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+            <span class="n">zk</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">&quot;/root&quot;</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getNodes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//第二个参数为版本，－1的话直接删除，无视版本</span>
+            <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">zk</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">&quot;/zk_test&quot;</span><span class="o">,</span><span class="kc">true</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;data is &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ZookeeperTest</span> <span class="n">zkTest</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ZookeeperTest</span><span class="o">();</span>
+            <span class="c1">//zkTest.createNodes();</span>
+<span class="c1">//            zkTest.updateNodes();</span>
+            <span class="c1">//zkTest.deleteNodes();</span>
+            <span class="n">zkTest</span><span class="o">.</span><span class="na">getNodes</span><span class="o">();</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h1>基于Curator的操作</h1>
+<ul>
+<li>ZooKeeper默认的Watcher是一次性的，即当触发了一次监听后，即失效，需重新注册</li>
+<li>使用Curator可以简化此操作</li>
+</ul>
+<p>添加pom依赖：</p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.curator<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>curator-framework<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.7.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.curator<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>curator-recipes<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.7.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.curator.RetryPolicy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.CuratorFramework</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.CuratorFrameworkFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.recipes.cache.PathChildrenCache</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.framework.recipes.cache.PathChildrenCacheListener</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.retry.ExponentialBackoffRetry</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.curator.utils.ZKPaths</span><span class="o">;</span>
+<span class="cm">/**</span>
+<span class="cm"> * Created by wangyifan on 2015/4/28.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZooKeeperWatcher</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="n">CuratorFramework</span> <span class="n">zkclient</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">nameSpace</span> <span class="o">=</span> <span class="s">&quot;root&quot;</span><span class="o">;</span><span class="c1">// 根节点</span>
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">zkhost</span> <span class="o">=</span> <span class="s">&quot;127.0.0.1:2181&quot;</span><span class="o">;</span><span class="c1">// zk的host</span>
+        <span class="n">RetryPolicy</span> <span class="n">rp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ExponentialBackoffRetry</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span><span class="c1">// 重试机制</span>
+        <span class="n">CuratorFrameworkFactory</span><span class="o">.</span><span class="na">Builder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">CuratorFrameworkFactory</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">connectString</span><span class="o">(</span><span class="n">zkhost</span><span class="o">).</span><span class="na">connectionTimeoutMs</span><span class="o">(</span><span class="mi">5000</span><span class="o">).</span><span class="na">sessionTimeoutMs</span><span class="o">(</span><span class="mi">5000</span><span class="o">).</span><span class="na">retryPolicy</span><span class="o">(</span><span class="n">rp</span><span class="o">);</span>
+        <span class="n">builder</span><span class="o">.</span><span class="na">namespace</span><span class="o">(</span><span class="n">nameSpace</span><span class="o">);</span>
+        <span class="n">CuratorFramework</span> <span class="n">zclient</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">zkclient</span> <span class="o">=</span> <span class="n">zclient</span><span class="o">;</span>
+        <span class="n">zkclient</span><span class="o">.</span><span class="na">start</span><span class="o">();</span><span class="c1">// 放在这前面执行</span>
+        <span class="n">zkclient</span><span class="o">.</span><span class="na">newNamespaceAwareEnsurePath</span><span class="o">(</span><span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">nameSpace</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">watch</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">PathChildrenCache</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PathChildrenCache</span><span class="o">(</span><span class="n">zkclient</span><span class="o">,</span> <span class="s">&quot;/&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="n">cache</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;监听开始/zk........&quot;</span><span class="o">);</span>
+        <span class="n">PathChildrenCacheListener</span> <span class="n">plis</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PathChildrenCacheListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">childEvent</span><span class="o">(</span><span class="n">CuratorFramework</span> <span class="n">client</span><span class="o">,</span> <span class="n">PathChildrenCacheEvent</span> <span class="n">event</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Event here &quot;</span> <span class="o">+</span> <span class="n">event</span><span class="o">.</span><span class="na">getType</span><span class="o">());</span>
+                <span class="k">switch</span> <span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getType</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="k">case</span> <span class="nl">CHILD_ADDED:</span> <span class="o">{</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Data: &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">zkclient</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">forPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">())));</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Node added: &quot;</span> <span class="o">+</span> <span class="n">ZKPaths</span><span class="o">.</span><span class="na">getNodeFromPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">()));</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="k">case</span> <span class="nl">CHILD_UPDATED:</span> <span class="o">{</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Data: &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">zkclient</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">forPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">())));</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Node changed: &quot;</span> <span class="o">+</span> <span class="n">ZKPaths</span><span class="o">.</span><span class="na">getNodeFromPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">()));</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="k">case</span> <span class="nl">CHILD_REMOVED:</span> <span class="o">{</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Data: &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">zkclient</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">forPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">())));</span>
+                        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Node removed: &quot;</span> <span class="o">+</span> <span class="n">ZKPaths</span><span class="o">.</span><span class="na">getNodeFromPath</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">()));</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+        <span class="c1">// 注册监听</span>
+        <span class="n">cache</span><span class="o">.</span><span class="na">getListenable</span><span class="o">().</span><span class="na">addListener</span><span class="o">(</span><span class="n">plis</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ZooKeeperWatcher</span><span class="o">.</span><span class="na">watch</span><span class="o">();</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>如上代码，当对/root目录进行操作时，即可监控到！</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=ZooKeeper安装与Java调用&amp;url=http://ivaneye.com/2015/04/22/zookeeper-begin.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2015/04/22/zookeeper-begin.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2015/04/22/zookeeper-begin';
+    var disqus_title = 'ZooKeeper安装与Java调用';
+    var disqus_url = 'http://ivaneye.com/2015/04/22/zookeeper-begin.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/04/22/zookeeper-begin" data-title="ZooKeeper安装与Java调用" data-url="http://ivaneye.com/2015/04/22/zookeeper-begin.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

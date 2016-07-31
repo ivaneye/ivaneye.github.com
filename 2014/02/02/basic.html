@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Clojure教程-基本语法 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2014/02/02/basic.html">
+<meta property="og:title" content=" Clojure教程-基本语法 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Clojure教程-基本语法 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2014/02/02/basic.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Clojure教程-基本语法</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2014-02-02"> 2014-02-02
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2014/02/02/basic.html#disqus_thread" data-disqus-identifier="/2014/02/02/basic">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>简介</h1>
+<p>学习一门语言最好的方法就是去使用它。我们就从一个小例子来学习Clojure语法.</p>
+<h1>核心语法</h1>
+<p>首先先来看一下Clojure的核心语法。</p>
+<p>Clojure的使用的是Lisp语法,又叫S表达式。核心语法非常的简单。但是对于熟悉c系语法(c,c++,java)的朋友来说，第一次接触会非常的不习惯。</p>
+<ul>
+<li>  所有代码以&quot;(&quot;开始,&quot;)&quot;结束。即所有的代码都被()包裹</li>
+<li>  &quot;(&quot;后的第一个数据被当作函数或者宏来调用</li>
+<li>  接着的数据被当作参数传递</li>
+<li>  如果想原样返回数据，在&quot;(&quot;前面添加&quot;&#39;&quot;。此写法是(quote (...))的简写</li>
+</ul>
+<p>以前面的hello world程序为例。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">println </span><span class="s">&quot;Hello World&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>它以&quot;(&quot;开始，后面跟的是函数println，接着空格跟的是参数&quot;HelloWorld&quot;，最后&quot;)&quot;结尾。</p>
+<p>了解了如上规则，你就基本学会了Clojure的大部分语法。</p>
+<p>下面比较一下Clojure,Java,Python,Ruby的一些语法.</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Clojure 表达式</th>
+<th style="text-align: left">对应的 Java 语法</th>
+<th style="text-align: left">对应的 Python 语法</th>
+<th style="text-align: left">对应的 Ruby 语法</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">(not k)</td>
+<td style="text-align: left">!k</td>
+<td style="text-align: left">not k</td>
+<td style="text-align: left">not k or !k</td>
+</tr>
+<tr>
+<td style="text-align: left">(inc a)</td>
+<td style="text-align: left">a++、++a、a += 1、a + 1^a</td>
+<td style="text-align: left">a += 1、a + 1</td>
+<td style="text-align: left">a += 1</td>
+</tr>
+<tr>
+<td style="text-align: left">(/ (+ x y) 2)</td>
+<td style="text-align: left">(x + y) / 2</td>
+<td style="text-align: left">(x + y) / 2</td>
+<td style="text-align: left">(x + y) / 2</td>
+</tr>
+<tr>
+<td style="text-align: left">(instance? java. util.List al)</td>
+<td style="text-align: left">al instanceof java.util.List</td>
+<td style="text-align: left">isinstance(al,list)</td>
+<td style="text-align: left">al.is_a? Array</td>
+</tr>
+<tr>
+<td style="text-align: left">(if (not a) (inc b) (dec b))</td>
+<td style="text-align: left">!a ? b + 1 : b - 1</td>
+<td style="text-align: left">b + 1 if not a else b-1</td>
+<td style="text-align: left">!a ? b + 1 : b - 1</td>
+</tr>
+<tr>
+<td style="text-align: left">(Math/pow 2 10)^c</td>
+<td style="text-align: left">Math.pow(2, 10)</td>
+<td style="text-align: left">pow(2, 10)</td>
+<td style="text-align: left">2 ** 10</td>
+</tr>
+<tr>
+<td style="text-align: left">(.someMethod someObj &quot;foo&quot; (.otherMethod otherObj 0))</td>
+<td style="text-align: left">someObj.someMethod(&quot;foo&quot; , otherObj.otherMethod(0))</td>
+<td style="text-align: left">someObj.someMethod(&quot;foo&quot; , otherObj.otherMethod(0))</td>
+<td style="text-align: left">someObj.someMethod(&quot;foo&quot; , otherObj.otherMethod(0))</td>
+</tr>
+</tbody></table>
+<p>可以看出Clojure的语法有高度的一致性，即使你不熟悉S表达式，但是依据上面的原则，可以看懂它想表达的是一个什么意思。</p>
+<p>而对于其他三门语言，如果你没有一个个的学习相应的语法，你还是比较难理解它的意思的。</p>
+<h1>代码功能</h1>
+<p>了解了核心语法，我们就可以来编写代码了。我们要编写的代码功能很简单，进行简繁翻译，其中过滤不需要翻译以及需要特殊翻译的文字。我们将分几步来完成:</p>
+<ul>
+<li>  读取简繁字典</li>
+<li>  进行简繁翻译</li>
+<li>  读取不需要翻译的文字</li>
+<li>  过滤不翻译的文字</li>
+<li>  提供给Java调用</li>
+<li>  打包</li>
+</ul>
+<!-- more -->
+<h2>读取简繁字典</h2>
+<ul>
+<li>  语法点
+<ul>
+<li>  查看Clojure API</li>
+<li>  第一个函数的编写</li>
+<li>  Namespace的引入</li>
+<li>  正则表达式</li>
+<li>  Clojure字面量</li>
+</ul></li>
+</ul>
+<p>我们先看第一个功能。我们要读取简繁字典。简繁字典其实就是简繁对照的文件，我这里叫jfmap.clj 格式如下:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">万 萬 与 與 丑 醜 专 專 业 業 丛 叢 东 東 丝 絲 丢 丟 两 兩 严 嚴 丧 喪 个 個 丬 爿
+</code></pre></div>
+<p>这里只是简单的列了一点。具体内容请见附件。有了这个文件，我们如何把内容读出来呢？熟悉Java的都知道，我们要创建文件流来读取，然后要打开流，循环读取，最后关闭流，还要抓异常。很繁琐。</p>
+<p>在Clojure中如何处理呢？Clojure提供了slurp函数，可以根据提供的路径将文件内容读入。API如下:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="nv">clojure.core/slurp</span>
+<span class="p">([</span><span class="nv">f</span> <span class="o">&amp;</span> <span class="nv">opts</span><span class="p">])</span>
+  <span class="nv">Opens</span> <span class="nv">a</span> <span class="nv">reader</span> <span class="nv">on</span> <span class="nv">f</span> <span class="nb">and </span><span class="nv">reads</span> <span class="nv">all</span> <span class="nv">its</span> <span class="nv">contents</span>, <span class="nv">returning</span> <span class="nv">a</span> <span class="nv">string.</span>
+  <span class="nv">See</span> <span class="nv">clojure.java.io/reader</span> <span class="nb">for </span><span class="nv">a</span> <span class="nv">complete</span> <span class="nb">list </span><span class="nv">of</span> <span class="nv">supported</span> <span class="nv">arguments.</span>
+</code></pre></div>
+<p>OK。我们知道了要用什么函数。那么根据API和上面说的总规则，我们来写代码.</p>
+<ul>
+<li>  首先是&quot;(&quot;</li>
+<li>  然后是函数名slurp</li>
+<li>  空格，参数。这里是要读取的文件路径</li>
+<li>  最后&quot;)&quot;</li>
+</ul>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">slurp </span><span class="s">&quot;jfmap-path&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>你可以在REPL里面去实验这行代码的执行结果。执行此行代码，clojure会将jfmap.clj的内容以字符串的形式全部读入。</p>
+<p>接着呢？要做简繁翻译，字符串肯定不方便我们的操作。很明显map才是最适合的数据结构。那么我们如何将字符串变成map呢？</p>
+<p>我们只能求助于API了，你可以在<a href="http://clojure.github.io/clojure/api-index.html">Clojure的Index页面</a>搜索map,可以找到hash-map函数。它的API说明如下:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nb">hash</span>-map
+<span class="k">function</span>
+Usage: <span class="o">(</span><span class="nb">hash</span>-map<span class="o">)</span>
+       <span class="o">(</span><span class="nb">hash</span>-map <span class="p">&amp;</span> keyvals<span class="o">)</span>
+<span class="nv">keyval</span> <span class="o">=</span>&gt; key val
+Returns a new <span class="nb">hash </span>map with supplied mappings.  If any keys are
+equal, they are handled as <span class="k">if</span> by repeated uses of assoc.
+</code></pre></div>
+<p>根据提供的映射关系返回一个新的hashmap。而这里我们是一个字符串，如何提供映射关系呢？按照空格将文字切开就行了嘛！！继续找API。</p>
+<p>Java里有split方法，Clojure里有没有相应的函数呢？试试再说。。有了！在clojure.string的Namespace(Namespace和Java中的包类似，但是在Clojure中叫Namespace。这里没有将其翻译为命名空间，主要是怕有误解。)中，我们找到了叫split的函数！</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">split
+<span class="k">function</span>
+Usage: <span class="o">(</span>split s re<span class="o">)</span>
+       <span class="o">(</span>split s re limit<span class="o">)</span>
+Splits string on a regular expression.  Optional argument limit is
+the maximum number of splits. Not lazy. Returns vector of the splits.
+</code></pre></div>
+<p>通过正则表达式来切割字符串。看着挺像，先用再说！我们有repl嘛！直接在
+repl里面输入</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">split</span> <span class="s">&quot;万 萬&quot;</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>执行!Oops,报错了！</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">CompilerException java.lang.RuntimeException: Unable to resolve symbol: split in this context
+</code></pre></div>
+<p>找不到split?!如果在Java中报类似的错误，你会想到什么？没有引入包阿！</p>
+<p>这里也是。在Java中会默认引入java.lang包，同理在Clojure中会引入clojure.core和java.lang包。其他包则要自己引入，这里split在clojure.string包中。所以你需要引入clojure.string包。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;clojure.string</span><span class="p">)</span>
+</code></pre></div>
+<p>这也就是调用了require函数来进行引入！为什么clojure.string前面有个单引号呢？想想核心语法！这里暂不展开说！给大家留个思考题！！后续会专门对命名空间引入做详细介绍！</p>
+<p>光引入还没用！调用代码也需要修改！</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">clojure.string/split</span> <span class="s">&quot;万 萬&quot;</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>你可能要吐槽了！既然引入了，为什么还要加Namespace前缀？！</p>
+<p>我们可以和Java作个比较！如果这里是Java的话，那么我们在调用split的时候，实际上是需要一个类作为前缀的，比如StringUtils.split()!但是在clojure中并没有类的概念！Namespace下面只有函数，所以它使用命名空间来确保函数的唯一性引用！</p>
+<p>当然了每次都要写这么长的命名空间的名字也是挺烦人的。Clojure提供了简写.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">require</span> <span class="p">[</span><span class="ss">&#39;clojure.stirng</span> <span class="ss">:as</span> <span class="ss">&#39;cstr</span><span class="p">])</span>
+<span class="p">(</span><span class="nf">cstr/split</span> <span class="s">&quot;万 萬&quot;</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>:as是Keyword,是Clojure字面量的一种。它和String很类似，不过有些区别，它比String有更多的功能。
+下表是Clojure所包含的字面量。</p>
+<p>|Type   |     Example(s)|
+ | -----------| ---------------------------|
+ | Boolean    | true,false|
+ | Character  | \a|
+ | Keyword    | :tag,:doc|
+ | List       | (1 2 3),(println &quot;foo&quot;)|
+ | Map        | {:name &quot;Bill&quot;,:age 42}|
+ | Nil        | nil|
+ | Number     | 1,4.2|
+ | Set        | #{:snap :crackle :pop}|
+ | String     | &quot;hello&quot;|
+ | Symbol     | user/foo,java.lang.String|
+ | Vector     | [1 2 3]|</p>
+<p>ok.终于得到了我们要的结果。</p>
+<p>这里的#&quot;&quot;是正则表达式(这是你遇到的第一个特殊语法，学习方法---死记！！)，它构建了Java中的Pattern，所以正则表达式内容和Java完全相同，这里就不废话了。你只需要记住其语法就行了。</p>
+<p>切开了字符串，我们来生成map吧！如何生成呢？你应该有答案了吧？</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">hash-map </span><span class="p">(</span><span class="nf">cstr/split</span> <span class="s">&quot;万 萬&quot;</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>又报错了！</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">IllegalArgumentException No value supplied <span class="k">for</span> key: <span class="o">[</span><span class="s2">&quot;万&quot;</span> <span class="s2">&quot;萬&quot;</span><span class="o">]</span>  clojure.lang.PersistentHashMap.create <span class="o">(</span>PersistentHashMap.java:77<span class="o">)</span>
+</code></pre></div>
+<p>不合法的参数！！split得到的是个Vector([]包裹的数据结构是Vector),而hash-map要的参数类似于Java中的可变参数！如何匹配这两者呢？</p>
+<p>Clojure中提供了apply函数!API如下</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="nv">clojure.core/apply</span>
+<span class="p">([</span><span class="nv">f</span> <span class="nv">args</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">x</span> <span class="nv">args</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">args</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">z</span> <span class="nv">args</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span> <span class="nv">d</span> <span class="o">&amp;</span> <span class="nv">args</span><span class="p">])</span>
+  <span class="nv">Applies</span> <span class="k">fn </span><span class="nv">f</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">argument</span> <span class="nb">list </span><span class="nv">formed</span> <span class="nv">by</span> <span class="nv">prepending</span> <span class="nv">intervening</span> <span class="nv">arguments</span> <span class="nv">to</span> <span class="nv">args.</span>
+</code></pre></div>
+<p>此函数有点特别！它的第一个参数是函数，后面是该函数所需要的参数！知道怎么调用吗？</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">apply hash-map </span><span class="p">(</span><span class="nf">cstr/split</span> <span class="s">&quot;万 萬&quot;</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>终于成功了！！我们看到了结果</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">{</span><span class="s">&quot;万&quot;</span> <span class="s">&quot;萬&quot;</span><span class="p">}</span>   <span class="c1">;以{}包裹的数据结构是map</span>
+</code></pre></div>
+<p>最后呢！我们需要对jfmap.clj的内容进行处理！So easy!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">apply hash-map </span><span class="p">(</span><span class="nf">cstr/split</span> <span class="p">(</span><span class="nb">slurp </span><span class="s">&quot;jfmap-path&quot;</span><span class="p">)</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">))</span>
+</code></pre></div>
+<h2>进行简繁翻译</h2>
+<ul>
+<li>  语法点
+<ul>
+<li>  var的定义</li>
+<li>  函数的定义</li>
+<li>  闭包的使用</li>
+</ul></li>
+</ul>
+<p>上一节我们完成了对jfmap.clj的读取，并生成了hashmap。但是呢，如果我们每次要使用jfmap.clj的时候都要写</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">apply hash-map </span><span class="p">(</span><span class="nf">cstr/split</span> <span class="p">(</span><span class="nb">slurp </span><span class="s">&quot;jfmap-path&quot;</span><span class="p">)</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>太麻烦了。在Java中的可以将其封装为一个方法来进行调用。Clojure也可以将其封装为函数:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">read-map</span>
+  <span class="s">&quot;Read trans map from file&quot;</span>
+  <span class="p">[</span><span class="nv">path</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">apply hash-map </span><span class="p">(</span><span class="nf">clstr/split</span> <span class="p">(</span><span class="nb">slurp </span><span class="nv">path</span><span class="p">)</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">)))</span>
+</code></pre></div>
+<p>defn是个宏，宏的定义后面讨论。</p>
+<p>defn是用来定义有名函数的。read-map就是函数名，和Java中的驼峰式取名不同，List系的取名方式一般是使用&quot;-&quot;。给出的原因是大写字母要按两个按键，&quot;-&quot;只需要按一个按键！！</p>
+<p>紧接着函数名的是注释，类似Java中的注释，不同的是其双引号内的内容可以多行。后面的vector是参数
+列表，最后就是函数体了。</p>
+<p>现在当你再读取jfmap的时候。只需要这样调用:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">read-map</span> <span class="s">&quot;jfmap-path&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>比刚才简单了很多。但是每次都要去读取，还是不够方便。在Java中会将其赋值给一个变量，然后去调用。Clojure当然也可以。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">jfmap</span> <span class="p">(</span><span class="nf">read-map</span> <span class="s">&quot;jfmap-path&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>然后你直接操作jfmap就可以了。 现在我们就来按照jfmap来进行简繁翻译吧！</p>
+<p>你可能会想，很简单吧？只需要遍历需要翻译的字符串，然后到jfmap中去找对应的翻译，然后将翻译组装成字符串就行了。so easy!但当你这么想的时候，你已经陷入到了实现的细节中了！Clojure让你能够更加的关注业务而不是实现细节！</p>
+<p>这里给出的建议是：
+<strong>请先查找Clojure是否可通过函数组合来解决问题？如果不能再考虑自己编写函
+数！</strong></p>
+<p>为什么这么说呢？因为在Clojure中大部分的问题都可以通过其提供的函数组合来解决。你需要做的就是根据需要来组合函数！这使你能更多的思考业务而非实现细节！比如这里的问题！ 我们需要一个函数：</p>
+<ol>
+<li> 接受一个字符串</li>
+<li> 返回翻译完成的字符串</li>
+</ol>
+<p>很简单，我们先编写函数的定义。这里我们叫translate。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>然后呢？需要翻译字符串。这里叫翻译字符串，实际上就是根据map的key找到value而已。在Clojure中找到这样的函数就可以了。你可以找到get函数。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">get map </span><span class="nv">k</span> <span class="nv">default</span><span class="p">)</span>
+</code></pre></div>
+<p>很好理解吧？根据k从map中查找value，如果找不到则返回default。其实这就是核心代码了！</p>
+<p>我们知道map就是我们这里的jfmap，k实际上是获取的字符串的每个字符，而default呢？这里如果我们根据k找不到的话，就直接返回k，也就是不翻译了。所以代码修改为:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">)</span>
+</code></pre></div>
+<p>现在只需要解决k就行了！继续寻找函数！现在需要的是在Clojure中用得还比较多的一个函数---map!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="nv">clojure.core/map</span>
+<span class="p">([</span><span class="nv">f</span> <span class="nv">coll</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">c1</span> <span class="nv">c2</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">c1</span> <span class="nv">c2</span> <span class="nv">c3</span><span class="p">]</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">c1</span> <span class="nv">c2</span> <span class="nv">c3</span> <span class="o">&amp;</span> <span class="nv">colls</span><span class="p">])</span>
+  <span class="nv">Returns</span> <span class="nv">a</span> <span class="nv">lazy</span> <span class="nv">sequence</span> <span class="nv">consisting</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">result</span> <span class="nv">of</span> <span class="nv">applying</span> <span class="nv">f</span> <span class="nv">to</span> <span class="nv">the</span>
+  <span class="nb">set </span><span class="nv">of</span> <span class="nb">first </span><span class="nv">items</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">coll</span>, <span class="nv">followed</span> <span class="nv">by</span> <span class="nv">applying</span> <span class="nv">f</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">set</span>
+  <span class="nv">of</span> <span class="nb">second </span><span class="nv">items</span> <span class="nv">in</span> <span class="nv">each</span> <span class="nv">coll</span>, <span class="nv">until</span> <span class="nv">any</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">colls</span> <span class="nv">is</span>
+  <span class="nv">exhausted.</span>  <span class="nv">Any</span> <span class="nv">remaining</span> <span class="nv">items</span> <span class="nv">in</span> <span class="nv">other</span> <span class="nv">colls</span> <span class="nv">are</span> <span class="nv">ignored.</span> <span class="nv">Function</span>
+  <span class="nv">f</span> <span class="nv">should</span> <span class="nv">accept</span> <span class="nv">number-of-colls</span> <span class="nv">arguments.</span>
+</code></pre></div>
+<p>看到作用了吗？将函数应用到序列的每个元素上去！并返回一个由结果组成的lazy序列！你可能会问了：这是针对序列的，对字符串有效吗？试试不就知道了？</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">map class </span><span class="s">&quot;aaa&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>在repl里面输入如上的代码！你看到了什么？java.lang.Character?!没错，字符串会被当作字符序列来操作！但是我们需要的是字符串啊？没关系，我们有str函数!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="nb">comp class </span><span class="nv">str</span><span class="p">)</span> <span class="s">&quot;aaa&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>comp是个什么东东？它的作用是将多个函数组合起来，从右向左的执行！！这里就是先执行str再执行class,可以看到结果打印的是java.lang.String,正是我们需要的。</p>
+<p>OK，现在我们来组合这两个函数就行了.但是问题又来了！map的第二个参数是个函数，我们怎么办呢？既然它需要函数，那我们就定义一个给它咯！</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">tmp</span> <span class="p">[</span><span class="nv">k</span><span class="p">]</span>
+   <span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map </span><span class="nv">tmp</span> <span class="nv">s</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>你可能要抱怨了！取了个什么烂名字！！居然叫tmp?!呵呵，别急！我把函数定义为tmp，是因为我要将优化掉！可以看出，这个功能非常的简单，而且只会给translate使用，那么我们需要特意定义一个单独的函数吗？</p>
+<p>不需要吧？我们直接将两个函数合并好了！</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="kd">defn </span><span class="nv">tmp</span> <span class="p">[</span><span class="nv">k</span><span class="p">]</span> <span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">))</span> <span class="nv">s</span><span class="p">))</span>
+</code></pre></div>
+<p>很简单，但是呢！既然都放到函数内部了！还需要函数名吗？</p>
+<p>就像Java中的匿名内部类一样，直接定义直接使用，不需要名字！</p>
+<p>在Clojure中有fn这个specialform来定义匿名函数！</p>
+<p>上面说defn是个宏！它的功能就类似于(还有其他功能，比如注释)：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">tmp</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">k</span><span class="p">]</span> <span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">)))</span>
+</code></pre></div>
+<p>我们使用fn来简化一下代码!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">k</span><span class="p">]</span> <span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">))</span> <span class="nv">s</span><span class="p">))</span>
+</code></pre></div>
+<p>舒服很多！还能更简单吗？当然！Clojure提供了#这个语法糖来定义匿名函数!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">k</span> <span class="nv">k</span><span class="p">)</span> <span class="nv">s</span><span class="p">))</span>
+</code></pre></div>
+<p>好！问题来了！这里没有了参数列表！那get函数怎么知道k是个什么东西呢？所以，这里使用%来替换，第一个参数用%或者%1替换，第二个则是%2,依次类推！</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">%</span> <span class="nv">%</span><span class="p">)</span> <span class="nv">s</span><span class="p">))</span>
+</code></pre></div>
+<p>搞定了吗？没有！translate需要返回一个字符串，而map返回的是个lazy序列！需要将序列转化为字符串！到clojure.string找找！有个join函数</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">translate</span>
+  <span class="s">&quot;Trans string by map&quot;</span>
+  <span class="p">[</span><span class="nv">s</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">clstr/join</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">get </span><span class="nv">jfmap</span> <span class="nv">%</span> <span class="nv">%</span><span class="p">)</span> <span class="nv">s</span><span class="p">)))</span>
+</code></pre></div>
+<p>不废话了！记得要引入Namespace哦！！</p>
+<p>实际上一行代码我们就搞定了基本的翻译了！很简单吧？</p>
+<h2>读取不需要翻译的文字</h2>
+<ul>
+<li>  复习</li>
+</ul>
+<p>翻译的字，是使用的map来存储的？那不需要翻译的文字该如何存储呢？这要看你如何处理了！我这里采用的是一个很简单的方式！</p>
+<ol>
+<li> 首先对文字全文翻译</li>
+<li> 然后对翻译后的文字再反翻译</li>
+</ol>
+<p>比如说，&quot;阿里山&quot;直接翻译的话，那么就会变成&quot;阿裡山&quot;，但是&quot;里&quot;字是不需要翻译的。</p>
+<p>那么我就新建一个map，保存&quot;阿裡山&quot;-&gt;&quot;阿里山&quot;，将文字再翻回来！</p>
+<p>那么这里我就再需要一个类似jfmap.clj的文件就可以了。我这里叫ntmap.clj。</p>
+<p>格式和jfmap.clj类似！只不过里面存储的是需要反翻译的文字!</p>
+<p>如何读取和组装map?不需要我废话吧？</p>
+<h2>过滤不翻译的文字</h2>
+<ul>
+<li>  Special Form
+<ul>
+<li>  let</li>
+<li>  loop</li>
+<li>  if</li>
+<li>  recur</li>
+</ul></li>
+</ul>
+<p>过滤不翻译的文字，实际上就是反翻译!如何进行呢？原来在翻译的过程中我们是一个字符一个字符的匹配的！但是这里是一个一个的字符串！这就比较难办了！</p>
+<p>不管怎么说我们先定义函数!</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">do-trans</span>
+  <span class="p">[</span><span class="nv">s</span> <span class="nv">tmap</span> <span class="nv">ntmap</span><span class="p">]</span>
+   <span class="p">)</span>
+</code></pre></div>
+<p>首先第一件事就是去全文翻译！然后获得结果！提供给后续函数使用！</p>
+<p>Java中有局部变量！只需要将变量写在方法里就可以了！但是在Clojure中不同，它需要通过let这个Special Form来处理。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">do-trans</span>
+  <span class="p">[</span><span class="nv">s</span> <span class="nv">tmap</span> <span class="nv">ntmap</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">re</span> <span class="p">(</span><span class="nf">translate</span> <span class="nv">s</span> <span class="nv">tmap</span><span class="p">)]</span>
+<span class="p">))</span>
+</code></pre></div>
+<p>let后面是个Vector，用来进行var绑定，这里translate翻译的结果会被绑定到re这个var上！而re的作用范围就只在let这个括号内部！</p>
+<p>接着呢！就是对re进行反翻译！没啥现成的函数了！只能自己处理！代码如下！</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">do-trans</span>
+  <span class="p">[</span><span class="nv">s</span> <span class="nv">tmap</span> <span class="nv">ntmap</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">re</span> <span class="p">(</span><span class="nf">translate</span> <span class="nv">s</span> <span class="nv">tmap</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">result</span> <span class="nv">re</span>
+           <span class="nv">k</span> <span class="p">(</span><span class="nb">keys </span><span class="nv">ntmap</span><span class="p">)]</span>
+      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">seq </span><span class="nv">k</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nf">clstr/replace</span> <span class="nv">result</span> <span class="p">(</span><span class="nb">first </span><span class="nv">k</span><span class="p">)</span> <span class="p">(</span><span class="nf">ntmap</span> <span class="p">(</span><span class="nb">first </span><span class="nv">k</span><span class="p">)))</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">k</span><span class="p">))</span>
+          <span class="nv">result</span><span class="p">))))</span>
+</code></pre></div>
+<p>loop又是个Special Form，看起来像循环！实际上它是个递归！</p>
+<p>loop后面也是个参数Vector，功能和let的相同！这里将re绑定到了result，以及ntmap的key绑定到了k上！</p>
+<p>然后是if判断，还是个Special Form，(seq k)判断k是否是个序列！如果是则执行recur，如果不是则返回result.其实seq并不是判断函数！</p>
+<p>它是用来构建序列的！这里之所以能用来判断，基于两个原因：</p>
+<ol>
+<li> 在Clojure中除了nil和false是假，其他全是真</li>
+<li> (seq nil)和(seq ())返回nil</li>
+</ol>
+<p>然后seq就可以用来作为判断条件了！</p>
+<p>recur是递归调用！这里调用的是loop，传递的参数是替换后的s和剩余的k.</p>
+<p>实际功能就是，遍历ntmap中的key，如果找到了，则使用value替换掉！</p>
+<p>至此，就完成了翻译的所有功能！考虑下如果使用Java需要多少行代码？？</p>
+<p>测试翻译一个页面的时间为70毫秒左右，速度还是不错的！</p>
+<h2>提供给Java调用</h2>
+<p>Clojure提供了将函数给Java调用的功能！</p>
+<p>首先，在core.clj文件中编写函数，比如下面的翻译:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">-transAll</span>
+  <span class="s">&quot;翻译所有&quot;</span>
+  <span class="p">[</span><span class="nv">source</span> <span class="nv">mapPath</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">trans/translate</span> <span class="nv">source</span> <span class="p">(</span><span class="nf">trans/read-map</span> <span class="nv">mapPath</span><span class="p">)</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>函数名前面一定要有个&quot;-&quot;。 然后在命名空间里添加如下代码</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">jft.core</span>
+<span class="c1">;这里开始</span>
+ <span class="p">(</span><span class="ss">:gen-class</span>
+   <span class="ss">:name</span> <span class="nv">jft.core.Trans</span>
+   <span class="ss">:methods</span> <span class="p">[</span><span class="o">#^</span><span class="p">{</span><span class="ss">:static</span> <span class="nv">true</span><span class="p">}</span> <span class="p">[</span><span class="nv">transAll</span> <span class="p">[</span><span class="nv">String</span> <span class="nv">String</span><span class="p">]</span> <span class="nv">String</span><span class="p">]])</span>
+<span class="c1">;这里结束</span>
+  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">cstr</span><span class="p">]</span>
+            <span class="p">[</span><span class="nv">jft.trans</span> <span class="ss">:as</span> <span class="nv">trans</span><span class="p">])</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>应该不难理解吧？name是在Java中import的时候的名字！methods是可以调用的方法,这里注解为静态方法！</p>
+<p>注意这里的transAll前面是没有&quot;-&quot;的，后面是参数和返回类型！</p>
+<h2>打包</h2>
+<p>需要给Java调用，那就要先封装为jar包。非常简单</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">lein jar
+</code></pre></div>
+<p>然后就可以提供给Java调用了！</p>
+<h1>源码</h1>
+<p><a href="/assets/clojure/jft.zip">jft</a></p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Clojure教程-基本语法&amp;url=http://ivaneye.com/2014/02/02/basic.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2014/02/02/basic.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2014/02/02/basic';
+    var disqus_title = 'Clojure教程-基本语法';
+    var disqus_url = 'http://ivaneye.com/2014/02/02/basic.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2014/02/02/basic" data-title="Clojure教程-基本语法" data-url="http://ivaneye.com/2014/02/02/basic.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

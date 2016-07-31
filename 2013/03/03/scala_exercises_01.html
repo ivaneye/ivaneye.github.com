@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 快学Scala习题解答—第一章 基础 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/03/03/scala_exercises_01.html">
+<meta property="og:title" content=" 快学Scala习题解答—第一章 基础 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 快学Scala习题解答—第一章 基础 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/03/03/scala_exercises_01.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>快学Scala习题解答—第一章 基础</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-03-03"> 2013-03-03
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/03/03/scala_exercises_01.html#disqus_thread" data-disqus-identifier="/2013/03/03/scala_exercises_01">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>基础</h1>
+<h2>在Scala REPL中键入3,然后按Tab键。有哪些方法可以被应用?</h2>
+<p>这个。。。。直接操作一遍就有结果了.此题不知是翻译的问题，还是原题的问题，在Scala
+REPL中需要按3. 然后按Tab才会提示。 直接按3加Tab是没有提示的。下面是结果</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">!<span class="o">=</span>             <span class="c">##             %              &amp;              *              +</span>
+-              /              &lt;              &lt;&lt;             &lt;<span class="o">=</span>             <span class="o">==</span>
+&gt;              &gt;<span class="o">=</span>             &gt;&gt;             &gt;&gt;&gt;            ^              asInstanceOf
+equals         getClass       hashCode       isInstanceOf   toByte         toChar
+toDouble       toFloat        toInt          toLong         toShort        toString
+unary_+        unary_-        unary_~        <span class="p">|</span>
+</code></pre></div>
+<p>列出的方法并不全，需要查询全部方法还是需要到Scaladoc中的Int,Double,RichInt,RichDouble等类中去查看。</p>
+<h2>在Scala REPL中，计算3的平方根,然后再对该值求平方。现在，这个结果与3相差多少？(提示:res变量是你的朋友)</h2>
+<p>依次进行计算即可</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; scala.math.sqrt<span class="o">(</span>3<span class="o">)</span>
+warning: there were <span class="m">1</span> deprecation warnings<span class="p">;</span> re-run with -deprecation <span class="k">for</span> details
+res5: <span class="nv">Double</span> <span class="o">=</span> 1.7320508075688772
+scala&gt; res5*res5
+res6: <span class="nv">Double</span> <span class="o">=</span> 2.9999999999999996
+scala&gt; <span class="m">3</span> - res6
+res7: <span class="nv">Double</span> <span class="o">=</span> 4.440892098500626E-16
+</code></pre></div>
+<!-- more -->
+<h2>res变量是val还是var?</h2>
+<p>val是不可变的，而var是可变的，只需要给res变量重新赋值就可以检测res是val还是var了</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; <span class="nv">res9</span> <span class="o">=</span> 3
+&lt;console&gt;:8: error: reassignment to val
+       <span class="nv">res9</span> <span class="o">=</span> 3
+            ^
+</code></pre></div>
+<h2>Scala允许你用数字去乘字符串---去REPL中试一下&quot;crazy&quot;*3。这个操作做什么？在Scaladoc中如何找到这个操作?</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; <span class="s2">&quot;crazy&quot;</span>*3
+res11: <span class="nv">String</span> <span class="o">=</span> crazycrazycrazy
+</code></pre></div>
+<p>从代码可以推断,*是&quot;crazy&quot;这个字符串所具有的方法，但是Java中的String可没这个方法，很明显。此方法在StringOps中。</p>
+<h2>10 max 2的含义是什么？max方法定义在哪个类中？</h2>
+<p>直接在REPL中执行</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; <span class="m">10</span> max 2
+res0: <span class="nv">Int</span> <span class="o">=</span> 10
+scala&gt; <span class="m">7</span> max 8
+res1: <span class="nv">Int</span> <span class="o">=</span> 8
+scala&gt; <span class="m">0</span> max 0
+res2: <span class="nv">Int</span> <span class="o">=</span> 0
+</code></pre></div>
+<p>可以看出,此方法返回两个数字中较大的那个。此方法Java中不存在，所以在RichInt中。</p>
+<h2>用BigInt计算2的1024次方</h2>
+<p>简单的API调用</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; BigInt<span class="o">(</span>2<span class="o">)</span>.pow<span class="o">(</span>1024<span class="o">)</span>
+res4: scala.math.BigInt <span class="o">=</span> 17976931348623159077293051907890247336179769789423065727343008115
+7732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124
+3777678934248654852763022196012460941194530829520850057688381506823424628814739131105408272
+37163350510684586298239947245938479716304835356329624224137216
+</code></pre></div>
+<h2>为了在使用probablePrime(100,Random)获取随机素数时不在probablePrime和Radom之前使用任何限定符，你需要引入什么？</h2>
+<p>so easy.
+import需要的包啊。Random在scala.util中，而probablePrime是BigInt中的方法，引入即可</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.math.BigInt._</span>
+<span class="k">import</span> <span class="nn">scala.util.Random</span>
+<span class="n">probablePrime</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span><span class="nc">Random</span><span class="o">)</span>
+</code></pre></div>
+<h2>创建随机文件的方式之一是生成一个随机的BigInt，然后将它转换成三十六进制，输出类似&quot;qsnvbevtomcj38o06kul&quot;这样的字符串。查阅Scaladoc，找到在Scala中实现该逻辑的办法。</h2>
+<p>到BigInt中查找方法。</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">scala&gt; scala.math.BigInt<span class="o">(</span>scala.util.Random.nextInt<span class="o">)</span>.toString<span class="o">(</span>36<span class="o">)</span>
+res21: <span class="nv">String</span> <span class="o">=</span> utydx
+</code></pre></div>
+<h2>在Scala中如何获取字符串的首字符和尾字符？</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">//获取首字符</span>
+<span class="s">&quot;Hello&quot;</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+<span class="s">&quot;Hello&quot;</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="c1">//获取尾字符</span>
+<span class="s">&quot;Hello&quot;</span><span class="o">.</span><span class="n">reverse</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+<span class="s">&quot;Hello&quot;</span><span class="o">.</span><span class="n">takeRight</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</code></pre></div>
+<h2>take,drop,takeRight和dropRight这些字符串函数是做什么用的？和substring相比，他们的优点和缺点都是哪些？</h2>
+<p>查询API即可
+take是从字符串首开始获取字符串,drop是从字符串首开始去除字符串。
+takeRight和dropRight是从字符串尾开始操作。 这四个方法都是单方向的。
+如果我想要字符串中间的子字符串，那么需要同时调用drop和dropRight，或者使用substring</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=快学Scala习题解答—第一章 基础&amp;url=http://ivaneye.com/2013/03/03/scala_exercises_01.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/03/03/scala_exercises_01.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/03/03/scala_exercises_01';
+    var disqus_title = '快学Scala习题解答—第一章 基础';
+    var disqus_url = 'http://ivaneye.com/2013/03/03/scala_exercises_01.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/03/03/scala_exercises_01" data-title="快学Scala习题解答—第一章 基础" data-url="http://ivaneye.com/2013/03/03/scala_exercises_01.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

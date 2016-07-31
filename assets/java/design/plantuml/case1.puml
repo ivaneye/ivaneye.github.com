@@ -1,0 +1,15 @@
+@startuml
+:Enroller: as Admin
+(View Menu of courses) as (Use)
+
+(Use) ---> Admin
+
+note right of Admin : 登记者
+
+note right of (Use):查看课程清单
+note top of (Use)
+清单包含课程的名字，时间，地点及费用。
+清单还显示课程所允许的学生数目以及这个课程当前是否"已满"
+end note
+
+@enduml

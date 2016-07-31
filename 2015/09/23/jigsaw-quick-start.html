@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Java模块化:jigsaw初体验 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2015/09/23/jigsaw-quick-start.html">
+<meta property="og:title" content=" Java模块化:jigsaw初体验 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Java模块化:jigsaw初体验 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2015/09/23/jigsaw-quick-start.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Java模块化:jigsaw初体验</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2015-09-23"> 2015-09-23
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2015/09/23/jigsaw-quick-start.html#disqus_thread" data-disqus-identifier="/2015/09/23/jigsaw-quick-start">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>简介</h1>
+<p>Java模块化一拖再拖，目前jdk9发布了包含jigsaw的先行版。本文为<a href="http://openjdk.java.net/projects/jigsaw/quick-start">Project Jigsaw: Module System Quick-Start Guide</a>的简译，及使用感受总结。</p>
+<h1>翻译正文</h1>
+<p>本文提供了一些简单的例子方便开发者熟悉模块化。</p>
+<p>例子中的文件路径使用反斜杠和冒号分隔。Windows用户请修改为反斜杠和分号。</p>
+<h2>Greetings</h2>
+<p>第一个例子是个叫com.greetings的模块，它只是简单的打印&quot;Greetings!&quot;。这个模块包含两个源文件:模块定义文件(mmodule-info.java)和主类。</p>
+<p>按规定，源文件需要在一个目录下，这个目录表示模块，目录名即模块名。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">src/com.greetings/com/greetings/Main.java
+src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span> <span class="o">{</span> <span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/com/greetings/Main.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Greetings!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<!-- more -->
+<p>使用下面的命令，将源代码编译到mods/com.greetings目录下</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mkdir -p mods/com.greetings
+$ javac -d mods/com.greetings \
+        src/com.greetings/module-info.java \
+        src/com.greetings/com/greetings/Main.java
+</code></pre></div>
+<p>通过下面的命令运行:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -modulepath mods -m com.greetings/com.greetings.Main
+</code></pre></div>
+<ul>
+<li>-modulepath 是模块路径，它可以指定一个或多个模块路径。</li>
+<li>-m 指定主模块，斜杠后的值为主模块中的主类</li>
+</ul>
+<h3>说明</h3>
+<p>就目前这个例子还看不出太多内容，和普通的开发的区别就是新增了module-info.java这个类，来描述模块信息。</p>
+<h2>Greetings world</h2>
+<p>第二个例子升级前面的例子来说明模块间的依赖。模块com.greetings依赖org.astro。模块org.astro导出包org.astro.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">src/org.astro/module-info.java
+src/org.astro/org/astro/World.java
+src/com.greetings/com/greetings/Main.java
+src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.astro/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">module org.astro {
+    exports org.astro;
+}
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.astro/org/astro/World.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">astro</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">World</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;world&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">module com.greetings {
+    requires org.astro;
+}
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/com/greetings/Main.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.astro.World</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Greetings %s!%n&quot;</span><span class="o">,</span> <span class="n">World</span><span class="o">.</span><span class="na">name</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>分别翻译org.astro模块和com.greetings模块.在编译com.greetings模块时需要指定模块路径，这样才能解析对org.astro的依赖.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mkdir mods/org.astro mods/com.greetings
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ javac -d mods/org.astro \
+        src/org.astro/module-info.java src/org.astro/org/astro/World.java
+$ javac -modulepath mods -d mods/com.greetings \
+        src/com.greetings/module-info.java src/com.greetings/com/greetings/Main.java
+</code></pre></div>
+<p>运行和前面的例子相同:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -modulepath mods -m com.greetings/com.greetings.Main
+</code></pre></div>
+<p>打印出:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Greetings world!
+</code></pre></div>
+<h3>说明</h3>
+<p>这里主要通过module-info.java来进行导入导出的声明。主要是为了解决模块间依赖关系的处理的。</p>
+<p>Java中的访问权限控制符是在类上的，而module-info.java中的导入导出声明是包层面的。</p>
+<h2>多模块编译</h2>
+<p>前面的例子中模块com.greetings和模块org.astro是分开编译的。当然也可以多个模块一起来编译.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mkdir mods
+$ javac -d mods -modulesourcepath src $(find src -name &quot;*.java&quot;)
+$ find mods -type f
+    mods/com.greetings/com/greetings/Main.class
+    mods/com.greetings/module-info.class
+    mods/org.astro/module-info.class
+    mods/org.astro/org/astro/World.class
+</code></pre></div>
+<h2>打包</h2>
+<p>前面的例子只是简单的编译，而一般为了便于发布，会将模块打包成模块化的jar包。模块化的jar包就是在包的根目录下有一个module-info.class文件，来定义模块信息。
+下面的命令在mlib目录下打一个叫<a href="mailto:org.astro@1.0.jar">org.astro@1.0.jar</a>的模块化jar包和一个叫com.greetings.jar的模块化jar包。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mkdir mlib
+$ jar --create --archive=mlib/org.astro@1.0.jar \
+        --module-version=1.0 -C mods/org.astro .
+$ jar --create --archive=mlib/com.greetings.jar \
+        --main-class=com.greetings.Main -C mods/com.greetings .
+$ ls mlib
+    com.greetings.jar   org.astro@1.0.jar
+</code></pre></div>
+<p>在这个例子中，模块org.astro打包时指定版本为1.0。模块com.greetings打包时指定主类为com.greetings.Main,这样我们可以直接执行模块com.greetings而不需要指明主类。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -mp mlib -m com.greetings
+    Greetings world!
+</code></pre></div>
+<p>-modulepath可以简写为-mp。jar命令行工具新增了许多新属性，其中一个是打印模块化jar的模块定义:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ jar --print-module-descriptor --archive=mlib/org.astro@1.0.jar
+    Name:
+      org.astro@1.0
+    Requires:
+      java.base [ MANDATED ]
+    Exports:
+      org.astro
+</code></pre></div>
+<h2>缺少导入或导出</h2>
+<p>现在让我们看一下在前面的例子里，如果我们没有对模块进行导入导出声明，会有什么错误!</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span> <span class="o">{</span>
+    <span class="c1">// requires org.astro;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ javac -modulepath mods -d mods/com.greetings \
+        src/com.greetings/module-info.java src/com.greetings/com/greetings/Main.java
+    src/com.greetings/com/greetings/Main.java:2: error: package org.astro does not exist
+    import org.astro.World;
+                    ^
+    src/com.greetings/com/greetings/Main.java:5: error: cannot find symbol
+            System.out.format(&quot;Greetings %s!%n&quot;, World.name());
+                                                 ^
+      symbol:   variable World
+      location: class Main
+    2 errors
+</code></pre></div>
+<p>现在恢复导入，注释掉导出!</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span> <span class="o">{</span>
+    <span class="n">requires</span> <span class="n">org</span><span class="o">.</span><span class="na">astro</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.astro/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">org</span><span class="o">.</span><span class="na">astro</span> <span class="o">{</span>
+    <span class="c1">// exports org.astro;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ javac -modulepath mods -d mods/com.greetings \
+       src/com.greetings/module-info.java src/com.greetings/com/greetings/Main.java
+    src/com.greetings/com/greetings/Main.java:2: error: package org.astro does not exist
+    import org.astro.World;
+                    ^
+    src/com.greetings/com/greetings/Main.java:5: error: cannot find symbol
+            System.out.format(&quot;Greetings %s!%n&quot;, World.name());
+                                                 ^
+      symbol:   variable World
+      location: class Main
+    2 errors\
+</code></pre></div>
+<h2>服务</h2>
+<p>服务可以接口服务的消费模块和服务生产模块。</p>
+<p>在这个例子中，有一个服务消费模块和一个服务生产模块</p>
+<ul>
+<li>模块com.socket导出一个网络socket的API。这个API在包com.socket中，所以这个包需要导出。这个API可选择具体的实现。
+服务类型是同模块下的com.socket.spi.NetworkSocketProvider，所以com.socket.spi这个包也要导出</li>
+<li>模块org.fastsocket是服务生产模块。它提供了一个com.socket.spi.NetworkSocketProvider的实现，它不需要导出任何包</li>
+</ul>
+<p>下面是模块com.socket的源码：</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.socket/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span> <span class="o">{</span>
+    <span class="n">exports</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">;</span>
+    <span class="n">exports</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">.</span><span class="na">spi</span><span class="o">;</span>
+    <span class="n">uses</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">.</span><span class="na">spi</span><span class="o">.</span><span class="na">NetworkSocketProvider</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.socket/com/socket/NetworkSocket.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.Closeable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Iterator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ServiceLoader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.spi.NetworkSocketProvider</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">NetworkSocket</span> <span class="kd">implements</span> <span class="n">Closeable</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="nf">NetworkSocket</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">NetworkSocket</span> <span class="nf">open</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">ServiceLoader</span><span class="o">&lt;</span><span class="n">NetworkSocketProvider</span><span class="o">&gt;</span> <span class="n">sl</span>
+            <span class="o">=</span> <span class="n">ServiceLoader</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">NetworkSocketProvider</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">NetworkSocketProvider</span><span class="o">&gt;</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">iter</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;No service providers found!&quot;</span><span class="o">);</span>
+        <span class="n">NetworkSocketProvider</span> <span class="n">provider</span> <span class="o">=</span> <span class="n">iter</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">provider</span><span class="o">.</span><span class="na">openNetworkSocket</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.socket/com/socket/spi/NetworkSocketProvider.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">.</span><span class="na">spi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.NetworkSocket</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">NetworkSocketProvider</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="nf">NetworkSocketProvider</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">NetworkSocket</span> <span class="nf">openNetworkSocket</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>下面是模块org.fastsocket的源码:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.fastsocket/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">org</span><span class="o">.</span><span class="na">fastsocket</span> <span class="o">{</span>
+    <span class="n">requires</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">;</span>
+    <span class="n">provides</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">.</span><span class="na">spi</span><span class="o">.</span><span class="na">NetworkSocketProvider</span>
+        <span class="n">with</span> <span class="n">org</span><span class="o">.</span><span class="na">fastsocket</span><span class="o">.</span><span class="na">FastNetworkSocketProvider</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.fastsocket/org/fastsocket/FastNetworkSocketProvider.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">fastsocket</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.NetworkSocket</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.spi.NetworkSocketProvider</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FastNetworkSocketProvider</span> <span class="kd">extends</span> <span class="n">NetworkSocketProvider</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">FastNetworkSocketProvider</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">NetworkSocket</span> <span class="nf">openNetworkSocket</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">FastNetworkSocket</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/org.fastsocket/org/fastsocket/FastNetworkSocket.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">fastsocket</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.NetworkSocket</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">FastNetworkSocket</span> <span class="kd">extends</span> <span class="n">NetworkSocket</span> <span class="o">{</span>
+    <span class="n">FastNetworkSocket</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>编译:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mkdir mods
+$ javac -d mods -modulesourcepath src $(find src -name &quot;*.java&quot;)
+</code></pre></div>
+<p>最后修改模块com.greetings来使用这个API</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/module-info.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">module</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span> <span class="o">{</span>
+    <span class="n">requires</span> <span class="n">com</span><span class="o">.</span><span class="na">socket</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ cat src/com.greetings/com/greetings/Main.java
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">greetings</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.socket.NetworkSocket</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">NetworkSocket</span> <span class="n">s</span> <span class="o">=</span> <span class="n">NetworkSocket</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ javac -d mods/com.greetings/ -mp mods $(find src/com.greetings/ -name &quot;*.java&quot;)
+</code></pre></div>
+<p>最后我们来运行:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -mp mods -m com.greetings/com.greetings.Main
+class org.fastsocket.FastNetworkSocket
+</code></pre></div>
+<p>从输出可以看到服务的生产者已经被确定，并被当作NetworkSocket的工厂类来使用.</p>
+<h3>说明</h3>
+<p>上面说API可以动态选择具体的实现，如何选择并没有说明！</p>
+<h2>链接(The linker)</h2>
+<p>jlink是链接工具可以根据模块间的传递依赖来链接模块，构建出一个自定义的模块化运行时镜像(image)</p>
+<p>目前这个工具需要被链接的模块是以模块化的jar或JMOD格式提供的。</p>
+<p>下面的例子船舰一个运行时镜像，它包含了com.greetings模块和它的依赖:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">jlink --modulepath $JAVA_HOME/jmods:mlib --addmods com.greetings --output greetingsapp
+</code></pre></div>
+<p>$JAVA_HOME/jmods目录包含了java.base.jmod和其他标准JDK模块。如果你使用你自己构建的OpenJDK，
+那么jmod文件在$BUILDOUTPUT/images/jmods目录下，$BUILDOUTPUT是构建输出目录。</p>
+<p>mlib目录包含了模块com.greetings需要的内容.</p>
+<p>jlink工具支持很多高级属性，请通过jlink --help查看</p>
+<p>在这里，jlink工具通过默认规则链接服务，所以镜像里会包含你其实并不需要的内容.</p>
+<h2>javac -Xmodule and java -Xoverride</h2>
+<p>以前开发者修改类时，首先从CVS检出j，比如ava.util.concurrent类，编译源码，然后通过-Xbootclasspath/p来部署。</p>
+<p>-Xbootclasspath/p 已经废弃了，现在可使用-Xoverride来实现同样的功能。-Xoverride可以用一个模块中的类覆盖另一个模块中的类。
+后面，javac在编译一个包里的类时，如果已经存在在某个模块中，则会有警告。如果要为某个以存在的模块编译类，需要添加-Xmodule属性.</p>
+<p>下面是个例子，它编译一个新版本的java.util.concurrent.ConcurrentHashMap，并使用它:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">javac -Xmodule:java.base -d mypatches/java.base \
+        src/java.base/java/util/concurrent/ConcurrentHashMap.java
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">java -Xoverride:mypatches ...
+</code></pre></div>
+<h1>总结</h1>
+<ul>
+<li>总体来说，初次体验jigsaw感觉要优于OSGi</li>
+<li>jigsaw不需要第三方运行环境，对于开发者来说要比OSGi更友好</li>
+<li>jigsaw自带解决传递依赖的工具</li>
+<li>jigsaw在编译期就能处理模块间的依赖，而不像OSGi需要到运行时才报模块依赖问题。主要还是第二点:jigsaw不需要第三方运行环境</li>
+<li>jigsaw可以动态选择实现，但是如何实现例子中没有提到!(网上查资料说:jigsaw并不支持OSGi那样的dynamic Service，就是说不支持动态的装载和卸载Service了。需要进一步证实)</li>
+</ul>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Java模块化:jigsaw初体验&amp;url=http://ivaneye.com/2015/09/23/jigsaw-quick-start.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2015/09/23/jigsaw-quick-start.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2015/09/23/jigsaw-quick-start';
+    var disqus_title = 'Java模块化:jigsaw初体验';
+    var disqus_url = 'http://ivaneye.com/2015/09/23/jigsaw-quick-start.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/09/23/jigsaw-quick-start" data-title="Java模块化:jigsaw初体验" data-url="http://ivaneye.com/2015/09/23/jigsaw-quick-start.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

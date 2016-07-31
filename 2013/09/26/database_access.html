@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Luminus手册-访问数据库 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/09/26/database_access.html">
+<meta property="og:title" content=" Luminus手册-访问数据库 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Luminus手册-访问数据库 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/09/26/database_access.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Luminus手册-访问数据库</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-09-26"> 2013-09-26
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/09/26/database_access.html#disqus_thread" data-disqus-identifier="/2013/09/26/database_access">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>Configuring the Database</h1>
+<p>当你使用数据库参数来创建Luminus工程时，比如+postgress，那么Luminus会使用Korma来处理数据库操作.</p>
+<p>Korma是一个基于Clojure的数据库操作DSL。Korma提供了一套简单的接口，方便你来处理复杂的数据。</p>
+<p>给一个现有的项目添加数据库支持，非常的简单。首先，你需要在project.clj文件中添加Korma依赖。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="nv">korma</span> <span class="s">&quot;0.4.0&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>另外还需要相应数据库的驱动，所以你还需要在project.clj中添加相关的数据库驱动。比如说，你要连接PostreSQL数据库，你需要添加如下的依赖.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="nv">postgresql/postgresql</span> <span class="s">&quot;9.3-1102-jdbc41&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>添加完依赖后，你可以创建一个新的namespace来管理你的model,这个namespace建议叫db.core。你需要在里面引入korma.db。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">myapp.db.core</span>
+  <span class="p">(</span><span class="ss">:use</span> <span class="nv">korma.core</span>
+        <span class="p">[</span><span class="nv">korma.db</span> <span class="ss">:only</span> <span class="p">(</span><span class="nf">defdb</span><span class="p">)]))</span>
+</code></pre></div>
+<h2>Setting up the database connection</h2>
+<p>配置完依赖后，我们要做的事情就是定义数据库连接。我们只需要提供一个包含连接信息的map。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">db-spec</span> <span class="p">{</span><span class="ss">:subprotocol</span> <span class="s">&quot;postgresql&quot;</span>
+         <span class="ss">:subname</span> <span class="s">&quot;//localhost/my_website&quot;</span>
+         <span class="ss">:user</span> <span class="s">&quot;admin&quot;</span>
+         <span class="ss">:password</span> <span class="s">&quot;admin&quot;</span><span class="p">})</span>
+</code></pre></div>
+<p>或者也可以配置服务器提供的JNDI名称来创建连接。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">db-spec</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;jdbc/myDatasource&quot;</span><span class="p">})</span>
+</code></pre></div>
+<!-- more -->
+<p>这种方式适合当你有多个连接的时候。比如说，你有个dev/staging/production
+服务器，你可以将JNDI连接指向它所配置的数据库。应用程序将会从环境中来加
+载数据库连接信息。这意味着，你可以随意的改变你的数据库连接，而不需要修
+改你的代码。 最后，你能自己配置JDBC连接:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">db-spec</span>
+  <span class="p">{</span><span class="ss">:datasource</span>
+    <span class="p">(</span><span class="nb">doto </span><span class="p">(</span><span class="k">new </span><span class="nv">PGPoolingDataSource</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">.setServerName</span>   <span class="s">&quot;localhost&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">.setDatabaseName</span> <span class="s">&quot;my_website&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">.setUser</span>         <span class="s">&quot;admin&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">.setPassword</span>     <span class="s">&quot;admin&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">.setMaxConnections</span> <span class="mi">10</span><span class="p">))})</span>
+</code></pre></div>
+<h2>Creating tables</h2>
+<p>Korma依赖clojure.java.jdbc.这个库提供操作表的功能。</p>
+<p>你可以使用create-table函数来从应用中创建数据表。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">create-users-table</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">sql/db-do-commands</span> <span class="nv">db-spec</span>
+    <span class="p">(</span><span class="nf">sql/create-table-ddl</span>
+      <span class="ss">:users</span>
+      <span class="p">[</span><span class="ss">:id</span> <span class="s">&quot;varchar(32)&quot;</span><span class="p">]</span>
+      <span class="p">[</span><span class="ss">:pass</span> <span class="s">&quot;varchar(100)&quot;</span><span class="p">])))</span>
+</code></pre></div>
+<p>create-table-ddl函数需要包含在db-do-commands内，db-do-commands保证了数据库连接的关闭。</p>
+<h1>Accessing the Database</h1>
+<p>当使用Korma时，你需要先用defdb来包裹db-spec。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defdb</span> <span class="nv">db</span> <span class="nv">schema/db-spec</span><span class="p">)</span>
+</code></pre></div>
+<p>这将会使用c3p0来创建一个连接池。需要注意的是，最后创建的连接池会被设为默认的连接池。</p>
+<p>Korma使用entities来表示sql表。这个entities构成了你查询的核心。</p>
+<p>entities使用defentity宏来创建:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defentity</span> <span class="nv">users</span><span class="p">)</span>
+</code></pre></div>
+<p>我们可以这样来创建user:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">create-user</span> <span class="p">[</span><span class="nv">user</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">insert</span> <span class="nv">users</span>
+          <span class="p">(</span><span class="nf">values</span> <span class="nv">user</span><span class="p">)))</span>
+</code></pre></div>
+<p>而如果我们想查询user，我们可以这样写:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">get-user</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="nb">select </span><span class="nv">users</span>
+                 <span class="p">(</span><span class="nf">where</span> <span class="p">{</span><span class="ss">:id</span> <span class="nv">id</span><span class="p">})</span>
+                 <span class="p">(</span><span class="nf">limit</span> <span class="mi">1</span><span class="p">))))</span>
+</code></pre></div>
+<p>详细文档可参考<a href="http://sqlkorma.com/docs">Korma官网</a></p>
+<h1>Yesql</h1>
+<p>Korma提供了操作SQL的DSL，而Yesql可以直接操作SQL.</p>
+<p>如果要使用Yesql你需要添加依赖：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="nv">yesql</span> <span class="s">&quot;0.4.0&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>当你在classpath下创建一个包含查询的SQL文件，比如resources/queries.sql.文件格式如下:</p>
+<div class="highlight"><pre><code class="language-sql" data-lang="sql">    <span class="c1">-- name: find-users</span>
+    <span class="c1">-- Find the users with the given ID(s).</span>
+    <span class="k">SELECT</span> <span class="o">*</span>
+    <span class="k">FROM</span> <span class="k">user</span>
+    <span class="k">WHERE</span> <span class="n">user_id</span> <span class="k">IN</span> <span class="p">(:</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">AND</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="p">:</span><span class="n">min_age</span>
+    <span class="c1">-- name: user-count</span>
+    <span class="c1">-- Counts all the users.</span>
+    <span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="k">count</span>
+    <span class="k">FROM</span> <span class="k">user</span>
+</code></pre></div>
+<p>创建问上述文件后，你需要在需要的地方引入yesql.core/defqueries。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">myapp.db.core</span>
+  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">yesql.core</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">defqueries</span><span class="p">]]))</span>
+<span class="p">(</span><span class="nf">defqueries</span> <span class="s">&quot;resources/queries.sql&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>每个查询可以像函数一样通过名字来调用。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">find-users</span> <span class="nv">db-spec</span> <span class="p">[</span><span class="mi">1001</span> <span class="mi">1003</span> <span class="mi">1005</span><span class="p">]</span> <span class="mi">18</span><span class="p">)</span>
+</code></pre></div>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Luminus手册-访问数据库&amp;url=http://ivaneye.com/2013/09/26/database_access.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/09/26/database_access.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/09/26/database_access';
+    var disqus_title = 'Luminus手册-访问数据库';
+    var disqus_url = 'http://ivaneye.com/2013/09/26/database_access.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/09/26/database_access" data-title="Luminus手册-访问数据库" data-url="http://ivaneye.com/2013/09/26/database_access.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

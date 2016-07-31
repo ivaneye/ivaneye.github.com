@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 快学Scala习题解答—第十四章 模式匹配和样例类 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/03/16/scala_exercises_14.html">
+<meta property="og:title" content=" 快学Scala习题解答—第十四章 模式匹配和样例类 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 快学Scala习题解答—第十四章 模式匹配和样例类 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/03/16/scala_exercises_14.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>快学Scala习题解答—第十四章 模式匹配和样例类</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-03-16"> 2013-03-16
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/03/16/scala_exercises_14.html#disqus_thread" data-disqus-identifier="/2013/03/16/scala_exercises_14">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>模式匹配和样例类</h1>
+<h2>JDK发行包有一个src.zip文件包含了JDK的大多数源代码。解压并搜索样例标签(用正则表达式case [^:]+:)。然后查找以//开头并包含[Ff]alls?thr的注释，捕获类似// Falls through或// just fall thru这样的注释。假定JDK的程序员们遵守Java编码习惯，在该写注释的地方写下了这些注释，有多少百分比的样例是会掉入到下一个分支的？</h2>
+<p>没读懂题意。。。。</p>
+<h2>利用模式匹配，编写一个swap函数，接受一个整数的对偶，返回对偶的两个组成部件互换位置的新对偶</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">swap</span><span class="o">[</span><span class="kt">S</span>,<span class="kt">T</span><span class="o">](</span><span class="n">tup</span><span class="k">:</span> <span class="o">(</span><span class="kt">S</span><span class="o">,</span><span class="kt">T</span><span class="o">))</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">tup</span> <span class="k">match</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="o">(</span><span class="n">a</span> <span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">b</span><span class="o">,</span><span class="n">a</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">swap</span><span class="o">[</span><span class="kt">String</span>,<span class="kt">Int</span><span class="o">]((</span><span class="s">&quot;1&quot;</span><span class="o">,</span><span class="mi">2</span><span class="o">)))</span>
+</code></pre></div>
+<h2>利用模式匹配，编写一个swap函数，交换数组中的前两个元素的位置，前提条件是数组长度至少为2</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">swap</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="n">arr</span> <span class="k">match</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Array</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">,</span> <span class="n">ar</span> <span class="k">@</span> <span class="k">_</span><span class="o">*)</span> <span class="k">=&gt;</span> <span class="nc">Array</span><span class="o">(</span><span class="n">b</span><span class="o">,</span><span class="n">a</span><span class="o">)</span> <span class="o">++</span> <span class="n">ar</span>
+    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">arr</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">swap</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span><span class="s">&quot;1&quot;</span><span class="o">,</span><span class="s">&quot;2&quot;</span><span class="o">,</span><span class="s">&quot;3&quot;</span><span class="o">,</span><span class="s">&quot;4&quot;</span><span class="o">)).</span><span class="n">mkString</span><span class="o">)</span>
+</code></pre></div>
+<!-- more -->
+<h2>添加一个样例类Multiple，作为Item的子类。举例来说，Multiple(10,Article(&quot;Blackwell Toster&quot;,29.95))描述的是10个烤面包机。当然了，你应该可以在第二个参数的位置接受任何Item，无论是Bundle还是另一个Multiple。扩展price函数以应对新的样例。</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Item</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Multiple</span><span class="o">(</span><span class="n">num</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">,</span><span class="n">item</span> <span class="k">:</span> <span class="kt">Item</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Item</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Article</span><span class="o">(</span><span class="n">description</span> <span class="k">:</span> <span class="kt">String</span> <span class="o">,</span> <span class="n">price</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Item</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Bundle</span><span class="o">(</span><span class="n">description</span> <span class="k">:</span> <span class="kt">String</span> <span class="o">,</span> <span class="n">discount</span> <span class="k">:</span> <span class="kt">Double</span> <span class="o">,</span> <span class="n">item</span> <span class="k">:</span> <span class="kt">Item*</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Item</span>
+<span class="k">object</span> <span class="nc">Test</span> <span class="k">extends</span> <span class="nc">App</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">price</span><span class="o">(</span><span class="n">it</span> <span class="k">:</span> <span class="kt">Item</span><span class="o">)</span> <span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">it</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Article</span><span class="o">(</span><span class="k">_</span><span class="o">,</span><span class="n">p</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">p</span>
+      <span class="k">case</span> <span class="nc">Bundle</span><span class="o">(</span><span class="k">_</span><span class="o">,</span><span class="n">disc</span><span class="o">,</span><span class="n">its</span> <span class="k">@</span> <span class="k">_</span><span class="o">*)</span> <span class="k">=&gt;</span> <span class="n">its</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">price</span> <span class="k">_</span><span class="o">).</span><span class="n">sum</span> <span class="o">-</span> <span class="n">disc</span>
+      <span class="k">case</span> <span class="nc">Multiple</span><span class="o">(</span><span class="n">n</span><span class="o">,</span><span class="n">it</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">price</span><span class="o">(</span><span class="n">it</span><span class="o">)</span>
+  <span class="o">}</span>
+  <span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="n">price</span><span class="o">(</span><span class="nc">Multiple</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="nc">Article</span><span class="o">(</span><span class="s">&quot;Blackwell Toster&quot;</span><span class="o">,</span><span class="mf">29.95</span><span class="o">)))</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">p</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>我们可以用列表制作只在叶子节点存放值的树。举例来说，列表((3 8) 2 (5))描述的是如下这样一棵树:</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">      *
+    / <span class="p">|</span> <span class="se">\</span>
+   *  <span class="m">2</span>  *
+ /  <span class="se">\ </span>   <span class="p">|</span>
+<span class="m">3</span>   <span class="m">8</span>    5
+</code></pre></div>
+<p>不过，有些列表元素是数字，而另一些是列表。在Scala中，你不能拥有异构的列表，因此你必须使用List[Any]。编写一个leafSum函数，计算所有叶子节点中的元素之和，用模式匹配来区分数字和列表。</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">l</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">8</span><span class="o">),</span> <span class="mi">2</span><span class="o">,</span> <span class="nc">List</span><span class="o">(</span><span class="mi">5</span><span class="o">))</span>
+<span class="k">def</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">list</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">])</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">total</span> <span class="k">=</span> <span class="mi">0</span>
+  <span class="n">list</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
+    <span class="n">lst</span> <span class="k">=&gt;</span>
+      <span class="n">lst</span> <span class="k">match</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="n">l</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Any</span><span class="o">]</span> <span class="k">=&gt;</span> <span class="n">total</span> <span class="o">+=</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">l</span><span class="o">)</span>
+        <span class="k">case</span> <span class="n">i</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+      <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="n">total</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">leafSum</span><span class="o">(</span><span class="n">l</span><span class="o">))</span>
+</code></pre></div>
+<h2>制作这样的树更好的做法是使用样例类。我们不妨从二叉树开始。</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">sealed</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">value</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Node</span><span class="o">(</span><span class="n">left</span> <span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">,</span><span class="n">right</span> <span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+</code></pre></div>
+<p>编写一个函数计算所有叶子节点中的元素之和。</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">sealed</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">value</span> <span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Node</span><span class="o">(</span><span class="n">left</span> <span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">,</span><span class="n">right</span> <span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span><span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">9</span><span class="o">)))</span>
+<span class="k">def</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">tree</span><span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+      <span class="n">tree</span> <span class="k">match</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nc">Node</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">a</span><span class="o">)</span> <span class="o">+</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">b</span><span class="o">)</span>
+        <span class="k">case</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">v</span>
+      <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">leafSum</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+</code></pre></div>
+<h2>扩展前一个练习中的树，使得每个节点可以有任意多的后代，并重新实现leafSum函数。第五题中的树应该能够通过下述代码表示：</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">Node</span><span class="o">(</span><span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">8</span><span class="o">)),</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span><span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">5</span><span class="o">)))</span>
+</code></pre></div><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">sealed</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Node</span><span class="o">(</span><span class="n">tr</span><span class="k">:</span> <span class="kt">BinaryTree*</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">object</span> <span class="nc">Test</span> <span class="k">extends</span> <span class="nc">App</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">Node</span><span class="o">(</span><span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> <span class="nc">Leaf</span><span class="o">(</span><span class="mi">8</span><span class="o">)),</span> <span class="nc">Leaf</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span> <span class="nc">Node</span><span class="o">(</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">5</span><span class="o">)))</span>
+  <span class="k">def</span> <span class="n">leafSum</span><span class="o">(</span><span class="n">tree</span><span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">tree</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Node</span><span class="o">(</span><span class="n">r</span> <span class="k">@</span> <span class="k">_</span><span class="o">*)</span> <span class="k">=&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">leafSum</span><span class="o">).</span><span class="n">sum</span>
+      <span class="k">case</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">v</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">leafSum</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>扩展前一个练习中的树，使得每个非叶子节点除了后代之外，能够存放一个操作符。然后编写一个eval函数来计算它的值。举例来说：</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">      +
+    / <span class="p">|</span> <span class="se">\</span>
+   *  <span class="m">2</span>  -
+ /  <span class="se">\ </span>   <span class="p">|</span>
+<span class="m">3</span>   <span class="m">8</span>    5
+</code></pre></div>
+<p>上面这棵树的值为(3 * 8) + 2 + (-5) = 21</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">sealed</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Node</span><span class="o">(</span><span class="n">ch</span> <span class="k">:</span> <span class="kt">Char</span> <span class="o">,</span> <span class="n">tr</span><span class="k">:</span> <span class="kt">BinaryTree*</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">BinaryTree</span>
+<span class="k">object</span> <span class="nc">Test</span> <span class="k">extends</span> <span class="nc">App</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">Node</span><span class="o">(</span><span class="sc">&#39;+&#39;</span> <span class="o">,</span> <span class="nc">Node</span><span class="o">(</span><span class="sc">&#39;*&#39;</span><span class="o">,</span><span class="nc">Leaf</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> <span class="nc">Leaf</span><span class="o">(</span><span class="mi">8</span><span class="o">)),</span> <span class="nc">Leaf</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span> <span class="nc">Node</span><span class="o">(</span><span class="sc">&#39;-&#39;</span> <span class="o">,</span> <span class="nc">Leaf</span><span class="o">(</span><span class="mi">5</span><span class="o">)))</span>
+  <span class="k">def</span> <span class="n">eval</span><span class="o">(</span><span class="n">tree</span><span class="k">:</span> <span class="kt">BinaryTree</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">tree</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nc">Node</span><span class="o">(</span><span class="n">c</span> <span class="k">:</span> <span class="kt">Char</span> <span class="o">,</span> <span class="n">r</span> <span class="k">@</span> <span class="k">_</span><span class="o">*)</span> <span class="k">=&gt;</span> <span class="k">if</span><span class="o">(</span> <span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="o">)</span> <span class="n">r</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">eval</span><span class="o">).</span><span class="n">sum</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;*&#39;</span><span class="o">)</span> <span class="n">r</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">eval</span><span class="o">).</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span> <span class="o">*</span> <span class="k">_</span><span class="o">)</span> <span class="k">else</span> <span class="n">r</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">eval</span><span class="o">).</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)(</span><span class="k">_</span> <span class="o">-</span> <span class="k">_</span><span class="o">)</span>
+      <span class="k">case</span> <span class="nc">Leaf</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">v</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">eval</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>编写一个函数，计算List[Option[Int]]中所有非None值之和。不得使用match语句。</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">l</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Option</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Option</span><span class="o">(-</span><span class="mi">1</span><span class="o">),</span><span class="nc">None</span><span class="o">,</span><span class="nc">Option</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+<span class="n">println</span><span class="o">(</span><span class="n">l</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">getOrElse</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="n">sum</span><span class="o">)</span>
+</code></pre></div>
+<h2>编写一个函数，将两个类型为Double=&gt;Option[Double]的函数组合在一起，产生另一个同样类型的函数。如果其中一个函数返回None，则组合函数也应返回None。例如：</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="nc">Some</span><span class="o">(</span><span class="n">sqrt</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="k">else</span> <span class="nc">None</span>
+<span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">x</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="nc">Some</span><span class="o">(</span> <span class="mi">1</span> <span class="o">/</span> <span class="o">(</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span> <span class="k">else</span> <span class="nc">None</span>
+<span class="k">val</span> <span class="n">h</span> <span class="k">=</span> <span class="n">compose</span><span class="o">(</span><span class="n">f</span><span class="o">,</span><span class="n">g</span><span class="o">)</span>
+</code></pre></div>
+<p>h(2)将得到Some(1)，而h(1)和h(0)将得到None</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.math.sqrt</span>
+<span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="nc">Some</span><span class="o">(</span><span class="n">sqrt</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="k">else</span> <span class="nc">None</span>
+<span class="k">def</span> <span class="n">g</span><span class="o">(</span><span class="n">x</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="nc">Some</span><span class="o">(</span> <span class="mi">1</span> <span class="o">/</span> <span class="o">(</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span> <span class="k">else</span> <span class="nc">None</span>
+<span class="k">val</span> <span class="n">h</span> <span class="k">=</span> <span class="n">compose</span><span class="o">(</span><span class="n">f</span><span class="o">,</span><span class="n">g</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">compose</span><span class="o">(</span><span class="n">f</span> <span class="k">:</span> <span class="o">(</span><span class="kt">Double</span> <span class="o">=&gt;</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Double</span><span class="o">]),</span> <span class="n">g</span> <span class="k">:</span> <span class="o">(</span><span class="kt">Double</span> <span class="o">=&gt;</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Double</span><span class="o">]))</span><span class="k">:</span><span class="o">(</span><span class="kt">Double</span> <span class="o">=&gt;</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Double</span><span class="o">])={</span>
+  <span class="o">(</span><span class="n">x</span> <span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">==</span> <span class="nc">None</span> <span class="o">||</span> <span class="n">g</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">==</span> <span class="nc">None</span><span class="o">)</span> <span class="nc">None</span>
+    <span class="k">else</span> <span class="n">g</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">h</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span>
+</code></pre></div>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=快学Scala习题解答—第十四章 模式匹配和样例类&amp;url=http://ivaneye.com/2013/03/16/scala_exercises_14.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/03/16/scala_exercises_14.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/03/16/scala_exercises_14';
+    var disqus_title = '快学Scala习题解答—第十四章 模式匹配和样例类';
+    var disqus_url = 'http://ivaneye.com/2013/03/16/scala_exercises_14.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/03/16/scala_exercises_14" data-title="快学Scala习题解答—第十四章 模式匹配和样例类" data-url="http://ivaneye.com/2013/03/16/scala_exercises_14.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

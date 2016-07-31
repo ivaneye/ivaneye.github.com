@@ -1,0 +1,62 @@
+@startuml
+
+title 我的知识结构
+
+skinparam component {
+  FontSize 16
+  FontName Monaco
+  BorderColor powderblue
+  BackgroundColor skyblue
+  ArrowFontName Impact
+  ArrowColor #FF6655
+  ArrowFontColor #777777
+}
+
+package "说明" {
+    () 熟练 #skyblue
+    () 熟悉 #green
+    () 精通 #crimson
+}
+
+node "基础" {
+    [HTTP]
+    [编译原理]
+    [操作系统]
+    [数据结构]
+    [算法]
+    [Linux]
+    [JVM]
+}
+
+node "编程语言" {
+    [Java] #crimson
+    [SQL]
+    [Java] ... [JVM]
+    [Clojure] #green
+    [Javascript]
+    [SQL]
+}
+
+node "设计" {
+    [Java] ... [设计模式]
+    [架构设计]
+    [UML] ... [Java]
+}
+
+node "思想" {
+    [面向对象思想] ... [Java]
+    [函数式思想] ... [Clojure]
+}
+
+node "项目经验" {
+    [B2B交易平台]
+    [分布式服务框架]
+    [在线支付平台]
+}
+
+node "软实力" {
+    [演讲]
+    [文档]
+}
+
+@enduml

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 一致性协议 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2015/05/12/consensus-protocol.html">
+<meta property="og:title" content=" 一致性协议 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 一致性协议 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2015/05/12/consensus-protocol.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>一致性协议</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2015-05-12"> 2015-05-12
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2015/05/12/consensus-protocol.html#disqus_thread" data-disqus-identifier="/2015/05/12/consensus-protocol">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>简介</h1>
+<p>一致性协议主要是为了解决分布式环境下的数据一致性问题。</p>
+<p>对于单节点应用来说，数据的同步相对较简单。例如数据库的事务，多线程中的锁，都是为了保证数据的一致性。</p>
+<p>而对于分布式环境来说，没有完善的强一致性解决方案。</p>
+<p>在2000年，加州大学伯克利分校Eric Brewer教授提出了CAP猜想(后被证明可行)：一个分布式系统不可能同时满足一致性(C:Consistency),
+可用性(A:Abailability)和分区容错性(P:Partition tolerance)这三个基本需求，最多只能同时满足其中的两项。</p>
+<p>后eBay架构师Dan Pritchett提出了BASE理论，即Basically Available(基本可用),Soft state(软状态)和Eventually consisent(最终一致性)。
+其核心思想即无法做到强一致性，但系统可以根据自身做到最终一致性。</p>
+<p>故对于分布式系统设计，目前的做法是保证可用性和分区容错性的基础上去实现最终一致性。</p>
+<p>而对于最终一致性处理，比较著名的协议和算法便是：二阶段提交协议(2PC)，三阶段提交协议(3PC)以及Paxos算法。</p>
+<!-- more -->
+<h1>2PC</h1>
+<p>二阶段提交主要是引入了协调者来协调各个节点。</p>
+<p><img src="/assets/zookeeper/consensus/2pc.png" alt=""></p>
+<h2>阶段一:提交事务请求</h2>
+<ul>
+<li><p>事务询问</p>
+<p>协调者向所有的参与者发送事务内容，询问是否可以执行事务提交操作，并开始等待各参与者的响应</p></li>
+<li><p>执行事务</p>
+<p>各参与者执行事务操作，并将Undo和Redo信息记录事务日志</p></li>
+<li><p>各参与者像协调者反馈事务询问的响应</p>
+<p>如果事务执行成功，返回Yes;否则返回No</p></li>
+</ul>
+<h2>阶段二:执行事务提交</h2>
+<p>如果所有参与者返回Yes则<strong>执行事务提交</strong></p>
+<ul>
+<li><p>发送提交请求</p>
+<p>协调者向左右参与者节点发送Commit请求</p></li>
+<li><p>事务提交</p>
+<p>参与者接收到Commit请求，提交事务</p></li>
+<li><p>反馈事务提交结果</p>
+<p>参与者提交事务后，向协调者发送完成消息</p></li>
+<li><p>完成事务</p>
+<p>协调者接收到所有参与者反馈的消息后，完成事务</p></li>
+</ul>
+<p>如果有参与者返回No则执行<strong>中断事务</strong></p>
+<ul>
+<li><p>发送回滚请求</p>
+<p>协调者向所有参与者发出Rollback请求</p></li>
+<li><p>事务回滚</p>
+<p>参与者根据Undo信息来执行事务回滚</p></li>
+<li><p>反馈事务回滚结果</p>
+<p>参与者完成回滚后，向协调者发送消息</p></li>
+<li><p>中断事务</p>
+<p>协调者接收到消息后，完成事务中断</p></li>
+</ul>
+<h2>优点</h2>
+<p>简单易实现</p>
+<h2>缺点</h2>
+<ul>
+<li><p>同步阻塞</p>
+<p>在二阶段提交过程中，所有参与该事务操作的逻辑都处于阻塞状态</p></li>
+<li><p>协调者单点</p>
+<p>整个过程过度依赖协调者，而协调者只有一个，当协调者出现问题，则后续操作无法执行</p></li>
+<li><p>数据不一致</p>
+<p>当协调者发送事务提交信息时，如果有参与者没有接收到，则会出现数据不一致的情况</p></li>
+<li><p>容错机制不够完善</p>
+<p>只要有一个参与者失败，则全部失败，没有相应的容错机制</p></li>
+</ul>
+<h1>3PC</h1>
+<p>3PC主要是对2PC的执行流程进行了优化。</p>
+<h2>阶段一:CanCommit</h2>
+<ul>
+<li><p>事务询问</p>
+<p>协调者向参与者发送包含事务内容的canCommit请求，询问是否可以执行事务</p></li>
+<li><p>参与者反馈事务询问</p>
+<p>参与者接收到canCommit请求后，根据自身情况返回Yes或No</p></li>
+</ul>
+<h2>阶段二:PreCommit</h2>
+<p>如果参与者都返回Yes,则<strong>执行事务预提交</strong></p>
+<ul>
+<li><p>发送预提交请求</p>
+<p>协调者发送preCommit请求，进入Prepared阶段</p></li>
+<li><p>事务预提交</p>
+<p>参与者接收到preCommit请求后，会执行事务操作，并将Undo和Redo记录到日志</p></li>
+<li><p>反馈事务执行响应</p>
+<p>如果参与者执行了事务，则回馈相应信息，同时等待提交或终止指令</p></li>
+</ul>
+<p>如果有参与者返回No，则<strong>中断事务</strong></p>
+<ul>
+<li><p>发送中断请求</p>
+<p>协调者发送终止命令</p></li>
+<li><p>中断事务</p>
+<p>无论是收到来自协调者的终止命令还是等待超时，参与者都中断事务</p></li>
+</ul>
+<h2>阶段三:doCommit</h2>
+<p>协调者接收到了所有参与者的响应则<strong>执行提交</strong></p>
+<ul>
+<li><p>发送提交请求</p>
+<p>协调者向所有参与者发送doCommit请求</p></li>
+<li><p>事务提交
+参与者接收到doCommit请求，执行事务提交</p></li>
+<li><p>反馈事务提交结果</p>
+<p>参与者完成事务提交后，向协调者发送消息</p></li>
+<li><p>完成事务</p>
+<p>协调者接收到所有参与者反馈的消息后，完成事务</p></li>
+</ul>
+<p>如果有协调者反馈No，则<strong>中断事务</strong></p>
+<ul>
+<li><p>发送中断请求</p>
+<p>协调者向所有参与者发送终止请求</p></li>
+<li><p>事务回滚</p>
+<p>参与者接收到abort请求后，利用日志中的Undo信息进行事务回滚</p></li>
+<li><p>反馈事务回滚结果</p>
+<p>参与者在完成事务回滚之后，向协调者发送消息</p></li>
+<li><p>中断事务</p>
+<p>协调者接收到参与者的反馈消息，中断事务</p></li>
+</ul>
+<p>特别说明：此阶段中，如果出现网络问题，参与者未收到响应指令，则在超时后执行提交事务操作。</p>
+<h2>优点</h2>
+<p>通过超时时间的设置，降低了协调者的参与度</p>
+<h2>缺点</h2>
+<p>由于超时时间的引入，可能导致数据不一致的情况。</p>
+<p>比如在:阶段三，协调者要发送中断事务，但是其中一个参与者没收到，则超时后自动提交了事务，导致数据不一致。</p>
+<h1>Paxos算法</h1>
+<p>2PC和3PC都存在缺点，而Paxos算法可以说是目前解决分布式最终一致性的最佳解决方案。当然也是相对较难理解的算法。</p>
+<p>Paxos算法中主要有三个角色，Proposer,Acceptor和Learner。而其中最主要的参与者是Proposer和Acceptor,还有一个就是全局计数器，这个不在Paxos算法之内，需额外实现。</p>
+<h2>示例一</h2>
+<p><img src="/assets/zookeeper/consensus/paxos.png" alt=""></p>
+<p>参照上图，以一个相对较简单的流程先来描述Paxos算法过程。</p>
+<ol>
+<li>针对某件事做决策时，Proposer分别从全局计数器中获得唯一的编号,这里假设p1,p2编号分别为1，2</li>
+<li>Proposer将编号及其提议一起提交给Acceptor的大多数(这里就提交给所有的Acceptor)，形如[编号,提议]，例如p1就是[1,p1的提议]</li>
+<li>步骤3
+<ul>
+<li>3-1. 假设a1,a2,a3先收到了p1的提议，则直接同意，并记录信息。(参考Paxos算法P1)形如[编号，提议，最大编号]，这里就是[1,p1的提议,1]</li>
+<li>3-2. 然后a1,a2,a3接收到了p2的提议。因为之前同意了p1的提议，但是p2的编号大于p1的编号，则也同意，但是反馈，已同意了p1的提议。修改最大编号[1,p1的提议,2](参考Paxos算法P2a，P2b)</li>
+</ul></li>
+<li>步骤4
+<ul>
+<li>4-1. p1接收到了三个同意，则准备正式提交提议</li>
+<li>4-2. p2接收到三个同意，但是反馈说已经同意了p1的提议了，于是p2修改提议为[2,p1的提议]进行提交(参考Paxos算法P2，P2b)</li>
+</ul></li>
+<li>步骤5
+<ul>
+<li>5-1. a1,a2,a3接收到p1的正式提议，目前a1,a2,a3的信息为[1,p1的提议,2]，p1的编号小于2，直接拒绝。</li>
+<li>5-2. a1,a2,a3接收到p2的提议，目前a1,a2,a3信息为[1,p1的提议,2]，p2的编号为2,同意。</li>
+</ul></li>
+<li>最终结果为[1,p1的提议,2]</li>
+</ol>
+<h2>Paxos算法条件</h2>
+<ul>
+<li>P1：An acceptor must accept the first proposal that it receives.
+即一个Acceptor必须要同意其收到的第一个提议</li>
+<li>P2：If a proposal with value v is chosen, then every higher-numbered proposal that is chosen has value v.
+如果一个包含了v的提议被选中，则后面序号高于此提议序号的被选中的提议需要包含v</li>
+<li>P2a：If a proposal with value v is chosen, then every higher-numbered proposal accepted by any acceptor has value v.
+如果一个包含了v的提议被选中，则后面序号高于此提议序号的被接受的提议需要包含v</li>
+<li>P2b：If a proposal with value v is chosen, then every higher-numbered proposal issued by any proposer has value v.
+如果一个包含了v的提议被选中，则后面序号高于此提议序号的被提出的提议需要包含v</li>
+<li><p>P2c：For any v and n, if a proposal with value v and number n is issued, then there is a set S consisting of a majority of acceptors such that either</p>
+<ul>
+<li>(a) no acceptor in S has accepted any proposal numbered less than n, or</li>
+<li>(b) v is the value of the highest-numbered proposal among all proposals numbered less than n accepted by the acceptors in S.</li>
+</ul>
+<p>对于任意的v和n,如果[n,v]被提出，则有一个S集合，这个S集合由半数以上Acceptor组成，且这些Acceptor满足如下条件之一:
+- (a) 没有同意任何小于n的提议
+- (b) 有同意了小于n的提议，但是所同意的提议中，编号最大的那个提议值为v</p></li>
+</ul>
+<h2>示例二</h2>
+<p><img src="/assets/zookeeper/consensus/paxos2.png" alt=""></p>
+<p>下面再描述一个较为复杂的流程</p>
+<ol>
+<li>Proposer分别从全局计数器中获得唯一的编号,这里假设p1,p2,p3编号分别为1，2，3</li>
+<li>Proposer将编号及其提议一起提交给Acceptor的大多数(这里p1提交给a1,a2,a3。p2提交给a2,a3,a4。p3提交给a3,a4,a5)</li>
+<li>步骤3
+<ul>
+<li>3-1. 假设a1,a2,a3先收到了p1的提议，则直接同意，并记录信息。(参考Paxos算法P1)形如[编号，提议，最大编号]，这里就是[1,p1的提议,1]</li>
+<li>3-2. 然后a2,a3,a4接收到了p2的提议。对于a4，直接同意。对于a2,a3,因为之前同意了p1的提议，但是p2的编号大于p1的编号，则也同意，但是反馈，已同意了p1的提议。修改最大编号<a href="%E5%8F%82%E8%80%83Paxos%E7%AE%97%E6%B3%95P2a%EF%BC%8CP2b">1,p1的提议,2</a></li>
+</ul></li>
+<li>3-3. 接着a3,a4,a5接收到了p3的提议，对于a5直接同意。而对于a3已经同意了p1,p3的编号大于p1，则同意，并反馈已同意了p1的提议,修改最大编号[1,p1的提议,3]。对于a4,已经同意了p2，做类似反馈，修改最大编号[2,p2的提议,3]</li>
+<li>步骤4
+<ul>
+<li>4-1. p1接收到了三个同意，则准备正式提交提议[1,p1的提议]</li>
+<li>4-2. p2接收到三个同意，但是反馈说已经同意了p1的提议了，于是p2修改提议为[2,p1的提议]进行提交(参考Paxos算法P2，P2b)</li>
+<li>4-3. p3接收到了三个同意，但是反馈说已经同意了p1,p2的提议，于是p3修改提议为[3,p2的提议]，取同意的提议中编号大的提议</li>
+</ul></li>
+<li>步骤5
+<ul>
+<li>5-1. a1,a2,a3接收到p1的正式提议[1,p1的提议],a1[1,p1的提议,1]直接同意。a2[1,p1的提议,2]，p1编号小于2,拒绝。a3[1,p1的提议,3],p1小于3，拒绝.</li>
+<li>5-2. a2,a3,a4接收到p2的正式提议[2,p1的提议],a2[1,p1的提议,2]，同意。a3[1,p1的提议,3],p2小于3，拒绝.a4[2,p2的提议,3],p2小于3，拒绝</li>
+<li>5-3. a3,a4,a5接收到p3的正式提议[3,p2的提议],a3[1,p1的提议,3],同意，修改记录[2,p2的提议,3].a4[2,p2的提议,3],同意，修改记录[3,p2的提议,3].a5[3,p3的提议,3]，同意，修改记录[3,p2的提议,3]</li>
+</ul></li>
+<li>步骤6
+<ul>
+<li>6-1. p1接收到a2,a3的拒绝，提议废除</li>
+<li>6-2. p2接收到a3,a4的拒绝，提议废除</li>
+<li>6-3. p3接收到同意，提议成功。</li>
+</ul></li>
+<li>最终结果为[3,p2的提议,3]</li>
+</ol>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=一致性协议&amp;url=http://ivaneye.com/2015/05/12/consensus-protocol.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2015/05/12/consensus-protocol.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2015/05/12/consensus-protocol';
+    var disqus_title = '一致性协议';
+    var disqus_url = 'http://ivaneye.com/2015/05/12/consensus-protocol.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/05/12/consensus-protocol" data-title="一致性协议" data-url="http://ivaneye.com/2015/05/12/consensus-protocol.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>
