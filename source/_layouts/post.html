@@ -12,6 +12,10 @@ comments: true
   <header class="post-header">
     <h1>{{ page.title }}</h1>
     <div class="post-meta">
+        {% if site.author %}
+          <h4>{{ site.author.name }}</h4>
+        </section>
+        {% endif %}
       <time datetime="2015-10-13">
         <i class="fa fa-calendar-o"></i> <time datetime="{{ page.date | date:"%Y-%m-%d" }}"> {{ page.date | date:"%Y-%m-%d" }}
       </time>
@@ -51,13 +55,10 @@ comments: true
   {{content}}
 
   <footer class="post-footer">
-    {% if site.author %}
-    <section class="author">
-      <h4>{{ site.author.name }}</h4>
-      <p>{{ site.author.bio }}</p>
-    </section>
-    {% endif %}
-
+      <div style="text-align:center">
+          <img src="/img/qrcode258.jpg"/>
+          <b>思考，执行，表达！</b>
+      </div>
     {% include share.html %}
 
     {% if site.comments and page.comments %}
