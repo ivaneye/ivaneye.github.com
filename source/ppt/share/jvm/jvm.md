@@ -148,4 +148,11 @@ public class Circle {
 - [深入理解Java虚拟机-JVM高级特性与最佳实践](https://book.douban.com/subject/6522893/)
 - [自己动手写Java虚拟机](https://book.douban.com/subject/26802084/)
 
+## 开源代码
+
+- [HotSpot](http://openjdk.java.net/groups/hotspot/)
+- [自己动手写Java虚拟机源代码](https://github.com/zxh0/jvmgo-book)   9k
+- [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) 2.4w
+- [JikesRVM](http://www.jikesrvm.org/) 14w
+
 # 谢谢
