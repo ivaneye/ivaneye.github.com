@@ -118,9 +118,116 @@ public class Circle {
 
 ![](files/jvm03.jpg)
 
+## 书单
+
+- [The Java Language Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf)
+- [The Java Virtual Machine Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
+- [Inside the Java 2 Virtual Machine](http://www.artima.com/insidejvm/ed2/index.html)
+- [深入理解Java虚拟机-JVM高级特性与最佳实践](https://book.douban.com/subject/6522893/)
+- [自己动手写Java虚拟机](https://book.douban.com/subject/26802084/)
+- [Java性能优化权威指南](https://book.douban.com/subject/25828043/)
+- [HotSpot实战](https://book.douban.com/subject/25847620/)
+
+## 例子
+
+```java
+public class Person {
+    public String sayHi(){
+        return "Hi";
+    }
+}
+
+public class Main {
+    public static void main(String[] args){
+        Person person = new Person();
+        String hi = person.sayHi();
+        System.out.println(hi);
+    }
+}
+```
+
 # Java的ClassFile表示
 
-讲解ClassFile结构
+## ClassFile结构
+
+```
+ClassFile {
+    u4 magic;
+    u2 minor_version;
+    u2 major_version;
+    u2 constant_pool_count;
+    cp_info constant_pool[constant_pool_count-1];
+    u2 access_flags;
+    u2 this_class;
+    u2 super_class;
+    u2 interfaces_count;
+    u2 interfaces[interfaces_count];
+    u2 fields_count;
+    field_info fields[fields_count];
+    u2 methods_count;
+    method_info methods[methods_count];
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
+
+## 反编译
+
+```
+javap -verbose Person
+```
+```
+public class Person
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #4.#13         // java/lang/Object."<init>":()V
+   #2 = String             #14            // Hi
+   #3 = Class              #15            // Person
+   #4 = Class              #16            // java/lang/Object
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = Utf8               Code
+   #8 = Utf8               LineNumberTable
+   #9 = Utf8               sayHi
+  #10 = Utf8               ()Ljava/lang/String;
+  #11 = Utf8               SourceFile
+  #12 = Utf8               Person.java
+  #13 = NameAndType        #5:#6          // "<init>":()V
+  #14 = Utf8               Hi
+  #15 = Utf8               Person
+  #16 = Utf8               java/lang/Object
+{
+  public Person();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>"
+:()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public java.lang.String sayHi();
+    descriptor: ()Ljava/lang/String;
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: ldc           #2                  // String Hi
+         2: areturn
+      LineNumberTable:
+        line 4: 0
+}
+```
+
+## 运行
+
+```
+java Main
+```
 
 # ClassFile的JVM表示
 
@@ -134,25 +241,21 @@ public class Circle {
 
 # JVM运行流程
 
-从java ClassName开始，JVM如何启动，执行，并退出的
+从Java ClassName开始，JVM如何启动，执行，并退出的
 
 # 示例
 
 通过示例，演示上面的流程
 
-## 参考资料
+# 整理结构图
 
-- [The Java Language Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf)
-- [The Java Virtual Machine Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
-- [Inside the Java 2 Virtual Machine](http://www.artima.com/insidejvm/ed2/index.html)
-- [深入理解Java虚拟机-JVM高级特性与最佳实践](https://book.douban.com/subject/6522893/)
-- [自己动手写Java虚拟机](https://book.douban.com/subject/26802084/)
+![](files/mind.png)
 
 ## 开源代码
 
-- [HotSpot](http://openjdk.java.net/groups/hotspot/)
-- [自己动手写Java虚拟机源代码](https://github.com/zxh0/jvmgo-book)   9k
-- [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) 2.4w
-- [JikesRVM](http://www.jikesrvm.org/) 14w
+- [HotSpot](http://openjdk.java.net/groups/hotspot/)  [Java:116w C:19.6w+4.5w C++:2w ]
+- [自己动手写Java虚拟机源代码](https://github.com/zxh0/jvmgo-book)   [Go:9k]
+- [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) [C:1.5w+9k]
+- [JikesRVM](http://www.jikesrvm.org/) [Java:14w ]
 
 # 谢谢
