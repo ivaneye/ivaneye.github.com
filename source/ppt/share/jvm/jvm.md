@@ -15,7 +15,7 @@
 	- Initailizing
 - 示例
 
-# JVM印象
+## JVM印象
 
 ## 一次编译，到处运行
 
@@ -55,7 +55,7 @@ public class Change {
 
 ## 字符串比较
 
-```
+```java
 public class Test{
     public static void main(String[] args){
         String s1 = "hello";
@@ -76,7 +76,7 @@ public class Test{
 
 ## 初始化顺序
 
-```
+```java
 public class Circle {
 
     int radius = prt("初始化radius");
@@ -127,6 +127,7 @@ public class Circle {
 - [自己动手写Java虚拟机](https://book.douban.com/subject/26802084/)
 - [Java性能优化权威指南](https://book.douban.com/subject/25828043/)
 - [HotSpot实战](https://book.douban.com/subject/25847620/)
+- [Oracle JRockit: The Definitive Guide](https://www.amazon.com/Oracle-JRockit-The-Definitive-Guide/dp/1847198066/ref=sr_1_1?ie=UTF8&qid=1373331499&sr=8-1&keywords=oracle+jrockit+the+definitive+guide)
 
 ## 例子
 
@@ -146,7 +147,7 @@ public class Main {
 }
 ```
 
-# Java的ClassFile表示
+## Java的ClassFile表示
 
 ## ClassFile结构
 
@@ -229,7 +230,7 @@ Constant pool:
 java Main
 ```
 
-# ClassFile的JVM表示
+## ClassFile的JVM表示
 
 讲解JVM结构以及ClassFile与JVM中的对应关系
 
@@ -239,23 +240,23 @@ java Main
 在Java 7中，Symbol的存储从PermGen移动到了native memory，并且把静态变量从instanceKlass末尾（位于PermGen内）移动到了java.lang.Class对象的末尾（位于普通Java heap内）；
 在Java 8中，永久代被彻底移除，取而代之的是另一块与堆不相连的本地内存——元空间（Metaspace）,‑XX:MaxPermSize 参数失去了意义，取而代之的是-XX:MaxMetaspaceSize。
 
-# JVM运行流程
+## JVM运行流程
 
 从Java ClassName开始，JVM如何启动，执行，并退出的
 
-# 示例
+## 示例
 
 通过示例，演示上面的流程
 
-# 整理结构图
+## 整体结构图
 
-![](files/mind.png)
+<img src="files/mind.png" style="height:700px"/>
 
 ## 开源代码
 
-- [HotSpot](http://openjdk.java.net/groups/hotspot/)  [Java:116w C:19.6w+4.5w C++:2w ]
-- [自己动手写Java虚拟机源代码](https://github.com/zxh0/jvmgo-book)   [Go:9k]
-- [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) [C:1.5w+9k]
-- [JikesRVM](http://www.jikesrvm.org/) [Java:14w ]
+- [HotSpot](http://openjdk.java.net/groups/hotspot/)  **Java:116w C:19.6w+4.5w C++:2w **
+- [自己动手写Java虚拟机源代码](https://github.com/zxh0/jvmgo-book)   **Go:9k**
+- [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) **C:1.5w+9k**
+- [JikesRVM](http://www.jikesrvm.org/) **Java:14w**
 
 # 谢谢
