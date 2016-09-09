@@ -1,0 +1,671 @@
+<!--
+    Powered By nodePPT - This is probably the best web presentation tool so far!
+    version: 1.2.3
+    site: https://github.com/ksky521/nodePPT
+-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Java的JVM表示 - By 王一帆</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    <link rel="stylesheet" media="print" href="./css/pdf.css">
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java的JVM表示</h1>
+<h2>王一帆</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>JVM印象</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>一次编译，到处运行</h2>
+<p class="moveIn"><span><img src="./assets/ppt/jvm/jvm01.png" alt="">  <span></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>传值还是传引用？</h2>
+<pre><code class="java">public class Change {
+    public void change(int i){
+        i = 2;
+    }
+
+    public void change(String str){
+        str = &quot;Hi&quot;;
+    }
+
+    public void change(StringBuffer str){
+        str.append(&quot;Hi&quot;);
+    }
+
+    public static void main(String[] args){
+        Change change = new Change();
+        int i = 1;
+        String str = &quot;Hello&quot;;
+        StringBuffer sb = new StringBuffer(&quot;Hello&quot;);
+        change.change(i);
+        change.change(str);
+        change.change(sb);
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<p><img src="./assets/ppt/jvm/jvm02.png" alt=""></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>字符串比较</h2>
+<ul>
+<li>jls8 3.10.5</li>
+</ul>
+<pre><code class="java">public class Test{
+    public static void main(String[] args){
+        String s1 = &quot;hello&quot;;
+        String s2 = &quot;hello&quot;;
+        String s3 = &quot;he&quot; + &quot;llo&quot;;
+        String s4 = new String(&quot;hello&quot;);
+        String s5 = new String(s1);
+        System.out.println(s1 == s2);
+        System.out.println(s1 == s3);
+        System.out.println(s1 == s4);
+        System.out.println(s1 == s5);
+        System.out.println(s5 == s4);
+        System.out.println(s1.equals(s4));
+        System.out.println(s3.equals(s4));
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>初始化顺序</h2>
+<pre><code class="java">public class Circle {
+
+    int radius = prt(&quot;初始化radius&quot;);
+    int t = prt(&quot;初始化t&quot;);
+    static int s = prt(&quot;初始化s&quot;);
+
+    {System.out.println(&quot;初始化块&quot;);}
+
+    static{
+        System.out.println(&quot;静态初始化块&quot;);
+    }
+
+    public Circle(){
+        System.out.println(&quot;默认构造方法&quot;);
+    }
+
+    public static int prt(String text){
+        System.out.println(text);
+        return 0;
+    }
+
+    public static void main(String[] args){
+        Circle circle = new Circle();
+        Circle circle2 = new Circle();
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>GC</h2>
+<ul class="bounceIn">
+<li>YoungGC  </li>
+<li>FullGC</li>
+<li>Eden Space</li>
+<li>Survivor Space</li>
+<li>Old Space</li>
+<li>PermGen Space</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>书单</h2>
+<ul>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf" target="_blank">The Java Language Specification, Java SE 8 Edition</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank">The Java Virtual Machine Specification, Java SE 8 Edition</a></li>
+<li><a href="http://www.artima.com/insidejvm/ed2/index.html" target="_blank">Inside the Java 2 Virtual Machine</a></li>
+<li><a href="https://book.douban.com/subject/6522893/" target="_blank">深入理解Java虚拟机-JVM高级特性与最佳实践</a></li>
+<li><a href="https://book.douban.com/subject/26802084/" target="_blank">自己动手写Java虚拟机</a></li>
+<li><a href="https://book.douban.com/subject/25828043/" target="_blank">Java性能优化权威指南</a></li>
+<li><a href="https://book.douban.com/subject/25847620/" target="_blank">HotSpot实战</a></li>
+<li><a href="https://www.amazon.com/Oracle-JRockit-The-Definitive-Guide/dp/1847198066/ref=sr_1_1?ie=UTF8&amp;qid=1373331499&amp;sr=8-1&amp;keywords=oracle+jrockit+the+definitive+guide" target="_blank">Oracle JRockit: The Definitive Guide</a></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>JVM</h2>
+<p><img src="./assets/ppt/jvm/jvm03.jpg" alt=""></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>例子</h2>
+<pre><code class="java">public class Calc {
+    public int sum(){
+        int a = 1;
+        int b = 2;
+        int c = a + b;
+        return c;
+    }
+}
+
+public class Main {
+    public static void main(String[] args){
+        Calc calc = new Calc();
+        int result = calc.sum();
+        System.out.println(result);
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>编译</h2>
+<pre><code>javac Calc.java
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>ClassFile结构</h2>
+<ul>
+<li>jvms8 4.1</li>
+</ul>
+<pre><code>ClassFile {
+    u4 magic;
+    u2 minor_version;
+    u2 major_version;
+    u2 constant_pool_count;
+    cp_info constant_pool[constant_pool_count-1];
+    u2 access_flags;
+    u2 this_class;
+    u2 super_class;
+    u2 interfaces_count;
+    u2 interfaces[interfaces_count];
+    u2 fields_count;
+    field_info fields[fields_count];
+    u2 methods_count;
+    method_info methods[methods_count];
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>The Constant Pool</h2>
+<p>jvms8 4.4</p>
+<pre><code>cp_info {
+    u1 tag;
+    u1 info[];
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Constant pool tags</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Constant Type</th>
+<th style="text-align:center">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">CONSTANT_Class</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Fieldref</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Methodref</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_InterfaceMethodref</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_String</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Integer</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Float</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Long</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Double</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_NameAndType</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Utf8</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_MethodHandle</td>
+<td style="text-align:center">15</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_MethodType</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_InvokeDynamic</td>
+<td style="text-align:center">18</td>
+</tr>
+</tbody>
+</table>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Fields</h2>
+<p>jvms8 4.5</p>
+<pre><code>field_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Methods</h2>
+<p>jvms8 4.6</p>
+<pre><code>method_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>反编译</h2>
+<pre><code>javap -verbose Calc
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>public class Calc
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #3.#12         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = Class              #13            // Calc
+   #3 = Class              #14            // java/lang/Object
+   #4 = Utf8               &lt;init&gt;
+   #5 = Utf8               ()V
+   #6 = Utf8               Code
+   #7 = Utf8               LineNumberTable
+   #8 = Utf8               sum
+   #9 = Utf8               ()I
+  #10 = Utf8               SourceFile
+  #11 = Utf8               Calc.java
+  #12 = NameAndType        #4:#5          // &quot;&lt;init&gt;&quot;:()V
+  #13 = Utf8               Calc
+  #14 = Utf8               java/lang/Object
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>{
+  public Calc();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;
+:()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public int sum();
+    descriptor: ()I
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=4, args_size=1
+         0: iconst_1
+         1: istore_1
+         2: iconst_2
+         3: istore_2
+         4: iload_1
+         5: iload_2
+         6: iadd
+         7: istore_3
+         8: iload_3
+         9: ireturn
+      LineNumberTable:
+        line 3: 0
+        line 4: 2
+        line 5: 4
+        line 6: 8
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>运行</h2>
+<pre><code>java Main
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>启动JVM</h2>
+<p>jvms8 5.2</p>
+<p>The Java Virtual Machine starts up by creating an initial class, which is specified in an implementation-dependent manner, using the bootstrap class loader (§5.3.1). The Java Virtual Machine then links the initial class, initializes it, and invokes the public class method void main(String[]).</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>加载Initial Class</h2>
+<ul>
+<li>jvms8 5.3.1 5.3.2</li>
+<li>JVM规范定义了两种类型的类装载器：bootstrap class loader,user-defined class loader</li>
+</ul>
+<p><img src="./assets/ppt/jvm/jvm03.png" alt=""></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>加载到哪里？</h2>
+<ul class="rollIn">
+<li>方法区:方法区（method area）只是JVM规范中定义的一个概念，用于存储类信息、常量池、静态变量、JIT编译后的代码等数据，具体放在哪里，不同的实现可以放在不同的地方。</li>
+<li>永久代是Hotspot虚拟机特有的概念，是方法区的一种实现</li>
+<li>在Java 6中，方法区中包含的数据，除了JIT编译生成的代码存放在native memory的CodeCache区域，其他都存放在永久代；</li>
+<li>在Java 7中，Symbol的存储从PermGen移动到了native memory，并且把静态变量从instanceKlass末尾（位于PermGen内）移动到了java.lang.Class对象的末尾（位于普通Java heap内）；</li>
+<li>在Java 8中，永久代被彻底移除，取而代之的是另一块与堆不相连的本地内存——元空间（Metaspace）,‑XX:MaxPermSize 参数失去了意义，取而代之的是-XX:MaxMetaspaceSize。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>链接</h2>
+<ul>
+<li>Verification</li>
+<li>Preparation</li>
+<li>Resolution</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Verification</h2>
+<p>jvms8 5.4.1</p>
+<p>Verification (§4.10) ensures that the binary representation of a class or interface is structurally correct (§4.9). Verification may cause additional classes and interfaces to be loaded (§5.3) but need not cause them to be verified or prepared.</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Preparation</h2>
+<p>jvms8 5.4.2</p>
+<p>Preparation involves creating the static fields for a class or interface and initializing such fields to their default values (§2.3, §2.4). This does not require the execution of any Java Virtual Machine code; explicit initializers for static fields are executed as part of initialization (§5.5), not preparation.</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>Resolution</h2>
+<p>jvms8 5.4.3</p>
+<p>The Java Virtual Machine instructions anewarray, checkcast, getfield, getstatic, instanceof, invokedynamic, invokeinterface, invokespecial, invokestatic, invokevirtual, ldc, ldc_w, multianewarray, new, putfield, and putstatic make symbolic references to the run-time constant pool. Execution of any of these instructions requires resolution of its symbolic reference.</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>初始化</h2>
+<p>jvms8 5.5</p>
+<p>Initialization of a class or interface consists of executing its class or interface
+initialization method</p>
+<ul class="moveIn">
+<li>The execution of any one of the Java Virtual Machine instructions new,getstatic, putstatic, or invokestatic that references C  </li>
+<li>The first invocation of a java.lang.invoke.MethodHandle instance which was the result of method handle resolution (§5.4.3.5) for a method handle of kind 2 (REF_getStatic), 4 (REF_putStatic), 6 (REF_invokeStatic), or 8 (REF_newInvokeSpecial).</li>
+<li>Invocation of certain reflective methods in the class library (§2.12), for example, in class Class or in package java.lang.reflect.</li>
+<li>If C is a class, the initialization of one of its subclasses</li>
+<li>If C is an interface that declares a non-abstract, non-static method, the initialization of a class that implements C directly or indirectly.</li>
+<li>If C is a class, its designation as the initial class at Java Virtual Machine startup (§5.2).</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>执行main</h2>
+<ul>
+<li>栈帧(Frame) jvms8 2.6<ul>
+<li>局部变量表(Local Variables) jvms8 2.6.1</li>
+<li>操作数栈(Operand Stacks)  jvms8 2.6.2</li>
+<li>动态链接(Dynamic Linking) jvms8 2.6.3</li>
+</ul>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>public class Main
+Constant pool:
+   #1 = Methodref          #8.#17         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = Class              #18            // Calc
+   #3 = Methodref          #2.#17         // Calc.&quot;&lt;init&gt;&quot;:()V
+   #4 = Methodref          #2.#19         // Calc.sum:()I
+   #5 = Fieldref           #20.#21        // java/lang/System.out:Ljava/io/PrintStream;
+   #6 = Methodref          #22.#23        // java/io/PrintStream.println:(I)V
+   #7 = Class              #24            // Main
+   #8 = Class              #25            // java/lang/Object
+   #9 = Utf8               &lt;init&gt;
+  #10 = Utf8               ()V
+  #11 = Utf8               Code
+  #12 = Utf8               LineNumberTable
+  #13 = Utf8               main
+  #14 = Utf8               ([Ljava/lang/String;)V
+  #15 = Utf8               SourceFile
+  #16 = Utf8               Main.java
+  #17 = NameAndType        #9:#10         // &quot;&lt;init&gt;&quot;:()V
+  #18 = Utf8               Calc
+  #19 = NameAndType        #26:#27        // sum:()I
+  #20 = Class              #28            // java/lang/System
+  #21 = NameAndType        #29:#30        // out:Ljava/io/PrintStream;
+  #22 = Class              #31            // java/io/PrintStream
+  #23 = NameAndType        #32:#33        // println:(I)V
+  #24 = Utf8               Main
+  #25 = Utf8               java/lang/Object
+  #26 = Utf8               sum
+  #27 = Utf8               ()I
+  #28 = Utf8               java/lang/System
+  #29 = Utf8               out
+  #30 = Utf8               Ljava/io/PrintStream;
+  #31 = Utf8               java/io/PrintStream
+  #32 = Utf8               println
+  #33 = Utf8               (I)V
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>{
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=3, args_size=1
+         0: new           #2                  // class Calc
+         3: dup
+         4: invokespecial #3                  // Method Calc.&quot;&lt;init&gt;&quot;:()V
+         7: astore_1
+         8: aload_1
+         9: invokevirtual #4                  // Method Calc.sum:()I
+        12: istore_2
+        13: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        16: iload_2
+        17: invokevirtual #6                  // Method java/io/PrintStream.println:(I)V
+        20: return
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>public class Calc
+Constant pool:
+   #1 = Methodref          #3.#12         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = Class              #13            // Calc
+   #3 = Class              #14            // java/lang/Object
+   #4 = Utf8               &lt;init&gt;
+   #5 = Utf8               ()V
+   #6 = Utf8               Code
+   #7 = Utf8               LineNumberTable
+   #8 = Utf8               sum
+   #9 = Utf8               ()I
+  #10 = Utf8               SourceFile
+  #11 = Utf8               Calc.java
+  #12 = NameAndType        #4:#5          // &quot;&lt;init&gt;&quot;:()V
+  #13 = Utf8               Calc
+  #14 = Utf8               java/lang/Object
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<pre><code>{
+  public Calc();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;
+:()V
+         4: return
+
+  public int sum();
+    descriptor: ()I
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=4, args_size=1
+         0: iconst_1
+         1: istore_1
+         2: iconst_2
+         3: istore_2
+         4: iload_1
+         5: iload_2
+         6: iadd
+         7: istore_3
+         8: iload_3
+         9: ireturn
+}
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2> </h2>
+<p><img src="./assets/ppt/jvm/mind.png" alt=""></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>参考资料</h2>
+<ul>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf" target="_blank">The Java Language Specification, Java SE 8 Edition</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf" target="_blank">The Java Virtual Machine Specification, Java SE 8 Edition</a></li>
+<li><a href="https://book.douban.com/subject/6522893/" target="_blank">深入理解Java虚拟机-JVM高级特性与最佳实践</a></li>
+<li><a href="https://book.douban.com/subject/26802084/" target="_blank">自己动手写Java虚拟机</a></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>开源代码</h2>
+<ul>
+<li><a href="http://openjdk.java.net/groups/hotspot/" target="_blank">HotSpot</a>  <strong>Java:116w C:19.6w+4.5w C++:2w </strong></li>
+<li><a href="https://github.com/zxh0/jvmgo-book" target="_blank">自己动手写Java虚拟机源代码</a>   <strong>Go:9k</strong></li>
+<li><a href="https://sourceforge.net/projects/jamvm/?source=typ_redirect" target="_blank">JamVM</a> <strong>C:1.5w+9k</strong></li>
+<li><a href="http://www.jikesrvm.org/" target="_blank">JikesRVM</a> <strong>Java:14w</strong></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>谢谢</h1>
+
+</article></section></slide>
+        <!--slide class="slide thank-you-slide segue nobackground">
+            <article class="flexbox vleft auto-fadein">
+                <h2>Q &amp; A</h2>
+                <h3>&lt;Thank You!&gt;</h3>
+            </article>
+        </slide-->
+        <slide class="slide logoslide dark nobackground">
+            <article class="flexbox vcenter">
+              <h2 style="color: white;">Powered By nodePPT v1.2.3</h2>
+            </article>
+          </slide>
+        <div class="slideTip" id="tip"></div>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<div id="_buttons">
+    <div class="_btn-box" id="_btn-box" style="display:none;">
+        <button class="fa fa-arrow-circle-left" id="_btn-prev"></button>
+        <button class="fa fa-arrow-circle-right" id="_btn-next"></button>
+        <button class="fa fa-paint-brush" id="_btn-brush"></button>
+        <button class="fa fa-compress" id="_btn-overview" data-toggle="fa fa-expand"></button>
+    </div>
+    <button class="fa fa-bars" id="_btn-bar"  data-toggle="fa fa-close"></button>
+</div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = location.pathname.split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+</script>
+<script src="./js/mixjs/lib/event/broadcast.js"></script>
+<script src="./js/nodeppt.js"></script>
+<script>
+Slide.init({
+    containerID: 'container',
+    drawBoardID: 'drawBoard',
+    slideClass: '.slide',
+    buildClass: '.build',
+    progressID: 'progress',
+    transition: 'stick',
+    width: 1100,
+    dir: './',
+    
+    //打开下面的注释就开启postMessage方式
+    //访问网址127.0.0.1:8080/ppt/demo#client
+    control:{
+        type: 'postMessage',
+        args:{
+            isControl:  false
+        }
+    },
+    
+    tipID: 'tip'
+});
+MixJS.loadJS('highlight/hljs-0.8.js',function(){
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+});
+</script>
+
+<link rel="stylesheet" href="./css/theme.dark.css">
+<!--placeholder-->
+</body>
+</html>
