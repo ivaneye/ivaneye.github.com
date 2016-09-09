@@ -1,12 +1,22 @@
-% Java的JVM表示
-% 王一帆
+title: Java的JVM表示
+speaker: 王一帆
+url: http://www.ivaneye.com
+transition: stick
+theme: dark
 
+[slide]
+# Java的JVM表示
+## 王一帆
+
+[slide]
 ## JVM印象
 
+[slide]
 ## 一次编译，到处运行
 
-![](files/jvm01.png)
+![](/assets/ppt/jvm/jvm01.png)  {:&.moveIn}
 
+[slide]
 ## 传值还是传引用？
 
 ```java
@@ -35,11 +45,15 @@ public class Change {
 }
 ```
 
+[slide]
 ## 
 
-![](files/jvm02.png)
+![](/assets/ppt/jvm/jvm02.png)
 
+[slide]
 ## 字符串比较
+
+- jls8 3.10.5
 
 ```java
 public class Test{
@@ -60,6 +74,7 @@ public class Test{
 }
 ```
 
+[slide]
 ## 初始化顺序
 
 ```java
@@ -91,19 +106,17 @@ public class Circle {
 }
 ```
 
+[slide]
 ## GC 
 
-- YoungGC
+- YoungGC   {:&.bounceIn}
 - FullGC
 - Eden Space
 - Survivor Space
 - Old Space
 - PermGen Space
 
-## JVM
-
-![](files/jvm03.jpg)
-
+[slide]
 ## 书单
 
 - [The Java Language Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf)
@@ -115,6 +128,12 @@ public class Circle {
 - [HotSpot实战](https://book.douban.com/subject/25847620/)
 - [Oracle JRockit: The Definitive Guide](https://www.amazon.com/Oracle-JRockit-The-Definitive-Guide/dp/1847198066/ref=sr_1_1?ie=UTF8&qid=1373331499&sr=8-1&keywords=oracle+jrockit+the+definitive+guide)
 
+[slide]
+## JVM
+
+![](/assets/ppt/jvm/jvm03.jpg)
+
+[slide]
 ## 例子
 
 ```java
@@ -136,12 +155,14 @@ public class Main {
 }
 ```
 
+[slide]
 ## 编译
 
 ```
 javac Calc.java
 ```
 
+[slide]
 ## ClassFile结构
 
 - jvms8 4.1
@@ -167,12 +188,76 @@ ClassFile {
 }
 ```
 
+[slide]
+## The Constant Pool
+
+jvms8 4.4
+
+```
+cp_info {
+    u1 tag;
+    u1 info[];
+}
+```
+
+[slide]
+## Constant pool tags
+
+ |Constant Type| Value |
+ |:-------|:------:|
+ |CONSTANT_Class |7|
+|CONSTANT_Fieldref |9|
+|CONSTANT_Methodref |10|
+|CONSTANT_InterfaceMethodref |11|
+|CONSTANT_String |8|
+|CONSTANT_Integer |3|
+|CONSTANT_Float |4|
+|CONSTANT_Long |5|
+|CONSTANT_Double |6|
+|CONSTANT_NameAndType |12|
+|CONSTANT_Utf8 |1|
+|CONSTANT_MethodHandle |15|
+|CONSTANT_MethodType |16|
+|CONSTANT_InvokeDynamic |18|
+
+[slide]
+## Fields
+
+jvms8 4.5
+
+```
+field_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
+
+[slide]
+## Methods
+
+jvms8 4.6
+
+```
+method_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
+
+[slide]
 ## 反编译
 
 ```
 javap -verbose Calc
 ```
 
+[slide]
 ## 
 
 ```
@@ -195,6 +280,12 @@ Constant pool:
   #12 = NameAndType        #4:#5          // "<init>":()V
   #13 = Utf8               Calc
   #14 = Utf8               java/lang/Object
+```
+
+[slide]
+## 
+
+```
 {
   public Calc();
     descriptor: ()V
@@ -231,78 +322,82 @@ Constant pool:
 }
 ```
 
+[slide]
 ## 运行
 
 ```
 java Main
 ```
 
+[slide]
 ## 启动JVM
 
-- jvms8 5.2
+jvms8 5.2
 
-The Java Virtual Machine starts up by creating an initial class, which is specified
-in an implementation-dependent manner, using the bootstrap class loader (§5.3.1).
-The Java Virtual Machine then links the initial class, initializes it, and invokes
-the public class method void main(String[]).
+The Java Virtual Machine starts up by creating an initial class, which is specified in an implementation-dependent manner, using the bootstrap class loader (§5.3.1). The Java Virtual Machine then links the initial class, initializes it, and invokes the public class method void main(String[]).
 
+[slide]
 ## 加载Initial Class
 
 - jvms8 5.3.1 5.3.2
 - JVM规范定义了两种类型的类装载器：bootstrap class loader,user-defined class loader
 
-![](files/jvm03.png)
+![](/assets/ppt/jvm/jvm03.png)
 
+[slide]
 ## 加载到哪里？
 
-- 方法区
+- 方法区:方法区（method area）只是JVM规范中定义的一个概念，用于存储类信息、常量池、静态变量、JIT编译后的代码等数据，具体放在哪里，不同的实现可以放在不同的地方。 {:&.rollIn}
+- 永久代是Hotspot虚拟机特有的概念，是方法区的一种实现
+- 在Java 6中，方法区中包含的数据，除了JIT编译生成的代码存放在native memory的CodeCache区域，其他都存放在永久代；
+- 在Java 7中，Symbol的存储从PermGen移动到了native memory，并且把静态变量从instanceKlass末尾（位于PermGen内）移动到了java.lang.Class对象的末尾（位于普通Java heap内）；
+- 在Java 8中，永久代被彻底移除，取而代之的是另一块与堆不相连的本地内存——元空间（Metaspace）,‑XX:MaxPermSize 参数失去了意义，取而代之的是-XX:MaxMetaspaceSize。
 
-方法区（method area）只是JVM规范中定义的一个概念，用于存储类信息、常量池、静态变量、JIT编译后的代码等数据，具体放在哪里，不同的实现可以放在不同的地方。而永久代是Hotspot虚拟机特有的概念，是方法区的一种实现，别的JVM都没有这个东西。
-
-在Java 6中，方法区中包含的数据，除了JIT编译生成的代码存放在native memory的CodeCache区域，其他都存放在永久代；
-在Java 7中，Symbol的存储从PermGen移动到了native memory，并且把静态变量从instanceKlass末尾（位于PermGen内）移动到了java.lang.Class对象的末尾（位于普通Java heap内）；
-在Java 8中，永久代被彻底移除，取而代之的是另一块与堆不相连的本地内存——元空间（Metaspace）,‑XX:MaxPermSize 参数失去了意义，取而代之的是-XX:MaxMetaspaceSize。
-
+[slide]
 ## 链接
 
 - Verification
 - Preparation
 - Resolution
 
+[slide]
 ## Verification
 
-- jvms8 5.4.1
+jvms8 5.4.1
 
-Verification (§4.10) ensures that the binary representation of a class or interface is
-structurally correct (§4.9). Verification may cause additional classes and interfaces
-to be loaded (§5.3) but need not cause them to be verified or prepared.
+Verification (§4.10) ensures that the binary representation of a class or interface is structurally correct (§4.9). Verification may cause additional classes and interfaces to be loaded (§5.3) but need not cause them to be verified or prepared.
 
+[slide]
 ## Preparation
 
-- jvms8 5.4.2
+jvms8 5.4.2
 
-Preparation involves creating the static fields for a class or interface and initializing
-such fields to their default values (§2.3, §2.4). This does not require the execution
-of any Java Virtual Machine code; explicit initializers for static fields are executed
-as part of initialization (§5.5), not preparation.
+Preparation involves creating the static fields for a class or interface and initializing such fields to their default values (§2.3, §2.4). This does not require the execution of any Java Virtual Machine code; explicit initializers for static fields are executed as part of initialization (§5.5), not preparation.
 
+[slide]
 ## Resolution
 
-- jvms8 5.4.3
+jvms8 5.4.3
 
-The Java Virtual Machine instructions anewarray, checkcast, getfield,
-getstatic, instanceof, invokedynamic, invokeinterface, invokespecial, invokestatic,
-invokevirtual, ldc, ldc_w, multianewarray, new, putfield, and putstatic make
-symbolic references to the run-time constant pool. Execution of any of these
-instructions requires resolution of its symbolic reference.
+The Java Virtual Machine instructions anewarray, checkcast, getfield, getstatic, instanceof, invokedynamic, invokeinterface, invokespecial, invokestatic, invokevirtual, ldc, ldc_w, multianewarray, new, putfield, and putstatic make symbolic references to the run-time constant pool. Execution of any of these instructions requires resolution of its symbolic reference.
 
+
+[slide]
 ## 初始化
 
-- jvms8 5.5
+jvms8 5.5
 
 Initialization of a class or interface consists of executing its class or interface
 initialization method
 
+- The execution of any one of the Java Virtual Machine instructions new,getstatic, putstatic, or invokestatic that references C   {:&.moveIn}
+- The first invocation of a java.lang.invoke.MethodHandle instance which was the result of method handle resolution (§5.4.3.5) for a method handle of kind 2 (REF_getStatic), 4 (REF_putStatic), 6 (REF_invokeStatic), or 8 (REF_newInvokeSpecial).
+- Invocation of certain reflective methods in the class library (§2.12), for example, in class Class or in package java.lang.reflect.
+- If C is a class, the initialization of one of its subclasses
+- If C is an interface that declares a non-abstract, non-static method, the initialization of a class that implements C directly or indirectly.
+- If C is a class, its designation as the initial class at Java Virtual Machine startup (§5.2).
+
+[slide]
 ## 执行main
 
 - 栈帧(Frame) jvms8 2.6
@@ -310,6 +405,7 @@ initialization method
     - 操作数栈(Operand Stacks)  jvms8 2.6.2
     - 动态链接(Dynamic Linking) jvms8 2.6.3
 
+[slide]
 ## 
 
 ```
@@ -348,6 +444,12 @@ Constant pool:
   #31 = Utf8               java/io/PrintStream
   #32 = Utf8               println
   #33 = Utf8               (I)V
+```
+
+[slide]
+## 
+
+```
 {
   public static void main(java.lang.String[]);
     descriptor: ([Ljava/lang/String;)V
@@ -368,7 +470,8 @@ Constant pool:
 }
 ```
 
-##
+[slide]
+## 
 
 ```
 public class Calc
@@ -387,6 +490,12 @@ Constant pool:
   #12 = NameAndType        #4:#5          // "<init>":()V
   #13 = Utf8               Calc
   #14 = Utf8               java/lang/Object
+```
+
+[slide]
+## 
+
+```
 {
   public Calc();
     descriptor: ()V
@@ -416,10 +525,20 @@ Constant pool:
 }
 ```
 
+[slide]
 ## 
 
-<img src="files/mind.png" style="height:800px"/>
+![](/assets/ppt/jvm/mind.png)
 
+[slide]
+## 参考资料
+
+- [The Java Language Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jls/se8/jls8.pdf)
+- [The Java Virtual Machine Specification, Java SE 8 Edition](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf)
+- [深入理解Java虚拟机-JVM高级特性与最佳实践](https://book.douban.com/subject/6522893/)
+- [自己动手写Java虚拟机](https://book.douban.com/subject/26802084/)
+
+[slide]
 ## 开源代码
 
 - [HotSpot](http://openjdk.java.net/groups/hotspot/)  **Java:116w C:19.6w+4.5w C++:2w **
@@ -427,4 +546,5 @@ Constant pool:
 - [JamVM](https://sourceforge.net/projects/jamvm/?source=typ_redirect) **C:1.5w+9k**
 - [JikesRVM](http://www.jikesrvm.org/) **Java:14w**
 
+[slide]
 # 谢谢
