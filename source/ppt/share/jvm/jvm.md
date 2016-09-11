@@ -1,20 +1,17 @@
-title: Java的JVM表示
+title: JVM是如何运行的？
 speaker: 王一帆
 url: http://www.ivaneye.com
 transition: stick
 theme: dark
 
 [slide]
-# Java的JVM表示
+# JVM是如何运行的？
 ## 王一帆
-
-[slide]
-## JVM印象
 
 [slide]
 ## 一次编译，到处运行
 
-![](/assets/ppt/jvm/jvm01.png)  {:&.moveIn}
+![](/files/jvm01.png)  {:&.moveIn}
 
 [slide]
 ## 传值还是传引用？
@@ -48,7 +45,7 @@ public class Change {
 [slide]
 ## 
 
-![](/assets/ppt/jvm/jvm02.png)
+![](/files/jvm02.png)
 
 [slide]
 ## 字符串比较
@@ -131,7 +128,7 @@ public class Circle {
 [slide]
 ## JVM
 
-![](/assets/ppt/jvm/jvm03.jpg)
+![](/files/jvm03.jpg)
 
 [slide]
 ## 例子
@@ -342,7 +339,7 @@ The Java Virtual Machine starts up by creating an initial class, which is specif
 - jvms8 5.3.1 5.3.2
 - JVM规范定义了两种类型的类装载器：bootstrap class loader,user-defined class loader
 
-![](/assets/ppt/jvm/jvm03.png)
+![](/files//jvm03.png)
 
 [slide]
 ## 加载到哪里？
@@ -528,7 +525,7 @@ Constant pool:
 [slide]
 ## 
 
-![](/assets/ppt/jvm/mind.png)
+![](/files/mind.png)
 
 [slide]
 ## 参考资料
