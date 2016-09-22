@@ -17,7 +17,7 @@ encoding: "utf-8"
 comments: true
 
 baseurl: "" # change to empty string ""
-domain_name: ivaneye.com
+domain_name: www.ivaneye.com
 google_analytics:
 
 source:      source
@@ -32,16 +32,16 @@ title: 从0到1
 description: "思考，执行，表达！"
 meta_description: "Architecturer"
 meta_keywords: "blog,java,clojure,golang,go,architectures"
-url: http://ivaneye.com
-production_url: http://ivaneye.com
+url: http://www.ivaneye.com
+production_url: http://www.ivaneye.com
 repo:
 disqus_shortname: ""
 rss_path: source/
 author:
   name      : wangyifan
   image     : /img/head.jpg
-  email     : wangyifan@ivaneye.com
-  url       : http://ivaneye.com
+  email     : ivaneye@foxmail.com
+  url       : http://www.ivaneye.com
   facebook  : http://facebook.com/ivan.pig.73
   twitter   : http://twitter.com/ivanpig
   github    : http://github.com/ivaneye
