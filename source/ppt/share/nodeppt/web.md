@@ -20,6 +20,13 @@ theme: dark
 <!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
 
 #
+
+- URI:Uniform Resource Identifier
+- URL:Uniform Resource Locators
+- URN:Uniform Resource Name
+
+![](/web_file/01.jpg)
+
 <!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
 
 #
