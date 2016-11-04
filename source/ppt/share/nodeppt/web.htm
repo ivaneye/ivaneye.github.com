@@ -1,0 +1,305 @@
+<!--
+    Powered By nodePPT - This is probably the best web presentation tool so far!
+    version: 1.4.2
+    site: https://github.com/ksky521/nodePPT
+    date: 
+-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Web - By 王一帆</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+    
+<link rel="stylesheet" href="./css/theme.dark.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Web</h1>
+<h2>王一帆</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Web的本质是什么?</h1>
+<!-- 讨论 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>处理<strong>数据</strong></h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>访问URL后,到底发生什么?</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<ul>
+<li><a href="http://www.example.com/hello.html" target="_blank">http://www.example.com/hello.html</a></li>
+</ul>
+<p class="moveIn"><span><img src="./web_file/03.jpg" alt=""> <span></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>解析主机名</h1>
+<ul>
+<li>浏览器拿到网址之后首先会将主机名解析出来，对于 <a href="http://www.example.com/hello.html" target="_blank">http://www.example.com/hello.html</a> 来说就是将主机名www.example.com解析出来。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>查找ip</h1>
+<ul>
+<li>根据主机名，会首先查找IP，首先查询hosts文件，成功则返回其对应ip地址，如果没有查询到，则去查询DNS服务器，成功就会返回ip，否则会报告连接错误。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>发送http请求</h1>
+<ul>
+<li>浏览器会把自身相关信息与请求相关信息封装成HTTP请求消息改送给服务器。</li>
+</ul>
+<pre><code>GET /hello.html HTTP/1.1
+Accept: text/plain; text/html
+Accept-Language: en-gb
+Connection: Keep-Alive
+Host: www.example.com
+User-Agent: Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)
+Accept-Encoding: gzip, deflate
+
+...
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>服务器处理请求</h1>
+<ul>
+<li>服务器读取HTTP请求中的内容，在经过解析主机，解析站点名称，解析访问资源后，会查找相关资源，如果查找成功，则返回状态码200，失败就会返回大名鼎鼎的404，在服务器监测到请求不存在的资源后，可以按照程序员设置的跳转到别的页面。所以有各种各样的404错误页面。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>服务器返回HTTP响应</h1>
+<ul>
+<li>服务器会将请求的资源封装成http响应</li>
+<li>浏览器得到返回数据后可以会提取数据，然后调用解析内核进行翻译，最后显示出页面。</li>
+<li>之后浏览器会对其引用的文件比如图片，CSS，JS等文件不断进行上述过程，直到所有文件都被下载下来之后，网页就会显示出来。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<!-- 整体流程 -->
+<img src="./web_file/02.jpg" alt="">
+<!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<ul class="moveIn">
+<li>如何查找，定位资源</li>
+<li>如何发送请求</li>
+<li>如何处理请求</li>
+<li>如何返回响应</li>
+<li>如何展示</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>URI/URL/URN</h1>
+<ul>
+<li>URI:Uniform Resource Identifier</li>
+<li>URL:Uniform Resource Locators</li>
+<li>URN:Uniform Resource Name</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>区别</h1>
+<ul>
+<li>URI:可以唯一标识某一资源的字符串</li>
+<li>URL:URL是URI的一种，不仅标识了Web 资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。</li>
+<li>URN:URN是URI的一种，用特定命名空间的名字标识资源。使用URN可以在不知道其网络位置及访问方式的情况下讨论资源。</li>
+</ul>
+<img src="./web_file/01.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>例子</h1>
+<ul>
+<li><a href="http://www.example.com/hello.html" target="_blank">http://www.example.com/hello.html</a></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>URL</h1>
+<p>这是一个URL,其中:</p>
+<ul>
+<li><strong>http</strong> 是定义如何访问资源的方式(协议类型)</li>
+<li><strong>www.example.com</strong> 域名</li>
+<li><strong>/hello.html</strong> 是资源存放的路径</li>
+</ul>
+<p><strong>所以它也是个URI</strong></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>URN</h1>
+<p>URN是URI的子集，包括名字（给定的命名空间内），但是不包括访问方式，如下所示：</p>
+<ul>
+<li>www.example.com/hello.html</li>
+</ul>
+<!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>发送http请求</h1>
+<ul>
+<li>浏览器会把自身相关信息与请求相关信息封装成HTTP请求消息改送给服务器。</li>
+</ul>
+<pre><code>GET /hello.html HTTP/1.1
+Accept: text/plain; text/html
+Accept-Language: en-gb
+Connection: Keep-Alive
+Host: www.example.com
+User-Agent: Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)
+Accept-Encoding: gzip, deflate
+
+...
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HTTP</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>TCP/IP</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>OSI七层模型</h1>
+<!-- 类似JavaIO的装饰模式 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>各种中间环节</h1>
+<ul>
+<li>DNS</li>
+<li>代理</li>
+<li>反向代理</li>
+<li>路由器</li>
+<li>中继器</li>
+<li>防火墙</li>
+<li>CDN</li>
+</ul>
+<!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>处理请求</h1>
+<!-- Java处理HTTP,Socket编程,BIO,NIO,Thread,Reactor，30p -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>#
+<!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p --></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>#
+<!-- Servlet流程,基于XML,基于注解，注解讲解 30p --></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>JDBC</h1>
+<pre><code class="java">try{
+   String url = &quot;jdbc:mysql://localhost:3306/blog?characterEncoding=utf8&quot;;
+   Class.forName(&quot;com.mysql.jdbc.Driver&quot;); //这是干嘛用的?
+   Connection conn = DriverManager.getConnection(url,&quot;root&quot;,&quot;root&quot;);
+   Statement stmt = conn.createStatement();
+   String sql = &quot;insert into articles (title,content) values (&#39;&quot; + title + &quot;&#39;,&#39;&quot; + content + &quot;&#39;);&quot;;
+   stmt.executeUpdate(sql);
+   conn.close();
+}catch(Exception e){
+    System.out.println(&quot;error&quot;);
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>JDBC架构</h1>
+<!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<p>#
+<!-- HTML,CSS,JS 展示数据 10p --></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>谢谢</h1>
+
+</article></section></slide>
+        
+
+        <!-- <slide class="slide logoslide dark nobackground">
+            <article class="flexbox vcenter">
+                <h2 style="color: white;">Powered By nodePPT v1.4.2</h2>
+            </article>
+        </slide> -->
+        <div class="slideTip" id="tip"></div>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<div id="_buttons">
+    <div class="_btn-box" id="_btn-box" style="display:none;">
+        <button class="fa fa-arrow-circle-left" id="_btn-prev"></button>
+        <button class="fa fa-arrow-circle-right" id="_btn-next"></button>
+        <button class="fa fa-paint-brush" id="_btn-brush"></button>
+        <button class="fa fa-compress" id="_btn-overview" data-toggle="fa fa-expand"></button>
+    </div>
+    <button class="fa fa-bars" id="_btn-bar"  data-toggle="fa fa-close"></button>
+</div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = (location.pathname + '#').split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+</script>
+<script src="./js/mixjs/lib/event/broadcast.js"></script>
+<script src="./js/nodeppt.js"></script>
+<script>
+Slide.init({
+    containerID: 'container',
+    drawBoardID: 'drawBoard',
+    slideClass: '.slide',
+    buildClass: '.build',
+    progressID: 'progress',
+    transition: 'stick',
+    width: 1100,
+    dir: './',
+    
+    //打开下面的注释就开启postMessage方式
+    //访问网址127.0.0.1:8080/ppt/demo#client
+    control:{
+        type: 'postMessage',
+        args:{
+            isControl:  false
+        }
+    },
+    
+    tipID: 'tip'
+});
+MixJS.loadJS('highlight/highlight.pack.js',function(){
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+});
+</script>
+
+
+<!--placeholder-->
+</body>
+</html>
