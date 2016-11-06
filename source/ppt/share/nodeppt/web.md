@@ -3,7 +3,6 @@ speaker: 王一帆
 url: http://www.ivaneye.com
 transition: stick
 theme: dark
-highlightStyle: monokai_sublime
 
 [slide]
 # Web
@@ -71,8 +70,9 @@ Accept-Encoding: gzip, deflate
 <!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
 
 [slide]
+# 流程划分
 
-- 如何查找，定位资源 {:&.moveIn}
+- 如何查找，定位资源 {:&.fadeIn}
 - 如何发送请求
 - 如何处理请求
 - 如何返回响应
