@@ -88,11 +88,15 @@ Accept-Encoding: gzip, deflate
 [slide]
 # 区别
 
-- URI:可以唯一标识某一资源的字符串
-- URL:URL是URI的一种，不仅标识了Web 资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。
-- URN:URN是URI的一种，用特定命名空间的名字标识资源。使用URN可以在不知道其网络位置及访问方式的情况下讨论资源。
-
-![](/web_file/01.jpg)
+- URI:按照规范定义的、可以唯一标识某一资源的字符串[RFC3986]
+    - URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+    - hier-part =
+         - "//" authority path-abempty
+         - / path-absolute
+         - / path-rootless
+         - / path-empty
+- URL:URL是URI的一种，不仅标识了Web资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。
+- URN:URN是URI的一种。分两种情况，一种特指以urn方案开头的URI。另一种指包含了属性名的URI。它只是一个标识，并且不保证所表示的资源一定存在!
 
 [slide]
 # 例子
@@ -104,9 +108,9 @@ Accept-Encoding: gzip, deflate
 
 这是一个URL,其中:
 
-- **http** 是定义如何访问资源的方式(协议类型)
-- **www.example.com** 域名
-- **/hello.html** 是资源存放的路径
+- **http** 是定义如何访问资源的方式(scheme,协议类型)
+- **www.example.com** 域名 (authority)
+- **/hello.html** 是资源存放的路径 (path)
 
 **所以它也是个URI**
 
@@ -116,6 +120,8 @@ Accept-Encoding: gzip, deflate
 URN是URI的子集，包括名字（给定的命名空间内），但是不包括访问方式，如下所示：
 
 - www.example.com/hello.html
+
+# Java URL处理
 
 <!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
 
