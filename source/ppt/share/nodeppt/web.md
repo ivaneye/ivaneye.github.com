@@ -79,6 +79,9 @@ Accept-Encoding: gzip, deflate
 - 如何展示
 
 [slide]
+# 查找，定位资源
+
+[slide]
 # URI/URL/URN
 
 - URI:Uniform Resource Identifier
@@ -101,7 +104,7 @@ Accept-Encoding: gzip, deflate
 [slide]
 # 例子
 
-- http://www.example.com/hello.html
+- http://www.example.com/hello.html?param=val#frag
 
 [slide]
 # URL
@@ -121,12 +124,77 @@ URN是URI的子集，包括名字（给定的命名空间内），但是不包�
 
 - www.example.com/hello.html
 
+[slide]
 # Java URL处理
+
+- URI
+- URL
+
+[slide]
+# Java URI
+
+```
+getQuery():String
+getFragment():String
+getPath():String
+getPort():int
+getHost():String
+getAuthority():String
+getScheme():String
+toURL():URL
+```
+
+[slide]
+# Java URL
+
+```
+toURI():URI
+getFile():String
+getHost():String
+getPort():int
+getAuthority():String
+getPath():String
+getQuery():String
+openConnection():URLConnection
+openStream():InputStream
+```
+
+[slide]
+# Java Example
+
+```java
+URI uri = new URI("http://www.example.com/hello.html?param=val#frag");
+System.out.println(uri.getAuthority());
+System.out.println(uri.getPath());
+System.out.println(uri.getQuery());
+System.out.println(uri.getFragment());
+URL url = new URL("http://www.baidu.com");
+BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+String tmp;
+while((tmp = br.readLine()) != null){
+    System.out.println(tmp);
+}
+br.close();
+```
+
+[slide]
+# 输出
+
+```
+www.example.com
+/hello.html
+param=val
+frag
+...
+```
 
 <!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
 
 [slide]
-# 发送http请求
+# 发送请求
+
+[slide]
+# HTTP请求
 
 - 浏览器会把自身相关信息与请求相关信息封装成HTTP请求消息改送给服务器。
 
@@ -143,7 +211,11 @@ Accept-Encoding: gzip, deflate
 ```
 
 [slide]
-# HTTP
+# Request
+
+- 请求首行
+- 请求头
+- 请求体
 
 [slide]
 # TCP/IP
@@ -172,7 +244,6 @@ Accept-Encoding: gzip, deflate
 - 接收http请求
 - 解析http请求
 - 处理http请求
-- 返回响应
 
 [slide]
 # 接收http请求
@@ -366,6 +437,12 @@ try{
 # ServiceLoader
 
 <!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
+
+[slide]
+# 返回响应
+
+[slide]
+# Response
 
 [slide]
 #
