@@ -130,6 +130,14 @@ URN是URI的子集，包括名字（给定的命名空间内），但是不包�
 - URI
 - URL
 
+```
+A URI is a uniform resource <i>identifier</i> while a URL is a uniform
+resource <i>locator</i>.  Hence every URL is a URI, abstractly speaking, but
+not every URI is a URL.  This is because there is another subcategory of
+URIs, uniform resource <i>names</i> (URNs), which name resources but do not
+specify how to locate them.
+```
+
 [slide]
 # Java URI
 
@@ -344,17 +352,17 @@ while(true){
 [slide]
 # Reactor单线程模型
 
-![](/web_file/10.jpg)
+![](/web_file/10.png)
 
 [slide]
 # Reactor多线程模型
 
-![](/web_file/11.jpg)
+![](/web_file/11.png)
 
 [slide]
 # 主从Reactor模型
 
-![](/web_file/12.jpg)
+![](/web_file/12.png)
 
 [slide]
 # 解析http请求[Java]
@@ -392,17 +400,17 @@ Accept-Encoding: gzip, deflate
 - 对象？
 
 [slide]
-# 把请求看作数据
-
-- clojure示例
-- golang示例
-
-[slide]
 # 把请求看作对象
 
 - HttpServletRequest
 
 <!-- Java处理HTTP,Socket编程,BIO,NIO,Thread,Reactor，30p -->
+
+[slide]
+# 把请求看作数据
+
+- clojure示例
+- golang示例
 
 [slide]
 #
@@ -431,12 +439,59 @@ try{
 ```
 
 [slide]
+# JDBC API
+
+- DriverManager: 这个类管理数据库驱动程序的列表。从Java应用程序的连接请求匹配的合适的数据库驱动程序，使用通讯子协议。第一个JDBC驱动程序识别某个子协议将被用来建立一个数据库连接。
+- Driver: 此接口处理与数据库服务器的通信。将直接与驱动程序对象很少。相反，您可以使用DriverManager隔离对象，这种类型的管理对象。它也抽象与驱动程序对象与工作相关的细节
+- Connection : 此接口与用于接触一个数据库的所有方法。连接对象通信的情况下，即，所有的通信是只通过与数据库连接对象。
+- Statement : 使用接口提交到数据库的SQL语句创建的对象。一些派生的接口接受，除了执行存储过程的参数。
+- ResultSet: 这些对象保存后，使用Statement对象执行SQL查询从数据库中检索数据。它作为一个迭代器，让您可以通过它的数据移动。
+- SQLException: 这个类处理的数据库应用程序中发生的任何错误。
+
+[slide]
 # JDBC架构
+
+![](/web_file/db01.gif)
+
+[slide]
+# Class.forName作用
+
+- 将Driver自身，添加到DriverManager列表中
 
 [slide]
 # ServiceLoader
 
+[slide]
+# ServiceLoader在JDBC中的应用
+
+- DriverManager
+
+```
+static {
+    loadInitialDrivers();
+    println("JDBC DriverManager initialized");
+}
+
+private static void loadInitialDrivers() {
+    ...
+    ServiceLoader<Driver> loadedDrivers = ServiceLoader.load(Driver.class);
+    Iterator<Driver> driversIterator = loadedDrivers.iterator();
+    try{
+        while(driversIterator.hasNext()) {
+            driversIterator.next();
+        }
+    } catch(Throwable t) {
+    // Do nothing
+    }
+    ...
+}
+```
+
+[slide]
+# Driver
+
 <!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
+
 
 [slide]
 # 返回响应
