@@ -249,6 +249,8 @@ Accept-Encoding: gzip, deflate
 [slide]
 # 处理请求
 
+<!-- 处理请求流程细分 -->
+
 - 接收http请求
 - 解析http请求
 - 处理http请求
@@ -383,6 +385,8 @@ private String parseUri(String requestString) {
 [slide]
 # 如何看待请求?
 
+<!-- 把请求解析为什么? -->
+
 ```
 GET /hello.html HTTP/1.1
 Accept: text/plain; text/html
@@ -412,6 +416,10 @@ Accept-Encoding: gzip, deflate
 - clojure示例
 - golang示例
 
+# 处理HTTP请求
+
+- 业务处理
+
 [slide]
 #
 <!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p -->
@@ -427,6 +435,7 @@ Accept-Encoding: gzip, deflate
 try{
    String url = "jdbc:mysql://localhost:3306/blog?characterEncoding=utf8";
    Class.forName("com.mysql.jdbc.Driver"); //这是干嘛用的?
+   //Class.forName("org.gjt.mm.mysql.Driver");//和上面的区别？
    Connection conn = DriverManager.getConnection(url,"root","root");
    Statement stmt = conn.createStatement();
    String sql = "insert into articles (title,content) values ('"
@@ -459,7 +468,241 @@ try{
 - 将Driver自身，添加到DriverManager列表中
 
 [slide]
+# com.mysql.jdbc.Driver
+
+```java
+public class Driver extends NonRegisteringDriver
+    implements java.sql.Driver {
+    ...
+    static {
+        DriverManager.registerDriver(new Driver());
+    }
+}
+```
+
+[slide]
+# static关键字
+
+- static标示的属性或方法,是类属性或方法
+- static标示的属性或方法直接使用类来调用
+- 非static标示的属性或方法,是对象属性或方法
+- 在非静态方法中可以访问静态方法
+- 在静态方法中不可以调用非静态方法
+- 可以使用this来调用静态方法或静态属性
+
+[slide]
+# 类加载顺序一
+
+```java
+public class LoadTest1 {
+    int num = 3;
+    int str = prt(num);
+    static int static_str = sprt("初始化static_str");
+
+    {System.out.println("LoadTest1:初始化块");}
+
+    static{
+        System.out.println("LoadTest1:静态初始化块");
+    }
+
+    public LoadTest1(){
+        System.out.println("LoadTest1:默认构造方法 " + getNum());
+    }
+
+    public int prt(int num){
+        System.out.println("LoadTest1: " + num);
+        return 0;
+    }
+
+    public static int sprt(String text){
+        System.out.println("LoadTest1: " + text);
+        return 0;
+    }
+
+    public int getNum() { return num; }
+
+    public static void main(String[] args){
+        LoadTest1 loadTest = new LoadTest1();
+        LoadTest1 loadTest1 = new LoadTest1();
+    }
+}
+```
+
+[slide]
+# 结果
+
+```
+LoadTest1: 初始化static_str
+LoadTest1:静态初始化块
+LoadTest1: 3
+LoadTest1:初始化块
+LoadTest1:默认构造方法 3
+
+LoadTest1: 3
+LoadTest1:初始化块
+LoadTest1:默认构造方法 3
+```
+
+[slide]
+# 类加载顺序二
+
+```java
+public class LoadTest2 extends LoadTest1 {
+    int num = 5;
+    int str = prt(num);
+    private static int static_str = sprt("初始化static_str");
+
+    {System.out.println("LoadTest2:初始化块");}
+
+    static{
+        System.out.println("LoadTest2:静态初始化块");
+    }
+
+    public LoadTest2(){
+        System.out.println("LoadTest2:默认构造方法 " + getNum());
+    }
+
+    public int prt(int num){
+        System.out.println("LoadTest2:" + num);
+        return 0;
+    }
+
+    public static int sprt(String text){
+        System.out.println("LoadTest2:" + text);
+        return 0;
+    }
+
+    public int getNum() { return num; }
+
+    public static void main(String[] args){
+        LoadTest1 loadTest = new LoadTest2();
+    }
+}
+```
+
+[slide]
+# 结果
+
+```
+LoadTest1: 初始化static_str
+LoadTest1:静态初始化块
+LoadTest2:初始化static_str
+LoadTest2:静态初始化块
+LoadTest2:3           ???
+LoadTest1:初始化块
+LoadTest1:默认构造方法 0       ???
+LoadTest2:5
+LoadTest2:初始化块
+LoadTest2:默认构造方法 5
+```
+
+[slide]
+# org.gjt.mm.mysql.Driver
+
+```java
+public class Driver extends com.mysql.jdbc.Driver{
+    ...
+}
+```
+
+[slide]
+# SPI
+
+- Service Provider Interface
+- 为某个接口寻找服务实现的机制
+
+```
+在面向的对象里，我们一般推荐基于接口编程。方便替换实现。为了实现可配置化，Java提供了SPI
+```
+
+[slide]
+# 示例
+
+```java
+package com.focustech.search;
+
+public interface Search {  
+   public List search(String keyword);  
+}
+```
+
+[slide]
+# 示例
+
+```java
+package com.focustech.search.impl;
+
+public interface SearchImplA {  
+   public List search(String keyword){
+       ...
+   }  
+}
+```
+
+```java
+package com.focustech.search.impl;
+
+public interface SearchImplB {  
+   public List search(String keyword){
+       ...
+   }  
+}
+```
+
+[slide]
+# IOC
+
+```java
+public class Caller{
+    @Autowired
+    private Search search;
+
+    public void call(){
+        ...
+        search.search("keyword");
+        ...
+    }
+}
+```
+
+[slide]
 # ServiceLoader
+
+- SearchImplA所属jar包添加**META-INF/services/com.focustech.search.Search**文件
+
+```
+com.focustech.search.impl.SearchImplA
+```
+
+- SearchImplB所属jar包添加**META-INF/services/com.focustech.search.Search**文件
+
+```
+com.focustech.search.impl.SearchImplB
+```
+
+[slide]
+# ServiceLoader调用
+
+```java
+public class Caller{
+    private Search search;
+
+    public Caller(){
+        ServiceLoader<Search> serviceLoader = ServiceLoader.load(Search.class);  
+        Iterator<Search> searchs = serviceLoader.iterator();  
+        if (searchs.hasNext()) {  
+            search = searchs.next();  
+        }
+    }
+
+    public void call(){
+        ...
+        search.search("keyword");
+        ...
+    }
+}
+```
+
 
 [slide]
 # ServiceLoader在JDBC中的应用
@@ -486,18 +729,15 @@ private static void loadInitialDrivers() {
     ...
 }
 ```
-
-[slide]
-# Driver
-
 <!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
-
 
 [slide]
 # 返回响应
 
 [slide]
 # Response
+
+<!-- 返回响应 10p-->
 
 [slide]
 #
