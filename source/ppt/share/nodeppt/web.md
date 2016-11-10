@@ -82,6 +82,82 @@ Accept-Encoding: gzip, deflate
 # 查找，定位资源
 
 [slide]
+# 从访问对象开始
+
+- 从软件方面来看，程序需要一种方法来访问对象
+- 可以通过声明变量来完成
+- 使用变量，实际就是一种查找、定位的过程
+
+[slide]
+# 标识符
+
+```java
+int num = 3;
+```
+
+- 上面的代码创建了一个名为num的标识符(identifier)
+- 标识符是一个名称，在这种情况下用来指定特定的内容
+- 那这个标识符指向明确吗？<!-- 当我说num的时候，我是在指3吗？答案是看情况 -->
+
+[slide]
+# 作用范围
+
+```java
+public class VarTest {
+    int num = 1;
+
+    public void test(){
+        System.out.println("num = " + num);
+        num = 3;
+        {
+            int num = 2;
+            System.out.println("num = " + num);
+        }
+        System.out.println("num = " + num);
+    }
+}
+```
+
+[slide]
+# 扩大范围
+
+```java
+public class VarTest {
+    int num = 1;
+}
+public class VarTest2 {
+    int num = 2;
+}
+```
+
+[slide]
+# 逆向思考
+
+- “作用范围”的作用是什么?
+
+[silde]
+# 确认资源
+
+- 要确认资源，需要明确资源所在范围
+- Java中（包名+类名+[方法名，属性名]）
+
+[silde]
+# 互联网上如何确认资源呢？
+
+<!-- 从变量开始，引入标识符，继而引入URI -->
+
+[slide]
+# URI
+
+- URI:Uniform Resource Identifier
+- URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+- hier-part =
+     - "//" authority path-abempty
+     - / path-absolute
+     - / path-rootless
+     - / path-empty
+
+[slide]
 # URI/URL/URN
 
 - URI:Uniform Resource Identifier
@@ -92,12 +168,6 @@ Accept-Encoding: gzip, deflate
 # 区别
 
 - URI:按照规范定义的、可以唯一标识某一资源的字符串[RFC3986]
-    - URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
-    - hier-part =
-         - "//" authority path-abempty
-         - / path-absolute
-         - / path-rootless
-         - / path-empty
 - URL:URL是URI的一种，不仅标识了Web资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。
 - URN:URN是URI的一种。分两种情况，一种特指以urn方案开头的URI。另一种指包含了属性名的URI。它只是一个标识，并且不保证所表示的资源一定存在!
 
@@ -137,6 +207,7 @@ not every URI is a URL.  This is because there is another subcategory of
 URIs, uniform resource <i>names</i> (URNs), which name resources but do not
 specify how to locate them.
 ```
+<!-- URI javadoc -->
 
 [slide]
 # Java URI
@@ -382,6 +453,7 @@ private String parseUri(String requestString) {
 }
 ```
 
+<!-- Java处理HTTP,Socket编程,BIO,NIO,Thread,Reactor，30p -->
 [slide]
 # 如何看待请求?
 
@@ -406,15 +478,69 @@ Accept-Encoding: gzip, deflate
 [slide]
 # 把请求看作对象
 
-- HttpServletRequest
+- Request对象
 
-<!-- Java处理HTTP,Socket编程,BIO,NIO,Thread,Reactor，30p -->
+```java
+Request
+    method:String
+    host:String
+    port:int
+    path:String
+    accept:String
+    ...
+```
 
 [slide]
 # 把请求看作数据
 
-- clojure示例
-- golang示例
+```
+{
+    method:"GET"
+    host:"www.example.com"
+    port:80
+    path:"/hello.html"
+    accept:"text/plain; text/html"
+}
+```
+
+[slide]
+# 面向对象VS函数式
+
+- 定义一组对象，维护对象之间的关系
+- 定义一组函数，操作少量的数据结构
+<!-- 表达式问题 -->
+
+[slide]
+# 表达式问题
+
+- 贝尔实验室的Philip Wadler在1998年提出了表达式问题
+- 通过案例定义数据类型，在不重新编译现有代码的情况下可以将新的案例添加到数据类型和数据类型的新函数中，同时保留静态类型安全（例如，没有转换）
+
+[slide]
+# 面向对象：轻松添加新的行（类型）
+
+![](/web_file/press01.png)
+
+- java.util.List 接口中的每一列都表示一种方法。为简单起见，它包括四种方法：List.add、List.get、List.clear 和 List.size。前四行中的每一行都表示实现 java.util.List 的一个类： ArrayList、LinkedList、Stack 和 Vector。这些行和列交叉处的单元格表示每一种类的方法的现有实现（通过标准 Java 类库提供）。在底部添加的第五行表示您可以编写的实现 java.util.List 的新类。对于行上的每一个单元格来说，您都可以编写在 java.util.List 中相应方法的您自己的实现，特定于您的新类。
+
+[slide]
+# 函数语言：轻松添加新的列（函数）
+
+![](/web_file/press02.png)
+
+- 列表示 Clojure 的标准集合 API 中的函数：conj、nth、empty 和 count。同样，行表示 Clojure 的内置集合类型：list、vector、map 和 set。这些行和列交叉处的单元格表示 Clojure 提供的这些函数的现有实现。通过定义新的函数，您可以向表添加新的列。假设您的新函数是用 Clojure 的内置函数编写的，则它将能够自动支持所有相同的类型。
+
+[slide]
+# Java8 lambda表达式
+
+[slide]
+# Server
+
+- Tomcat
+- Jetty
+- Resin
+
+<!-- server处理 -->
 
 # 处理HTTP请求
 
@@ -425,7 +551,36 @@ Accept-Encoding: gzip, deflate
 <!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p -->
 
 [slide]
-#
+# Servlet架构
+
+![](/web_file/10.jpg)
+
+[slide]
+# Session
+
+[slide]
+# Filter
+
+[slide]
+# Listener
+
+[slide]
+# 注解
+
+[slide]
+# web.xml
+
+[slide]
+# web模块
+
+[slide]
+# 请求分派
+
+[slide]
+# Web应用
+
+[slide]
+# 应用声明周期
 <!-- Servlet流程,基于XML,基于注解，注解讲解 30p -->
 
 [slide]
