@@ -1,11 +1,11 @@
-title: Web
+title: 理解Web
 speaker: 王一帆
 url: http://www.ivaneye.com
 transition: stick
 theme: dark
 
 [slide]
-# Web
+# 理解Web
 ## 平台架构部 王一帆
 
 [slide]
@@ -534,41 +534,286 @@ Request
 # Java8 lambda表达式
 
 [slide]
+# Java的做法
+
+- HttpServletRequest
+
+```
+getCookies(): Cookie[]
+getDateHeader(String): long
+getHeader(String): String
+getHeaders(String): Enumeration
+getHeaderNames(): Enumeration
+getMethod(): String
+getContextPath(): String
+getQueryString(): String
+getRemoteUser(): String
+getRequestedSessionId(): String
+getRequestURI(): String
+getRequestURL(): StringBuffer
+getServletPath(): String
+getSession(boolean): HttpSession
+getSession(): HttpSession
+...
+```
+
+[slide]
 # Server
 
 - Tomcat
 - Jetty
 - Resin
 
-<!-- server处理 -->
-
-# 处理HTTP请求
-
-- 业务处理
+<!-- 以上为server处理 -->
 
 [slide]
-#
+# 如何定位资源？
+
+- /hello.html
+
+<!-- 目前为止我们只是定位到了服务器，如何定位到资源呢?
+     就像我们定位到了类，我们如何定位到属性和方法? -->
+
+[slide]
+# 路由
+
+```clojure
+(defroutes app
+  (GET "/" [] "<h1>Hello World</h1>")
+  (GET "/hello.html" [] (render "hello.html"))
+  (POST "/order/save" [order] (save order))
+  (route/not-found "<h1>Page not found</h1>"))
+```
+
+[slide]
+# Servlet路由
+
+- web.xml:部署描述文件
+
+[slide]
+# web.xml
+
+- ServletContext初始化参数
+- Session配置
+- Servlet声明
+- Servlet映射
+- 应用程序生命周期监听器类
+- 过滤器定义和过滤器映射
+- MIME类型映射
+- 欢迎文件列表
+- 错误页面
+- 语言环境和编码映射
+- 安全配置，包括login-config，security-constraint，security-constraint，security-role-ref和run-as
+
+[slide]
+# Servlet声明
+
+```xml
+  <servlet>
+    <servlet-name>helloServlet</servlet-name>
+    <servlet-class>com.focustech.hello.HelloServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>helloServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+```
+
+[slide]
+# Spring配置
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext.xml</param-value>
+    </context-param>
+```
+
+[slide]
+# Spring配置 续
+
+```xml
+...
+<servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.html</url-pattern>
+</servlet-mapping>
+...
+<servlet>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/dispatcher-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+</servlet-mapping>
+
+<welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+</welcome-file-list>
+<error-page>
+    <error-code>404</error-code>
+    <location>/nopage.html</location>
+</error-page>
+<session-config>
+    <session-timeout>360</session-timeout>
+</session-config>
+</web-app>
+```
+
+[slide]
+# 解释配置
+
+[slide]
+# Listener
+
+- Spring中的Listener
+
+[slide]
+# Servlet映射问题
+
+```xml
+<servlet>  
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>
+        org.springframework.web.servlet.DispatcherServlet
+    </servlet-class>
+    <init-param>  
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring/dispatcher-servlet.xml
+        </param-value>  
+    </init-param>  
+    <load-on-startup>1</load-on-startup>
+</servlet>  
+<servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+</servlet-mapping>  
+```
+
+[slide]
+# Filter映射问题
+
+[slide]
+# Filter顺序问题
+
+```xml
+<filter-mapping>
+  <filter-name>f1</filter-name>
+  <url-pattern>/a/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+  <filter-name>f2</filter-name>
+  <servlet-name>/a/b.do</servlet-name>
+</filter-mapping>
+<filter-mapping>
+  <filter-name>f3</filter-name>
+  <url-pattern>/a/c/*</url-pattern>
+</filter-mapping>
+<filter-mapping>
+  <filter-name>f4</filter-name>
+  <servlet-name>/a/d/e.do</servlet-name>
+</filter-mapping>
+<filter-mapping>
+  <filter-name>f5</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+- /a/s.do
+- /a/b.do
+- /a/d/e.do
+- /b.do
+- /a/c/p.do
+
+[slide]
+# 答案
+
+- /a/s.do      1   5
+- /a/b.do      1   5   2
+- /a/d/e.do    1   5   4
+- /b.do        5
+- /a/c/p.do    1   3   5
+
+[slide]
+# Filter顺序
+
+- 将 filter-mapping 元素包含与请求匹配的 url-pattern的筛选器按其在 web.xml 部署描述符中出现的顺序添加到链中。
+- 将 filter-mapping 元素包含与请求匹配的 servlet-name 的筛选器添加在链中与 URL 模式匹配的筛选器之后。
+- 链上先进先出的，链中最后的项目往往是最初请求的资源。
+
+[slide]
+# 处理请求
+
+```Java
+package com.focustech.hello;
+
+import java.io.*;
+import javax.servlet.http.*;
+import javax.servlet.*;
+
+public class HelloServlet extends HttpServlet{
+
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+   throws ServletException, IOException{
+      ...
+  }
+}
+```
+
+[slide]
+# 如何将请求对象传递给业务方法?
+
+- **反射**
+
+[slide]
+# 反射
+
+[slide]
+# 注解
+
+- 使用反射+注解，解释web注解的实现逻辑
+
 <!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p -->
 
 [slide]
 # Servlet架构
 
 ![](/web_file/10.jpg)
-
-[slide]
-# Session
-
-[slide]
-# Filter
-
-[slide]
-# Listener
-
-[slide]
-# 注解
-
-[slide]
-# web.xml
 
 [slide]
 # web模块
@@ -578,6 +823,53 @@ Request
 
 [slide]
 # Web应用
+
+[slide]
+# Cookie与Session
+
+- Cookies是存储在客户端计算机上的文本文件，并保留了各种信息。
+- 当下一次浏览器向 Web 服务器发送任何请求时，浏览器会把这些 Cookies 信息发送到服务器，服务器将使用这些信息来识别用户。
+- 而Session通过在服务器端记录信息确定用户身份。
+
+[slide]
+# 新增Cookie
+
+```java
+Cookie cookie = new Cookie("username","admin");   // 新建Cookie
+cookie.setMaxAge(Integer.MAX_VALUE);           // 设置生命周期为MAX_VALUE
+response.addCookie(cookie);                    // 输出到客户端
+```
+
+[slide]
+# 获取Cookie
+
+```java
+Cookie cookies = request.getCookies();
+for (int i = 0; i < cookies.length; i++){
+  cookie = cookies[i];
+  System.out.print("名称：" + cookie.getName( ) + "，");
+  System.out.print("值：" + cookie.getValue( )+" <br/>");
+}
+```
+
+[slide]
+# Session操作
+
+```java
+// 如果不存在 session 会话，则创建一个 session 对象
+HttpSession session = request.getSession(true);
+session.setAttribute(key, value);
+session.setMaxInactiveInterval(30*60);//30分钟超时
+```
+
+[slide]
+# 浏览器关闭Cookie
+
+- 实际上使用Session时，还是会使用Cookie
+- 会在响应的头部新增一个Set-Cookie头保存SessionID
+- 当再次请求时，请求会新增Cookie头，内容为SessionID，发送给服务器来获得相应的会话
+- 如果浏览器关闭了Cookie，如果使用Session，则需要对url进行encode.
+- response.encodeURL("...")
 
 [slide]
 # 应用声明周期
@@ -889,14 +1181,72 @@ private static void loadInitialDrivers() {
 [slide]
 # 返回响应
 
+```
+HTTP/1.1 200 OK
+Date: Sat, 31 Dec 2005 23:59:59 GMT
+Content-Type: text/html;charset=ISO-8859-1
+Content-Length: 122
+
+＜html＞
+＜head＞
+＜title＞hello＜/title＞
+＜/head＞
+＜body＞
+＜!-- body content --＞
+＜/body＞
+＜/html＞
+```
+
+- 状态行
+- 消息报头
+- 响应正文
+
 [slide]
-# Response
+# HttpServletResponse
+
+```
+addCookie(Cookie): void
+containsHeader(String): boolean
+encodeURL(String): String
+encodeRedirectURL(String): String
+sendError(int, String): void
+sendError(int): void
+sendRedirect(String): void
+setHeader(String, String): void
+addHeader(String, String): void
+setStatus(int): void
+...
+```
+
+[slide]
+# 回写响应
+
+```Java
+public void doGet(HttpServletRequest request,
+                HttpServletResponse response)
+throws ServletException, IOException{
+  PrintWriter out = response.getWriter();
+  out.println("Hello");
+}
+```
+
+[slide]
+# Format Body
+
+- json
+- 模板
 
 <!-- 返回响应 10p-->
 
 [slide]
-#
-<!-- HTML,CSS,JS 展示数据 10p -->
+# 客户端接收
+
+- 浏览器渲染
+- HTML
+- JavaScript
+- CSS
+
+<!-- 吕翔讲解 -->
 
 [slide]
 # 谢谢
