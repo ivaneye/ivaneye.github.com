@@ -33,6 +33,8 @@ theme: dark
 
 - 根据主机名，会首先查找IP，首先查询hosts文件，成功则返回其对应ip地址，如果没有查询到，则去查询DNS服务器，成功就会返回ip，否则会报告连接错误。
 
+<!-- 域名/主机名只是方便人类识别，机器识别的是数字,IP最终还是会被转化为数字。就像编程语言只是方便我们开发而已，机器只认识0和1 -->
+
 [slide]
 # 发送http请求
 
@@ -54,7 +56,7 @@ Accept-Encoding: gzip, deflate
 [slide]
 # 服务器处理请求
 
-- 服务器读取HTTP请求中的内容，在经过解析主机，解析站点名称，解析访问资源后，会查找相关资源，如果查找成功，则返回状态码200，失败就会返回大名鼎鼎的404，在服务器监测到请求不存在的资源后，可以按照程序员设置的跳转到别的页面。所以有各种各样的404错误页面。
+- 服务器读取HTTP请求中的内容，在经过解析主机、解析站点名称、解析访问资源后，会查找相关资源，如果查找成功，则返回状态码200，失败就会返回大名鼎鼎的404，在服务器监测到请求不存在的资源后，可以按照程序员设置的跳转到别的页面。所以有各种各样的404错误页面。
 
 [slide]
 # 服务器返回HTTP响应
@@ -575,7 +577,7 @@ getSession(): HttpSession
      就像我们定位到了类，我们如何定位到属性和方法? -->
 
 [slide]
-# 路由
+# 路由(Clojure示例)
 
 ```clojure
 (defroutes app
@@ -586,9 +588,28 @@ getSession(): HttpSession
 ```
 
 [slide]
+# 路由(Python示例)
+
+```python
+@route('/hello/<name>')
+def index(name):
+  return '<b>Hello {{name}}</b>!'
+```
+
+```python
+def setup_routing():
+  bottle.route('/', 'GET', index)
+  bottle.route('/edit', ['GET', 'POST'], edit)
+```
+
+[slide]
 # Servlet路由
 
 - web.xml:部署描述文件
+
+为什么使用XML作为描述文件?
+
+<!-- 很多语言使用语言自身来作为描述语言，Java为什么使用XML作为描述语言? -->
 
 [slide]
 # web.xml
@@ -608,16 +629,18 @@ getSession(): HttpSession
 [slide]
 # Servlet声明
 
+<!-- 与前面的路由配置做比较 -->
+
 ```xml
-  <servlet>
+<servlet>
     <servlet-name>helloServlet</servlet-name>
     <servlet-class>com.focustech.hello.HelloServlet</servlet-class>
-  </servlet>
+</servlet>
 
-  <servlet-mapping>
+<servlet-mapping>
     <servlet-name>helloServlet</servlet-name>
     <url-pattern>/hello</url-pattern>
-  </servlet-mapping>
+</servlet-mapping>
 ```
 
 [slide]
@@ -695,38 +718,43 @@ getSession(): HttpSession
 ```
 
 [slide]
-# 解释配置
-
-[slide]
-# Listener
-
-- Spring中的Listener
-
-[slide]
-# Servlet映射问题
+# url-pattern
 
 ```xml
-<servlet>  
-    <servlet-name>DispatcherServlet</servlet-name>
-    <servlet-class>
-        org.springframework.web.servlet.DispatcherServlet
-    </servlet-class>
-    <init-param>  
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:spring/dispatcher-servlet.xml
-        </param-value>  
-    </init-param>  
-    <load-on-startup>1</load-on-startup>
-</servlet>  
+<filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+...
 <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
 </servlet-mapping>  
 ```
 
+- "/"与"/\*"有什么区别？
+
 [slide]
-# Filter映射问题
+# Servlet规范
+
+- The container will try to find an exact match of the path of the request to the path of the servlet. A successful match selects the servlet.
+- The container will recursively try to match the longest path-prefix. This is done by stepping down the path tree a directory at a time, using the ’/’ character as a path separator. The longest match determines the servlet selected.
+- If the last segment in the URL path contains an extension (e.g. .jsp), the servlet container will try to match a servlet that handles requests for the extension. An extension is defined as the part of the last segment after the last ’.’ character.
+- If neither of the previous three rules result in a servlet match, the container will attempt to serve content appropriate for the resource requested. If a "default" servlet is defined for the application, it will be used. Many containers provide an implicit default servlet for serving content.
+
+[slide]
+# /与/\*比较
+
+- /\*会覆盖所有其他的servlet请求，包括servlet容器提供的servlet，比如default servlet和JSP servlet
+- /不会覆盖其它的servlet，但会匹配default请求
+
+[slide]
+# 对静态资源的处理
+
+- 配置Tomcat的defaultServlet来处理静态文件。注意：要写在DispatcherServlet的前面
+- 使用Spring静态资源处理配置。<mvc:default-servlet-handler/>或<mvc:resources/>(两者有什么区别?)
+
+<!-- <mvc:default-servlet-handler/>将静态资源的处理经由Spring MVC框架交回Web应用服务器处理。而<mvc:resources/>更进一步，由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能。 -->
 
 [slide]
 # Filter顺序问题
@@ -774,6 +802,196 @@ getSession(): HttpSession
 - 将 filter-mapping 元素包含与请求匹配的 url-pattern的筛选器按其在 web.xml 部署描述符中出现的顺序添加到链中。
 - 将 filter-mapping 元素包含与请求匹配的 servlet-name 的筛选器添加在链中与 URL 模式匹配的筛选器之后。
 - 链上先进先出的，链中最后的项目往往是最初请求的资源。
+
+[slide]
+# Listener
+
+```xml
+<listener>
+    <listener-class>
+        org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+</listener>
+```
+
+[slide]
+# 观察者模式
+
+<!-- 从观察者模式到监听器 -->
+![](/web_file/observer.jpg)
+
+- 定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时, 所有依赖于它的对象都得到通知并被自动更新。
+
+[slide]
+# Subject
+
+```java
+public abstract class Subject {
+    /**
+    * 用来保存注册的观察者对象
+    */
+    private List<Observer> list = new ArrayList<Observer>();
+    /**
+    * 注册观察者对象
+    * @param observer 观察者对象
+    */
+    public void attach(Observer observer){
+        list.add(observer);
+        System.out.println("Attached an observer");
+    }
+    /**
+    * 删除观察者对象
+    * @param observer 观察者对象
+    */
+    public void detach(Observer observer){
+        list.remove(observer);
+    }
+    /**
+    * 通知所有注册的观察者对象
+    */
+    public void nodifyObservers(String newState){
+        for(Observer observer : list){
+            observer.update(newState);
+        }
+    }
+}
+```
+
+[slide]
+# ConcreteSubject
+
+```java
+public class ConcreteSubject extends Subject{
+    private String state;
+    public String getState() {
+        return state;
+    }
+    public void change(String newState){
+        state = newState;
+        System.out.println("主题状态为：" + state);
+        //状态发生改变，通知各个观察者
+        this.nodifyObservers(state);
+    }
+}
+```
+
+[slide]
+# Observer
+
+```java
+public interface Observer {
+    /**
+    * 更新接口
+    * @param state 更新的状态
+    */
+    public void update(String state);
+}
+```
+
+[slide]
+# ConcreteObserver
+
+```java
+public class ConcreteObserver implements Observer {
+    //观察者的状态
+    private String observerState;
+    @Override
+    public void update(String state) {
+        /**
+        * 更新观察者的状态，使其与目标的状态保持一致
+        */
+        observerState = state;
+        System.out.println("状态为："+observerState);
+    }
+}
+```
+
+[slide]
+# Client
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        //创建主题对象
+        ConcreteSubject subject = new ConcreteSubject();
+        //创建观察者对象
+        Observer observer = new ConcreteObserver();
+        //将观察者对象登记到主题对象上
+        subject.attach(observer);
+        //改变主题对象的状态
+        subject.change("new state");
+    }
+}
+```
+
+<!-- 默认Listener Start -->
+[slide]
+# ServletContextListener接口
+
+- [接口方法] contextInitialized()与 contextDestroyed()
+- [接收事件] ServletContextEvent
+- [触发场景] 在Container加载Web应用程序时（例如启动 Container之后），会呼叫contextInitialized()，而当容器移除Web应用程序时，会呼叫contextDestroyed ()方法。
+
+[slide]
+# ServletContextAttributeListener
+
+- [接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()
+- [接收事件] ServletContextAttributeEvent
+- [触发场景] 若有对象加入为application（ServletContext）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、attributeRemoved()。
+
+[slide]
+# HttpSessionListener
+
+- [接口方法] sessionCreated()与sessionDestroyed ()
+- [接收事件] HttpSessionEvent
+- [触发场景] 在session （HttpSession）对象建立或被消灭时，会分别呼叫这两个方法。
+
+[slide]
+# HttpSessionAttributeListener
+
+- [接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()
+- [接收事件] HttpSessionBindingEvent
+- [触发场景] 若有对象加入为session（HttpSession）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、 attributeRemoved()。
+
+[slide]
+# HttpSessionActivationListener
+
+- [接口方法] sessionDidActivate()与 sessionWillPassivate()
+- [接收事件] HttpSessionEvent
+- [触发场景] Activate与Passivate是用于置换对象的动作，当session对象为了资源利用或负载平衡等原因而必须暂时储存至硬盘或其它储存器时（透 过对象序列化），所作的动作称之为Passivate，而硬盘或储存器上的session对象重新加载JVM时所采的动作称之为Activate，所以容易理解的，sessionDidActivate()与 sessionWillPassivate()分别于Activeate后与将Passivate前呼叫。
+
+[slide]
+# ServletRequestListener
+
+- [接口方法] requestInitialized()与 requestDestroyed()
+- [接收事件] RequestEvent
+- [触发场景] 在request（HttpServletRequest）对象建立或被消灭时，会分别呼叫这两个方法。
+
+[slide]
+# ServletRequestAttributeListener
+
+- [接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()
+- [接收事件] HttpSessionBindingEvent
+- [触发场景] 若有对象加入为request（HttpServletRequest）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、attributeRemoved()。
+
+[slide]
+# HttpSessionBindingListener
+
+- [接口方法] valueBound()与valueUnbound()
+- [接收事件] HttpSessionBindingEvent
+- [触发场景] 实现HttpSessionBindingListener接口的类别，其实例如果被加入至session（HttpSession）对象的属性中，则会 呼叫 valueBound()，如果被从session（HttpSession）对象的属性中移除，则会呼叫valueUnbound()，实现HttpSessionBindingListener接口的类别不需在web.xml中设定。
+<!-- 默认Listener End -->
+
+[slide]
+# ContextLoaderListener
+
+```java
+public class ContextLoaderListener
+                extends ContextLoader
+                implements ServletContextListener{...}
+```
+
+- 启动Web容器时，自动装配ApplicationContext的配置信息
 
 [slide]
 # 处理请求
@@ -1247,6 +1465,13 @@ throws ServletException, IOException{
 - CSS
 
 <!-- 吕翔讲解 -->
+
+[slide]
+# 考试
+
+- 木有考试!!! {:&.moveIn}
+
+<!-- 针对Web的理解，可以以任意形式总结给我，一起讨论! -->
 
 [slide]
 # 谢谢
