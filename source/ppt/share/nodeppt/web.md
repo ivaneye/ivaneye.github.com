@@ -304,7 +304,50 @@ Accept-Encoding: gzip, deflate
 [slide]
 # OSI七层模型
 
-<!-- 类似JavaIO的装饰模式 -->
+<!-- 类似JavaIO的装饰模式和高阶函数 -->
+
+[slide]
+# JavaIO
+
+```java
+BufferedInputStream bi = new BufferedInputStream(
+                            new FileInputStream(filename));
+```
+
+[slide]
+# 装饰模式
+
+- 动态地给一个对象添加一些额外的职责
+
+![](/web_file/decorator.jpg)
+
+[slide]
+# 高阶函数
+
+```clojure
+(send
+    (add-head
+    (add-footer msg)))
+```
+
+[slide]
+# Java8高阶函数
+
+```java
+Collections.sort(names,new Comparator<String>(){
+    @Override
+    public int compare(String first,String second){
+        return first.length() - second.length();
+    }
+});
+```
+
+[slide]
+# Java8高阶函数
+
+```java
+Collections.sort(names, (first, second) -> first.length() - second.length());
+```
 
 [slide]
 # 各种中间环节
@@ -317,7 +360,30 @@ Accept-Encoding: gzip, deflate
 - 防火墙
 - CDN
 
+[slide]
+# 路由器
+
+[slide]
+# DNS
+
+[slide]
+# 代理
+
+[slide]
+# 反向代理
+
+[slide]
+# 中继器
+
+[slide]
+# 防火墙
+
+[slide]
+# CDN
+
 <!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
+
+<!-- 历经千辛万苦终于找到了服务器，服务器需要对请求进行处理 -->
 
 [slide]
 # 处理请求
@@ -1013,18 +1079,151 @@ public class HelloServlet extends HttpServlet{
 }
 ```
 
+<!-- 提问：servlet生命周期？ -->
+
 [slide]
 # 如何将请求对象传递给业务方法?
 
-- **反射**
+- **反射**  {:&.moveIn}
+
+<!-- 提问：如何反射? -->
 
 [slide]
 # 反射
 
+- Class.forName()
+- getClass().getClassLoader().loadClass()
+
+<!-- 提问：两者的区别? -->
+
+[slide]
+# 两者区别
+
+- Class.forName()装载的class已经被初始化
+- getClass.getClassLoader().loadClass()装载的class还没有被link
+
+[slide]
+# 元编程
+
+什么叫元编程？
+
+- **编写程序的程序!** {:&.moveIn}
+
+<!-- 3D打印机的例子 -->
+
+[slide]
+# 常见元编程技术
+
+- Lisp的宏
+- C的宏
+- C++的Template
+- ...
+
+[slide]
+# C的宏
+
+```c
+#define x 1+1
+
+printf("x * x = %d\n",(x * x));
+```
+
+[slide]
+# Lisp的宏
+
+```clojure
+(defmacro prt [x]
+    `(println (* ~x ~x)))
+
+(prt (+ 1 1) (+ 1 1))
+```
+
+[slide]
+# Java元编程
+
+- **注解**  {:&.moveIn}
+
 [slide]
 # 注解
 
-- 使用反射+注解，解释web注解的实现逻辑
+- 注解为我们在代码中添加信息提供了一种形式化的方法,使我们可以在稍后某个时刻非常方便地使用这些数据.
+- 注解可以提供用来完整的描述程序所需要的信息,而这些信息是无法用Java来表达的
+- 注解本身并不做任何事情
+- 需要注解处理程序,来对注解来进行处理
+
+**特殊语法的文本**
+
+[slide]
+# 示例
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyTest {
+    public Class clz() default Object.class;
+    public String value();
+}
+```
+
+[slide]
+# 元注解
+
+```
+@Target     表示该注解可以用于什么地方
+            CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,PARAMETER,TYPE
+@Retention  表示需要在什么级别保存注解信息 SOURCE,CLASS,RUNTIME
+@Documented 将此注解包含在Javadoc中
+@Inherited  允许子类继承父类的注解
+```
+
+[slide]
+# 注解元素
+
+- 基本类型
+- String
+- Class
+- enum
+- Annotation
+- 及其数组
+
+[slide]
+# 注解的使用
+
+```java
+public class Dog {
+    @MyTest("testShout")   //@MyTest(value="testShout")
+    public String shout(){
+        return "wawawa";
+    }
+}
+```
+
+[slide]
+# 处理方法
+
+```java
+public static void main(String[] args) {
+    Class clz = Class.forName("com.focus.ann.Dog");
+    Dog dog = (Dog) clz.newInstance();
+    Method[] methods = clz.getMethods();
+    Method initMethod = null;
+    for(Method m : methods){
+        MyTest myTest = m.getAnnotation(MyTest.class);
+        if(myTest != null){
+            m.invoke(dog,new Object[]{});
+        }
+    }
+}
+```
+
+[slide]
+# Web中的注解
+
+- @WebServlet
+- @WebFilter
+- @WebInitParam
+- @WebListener
+- @MultipartConfig:表示请求期望是 mime/multipart 类型
 
 <!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p -->
 
@@ -1090,7 +1289,7 @@ session.setMaxInactiveInterval(30*60);//30分钟超时
 - response.encodeURL("...")
 
 [slide]
-# 应用声明周期
+# 应用生命周期
 <!-- Servlet流程,基于XML,基于注解，注解讲解 30p -->
 
 [slide]
