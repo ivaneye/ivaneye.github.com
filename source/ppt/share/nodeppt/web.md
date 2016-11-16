@@ -299,12 +299,29 @@ Accept-Encoding: gzip, deflate
 - 请求体
 
 [slide]
-# TCP/IP
+# 如何传输?
+
+- TCP/IP  {:&.fadeIn}
+
+[slide]
+# Java中的协议
+
+- 接口(Interface) {:&.fadeIn}
+- Protocol
 
 [slide]
 # OSI七层模型
 
+- 应用层：针对特定应用的协议
+- 表示层：设备固有数据格式和网络标准数据格式的转换
+- 会话层：通信管理。负责建立和断开通信连接
+- 传输层：管理两个节点之间的数据传输
+- 网络层：地址管理与路由选择
+- 数据链路层：互连设备之间传送和识别数据帧
+- 物理层：以0,1代表电压的高低、灯光的闪灭
 <!-- 类似JavaIO的装饰模式和高阶函数 -->
+
+**在处理由上层传过来的数据时可以附上当前分层的协议所必须的首部信息**
 
 [slide]
 # JavaIO
@@ -349,13 +366,18 @@ Collections.sort(names,new Comparator<String>(){
 Collections.sort(names, (first, second) -> first.length() - second.length());
 ```
 
+<!-- 发送出去了，就到了吗？没那么简单，还有各种中间环节 -->
+
 [slide]
 # 各种中间环节
 
-- DNS
-- 代理
-- 反向代理
 - 路由器
+- 代理
+- DNS
+- 网桥
+- 交换机
+- 网关
+- 反向代理
 - 中继器
 - 防火墙
 - CDN
