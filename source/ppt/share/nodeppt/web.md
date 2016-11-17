@@ -381,27 +381,24 @@ Collections.sort(names, (first, second) -> first.length() - second.length());
 - 中继器
 - 防火墙
 - CDN
+- ...
 
-[slide]
-# 路由器
-
-[slide]
-# DNS
+<!-- web开发有涉及的，反向代理，从代理->反向代理 -->
 
 [slide]
 # 代理
 
+![](/web_file/proxy.jpg)
+
 [slide]
 # 反向代理
 
-[slide]
-# 中继器
-
-[slide]
-# 防火墙
+![](/web_file/nproxy.jpg)
 
 [slide]
 # CDN
+
+![](/web_file/cdn.jpg)
 
 <!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
 
@@ -593,10 +590,12 @@ Request
 }
 ```
 
+<!-- 支线，OO VS Function Start-->
+
 [slide]
 # 面向对象VS函数式
 
-- 定义一组对象，维护对象之间的关系
+- 定义一组对象，针对特定的对象编写特定的方法
 - 定义一组函数，操作少量的数据结构
 <!-- 表达式问题 -->
 
@@ -620,8 +619,7 @@ Request
 
 - 列表示 Clojure 的标准集合 API 中的函数：conj、nth、empty 和 count。同样，行表示 Clojure 的内置集合类型：list、vector、map 和 set。这些行和列交叉处的单元格表示 Clojure 提供的这些函数的现有实现。通过定义新的函数，您可以向表添加新的列。假设您的新函数是用 Clojure 的内置函数编写的，则它将能够自动支持所有相同的类型。
 
-[slide]
-# Java8 lambda表达式
+<!-- 支线，OO VS Function End-->
 
 [slide]
 # Java的做法
@@ -825,10 +823,10 @@ def setup_routing():
 [slide]
 # Servlet规范
 
-- The container will try to find an exact match of the path of the request to the path of the servlet. A successful match selects the servlet.
-- The container will recursively try to match the longest path-prefix. This is done by stepping down the path tree a directory at a time, using the ’/’ character as a path separator. The longest match determines the servlet selected.
-- If the last segment in the URL path contains an extension (e.g. .jsp), the servlet container will try to match a servlet that handles requests for the extension. An extension is defined as the part of the last segment after the last ’.’ character.
-- If neither of the previous three rules result in a servlet match, the container will attempt to serve content appropriate for the resource requested. If a "default" servlet is defined for the application, it will be used. Many containers provide an implicit default servlet for serving content.
+- 如果有完全匹配的路径，则直接调用此路径对应的servlet
+- 如果找不到完全匹配路径，则按最长路径匹配规则进行匹配
+- 如果URL包含了后缀(例如jsp)，那么就找能对这个后缀名处理的servlet
+- 如果前三个规则都没找到对应的servlet，则容器将为请求提供相关内容，例如使用default servlet来进行处理
 
 [slide]
 # /与/\*比较
@@ -1255,13 +1253,147 @@ public static void main(String[] args) {
 ![](/web_file/10.jpg)
 
 [slide]
+# 模块化
+
+- OSGi
+- Jigsaw
+
+[slide]
+# ClassLoader
+
+![](/web_file/classloader.jpg)
+
+[slide]
+# 双亲委托模型
+
+- 首先由最顶层的类加载器Bootstrap ClassLoader试图加载，如果没加载到，
+- 则把任务转交给Extension ClassLoader试图加载，如果也没加载到，
+- 则转交给App ClassLoader 进行加载，如果它也没有加载得到的话，
+- 则返回给委托的发起者，由它到指定的文件系统或网络等URL中加载该类。
+- 如果它们都没有加载到这个类时，则抛出ClassNotFoundException异常。
+- 否则将这个找到的类生成一个类的定义，并将它加载到内存当中，最后返回这个类在内存中的Class实例对象
+
+[slide]
+# 为什么使用双亲委托模型
+
+**使用双亲委托模型主要是为了安全性.**
+- 如果不使用这种委托模式，那我们就可以随时使用自定义的Object来动态替代java核心api中定义的类型， 这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为Object已经在启动时就被引导类加载器（Bootstrcp ClassLoader） 加载，所以用户自定义的ClassLoader永远也无法加载一个自己写的Object，除非你改变JDK中ClassLoader搜索类的默认算法。
+
+[slide]
+# Class的唯一性判断
+
+JVM在判定两个class是否相同时，**不仅要判断两个类名是否相同，而且要判断是否由同一个类加载器实例加载的**。 只有两者同时满足的情况下，JVM才认为这两个class是相同的。就算两个class是同一份class字节码， 如果被两个不同的ClassLoader实例所加载，JVM也会认为它们是两个不同class。
+
+[slide]
+# 示例
+
+```java
+import com.sun.nio.zipfs.ZipFileStore;
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("1".getClass().getClassLoader());
+        System.out.println(ZipFileStore.class.getClassLoader());
+        System.out.println(A.class.getClassLoader());
+    }
+}
+class A{}
+```
+
+[slide]
+# 输出
+
+```
+null                          //BootStrap ClassLoader输出为null
+sun.misc.Launcher$ExtClassLoader@3e10c986
+sun.misc.Launcher$AppClassLoader@610f7612
+```
+
+[slide]
+# 自定义ClassLoader
+
+- 继承java.lang.ClassLoader
+- 重写父类的findClass方法
+- **如没有特殊的要求，一般不建议重写loadClass搜索类的算法**
+
+[slide]
+# Tomcat ClassLoader
+
+Java Web服务器需要解决以下四个问题：
+
+- 同一个Web服务器里，各个Web项目之间各自使用的Java类库要互相隔离。
+- 同一个Web服务器里，各个Web项目之间可以提供共享的Java类库。
+- 服务器为了不受Web项目的影响，应该使服务器的类库与应用程序的类库互相独立。
+- 对于支持JSP的Web服务器，应该支持热插拔（hotswap）功能。
+
+[slide]
+# Tomcat5
+
+![](/web_file/tomcat5.jpg)
+
+
+[slide]
+# Tomcat6
+
+![](/web_file/tomcat6.jpg)
+
+
+[slide]
+# Tomcat7
+
+![](/web_file/tomcat7.png)
+
+[slide]
+# 对比
+
+- Tomcat5,6,7的ClassLoader结构略有不同。
+- Tomcat6中将CommonClassLoader,CatalinaClassLoader,SharedClassLoader合并，就一个CommonClassLoader.
+- Tomcat7中没有ExtensionClassLoader.
+
+[slide]
+# 资源隔离
+
+从上图可以看出，为了解决jar隔离和共享的问题。对于每个webapp,Tomcat都会创建一个WebAppClassLoader来加载应用，这样就保证了每个应用加载进来的class都是不同的(因为ClassLoader不同)! 而共享的jar放在tomcat-home/lib目录下，由CommonClassLoader来加载。通过双亲委托模式，提供给其下的所有webapp共享
+
+[slide]
+# 特别说明
+
+**对于WebAppClassLoader是违反双亲委托模型的。如果加载的是jre或者servlet api则依然是双亲委托模型。 而如果不是的话，则会先尝试自行加载，如果找不到再委托父加载器加载。 这个应该是可以理解的，因为应用的class是由WebAppClassLoader加载的，是项目私有的**
+
+[slide]
 # web模块
 
-[slide]
-# 请求分派
+- 编写一个类继承自Servlet，将该类打成JAR包，并且在JAR包的META-INF目录下放置一个 web-fragment.xml文件：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment
+    xmlns=http://java.sun.com/xml/ns/javaee
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+    metadata-complete="true">
+    <servlet>
+        <servlet-name>fragment</servlet-name>
+        <servlet-class>footmark.servlet.FragmentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fragment</servlet-name>
+        <url-pattern>/fragment</url-pattern>
+    </servlet-mapping>
+</web-fragment>
+```
 
 [slide]
-# Web应用
+# OSGi模块化
+
+- OSGi通过自定义ClassLoader实现包级别的访问权限控制
+- 通过自定义ClassLoader实现多版本控制(一个bundle可以发布多个版本，而jar不能多版本共存)
+- 可独立部署和卸载
+
+[slide]
+# OSGi ClassLoader
+
+![](/web_file/OSGi_ClassLoader.png)
 
 [slide]
 # Cookie与Session
@@ -1276,6 +1408,8 @@ public static void main(String[] args) {
 ```java
 Cookie cookie = new Cookie("username","admin");   // 新建Cookie
 cookie.setMaxAge(Integer.MAX_VALUE);           // 设置生命周期为MAX_VALUE
+cookie.setDomain(domain);
+cookie.setPath("/");
 response.addCookie(cookie);                    // 输出到客户端
 ```
 
@@ -1304,14 +1438,12 @@ session.setMaxInactiveInterval(30*60);//30分钟超时
 [slide]
 # 浏览器关闭Cookie
 
-- 实际上使用Session时，还是会使用Cookie
+- 实际上使用Session时，还是会使用Cookie {:&.moveIn}
 - 会在响应的头部新增一个Set-Cookie头保存SessionID
 - 当再次请求时，请求会新增Cookie头，内容为SessionID，发送给服务器来获得相应的会话
 - 如果浏览器关闭了Cookie，如果使用Session，则需要对url进行encode.
 - response.encodeURL("...")
 
-[slide]
-# 应用生命周期
 <!-- Servlet流程,基于XML,基于注解，注解讲解 30p -->
 
 [slide]
