@@ -137,13 +137,13 @@ public class VarTest2 {
 
 - “作用范围”的作用是什么?
 
-[silde]
+[slide]
 # 确认资源
 
 - 要确认资源，需要明确资源所在范围
 - Java中（包名+类名+[方法名，属性名]）
 
-[silde]
+[slide]
 # 互联网上如何确认资源呢？
 
 <!-- 从变量开始，引入标识符，继而引入URI -->
@@ -203,10 +203,10 @@ URN是URI的子集，包括名字（给定的命名空间内），但是不包�
 - URL
 
 ```
-A URI is a uniform resource <i>identifier</i> while a URL is a uniform
-resource <i>locator</i>.  Hence every URL is a URI, abstractly speaking, but
+A URI is a uniform resource identifier while a URL is a uniform
+resource locator.  Hence every URL is a URI, abstractly speaking, but
 not every URI is a URL.  This is because there is another subcategory of
-URIs, uniform resource <i>names</i> (URNs), which name resources but do not
+URIs, uniform resource names (URNs), which name resources but do not
 specify how to locate them.
 ```
 <!-- URI javadoc -->
@@ -250,7 +250,8 @@ System.out.println(uri.getPath());
 System.out.println(uri.getQuery());
 System.out.println(uri.getFragment());
 URL url = new URL("http://www.baidu.com");
-BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+BufferedReader br = new BufferedReader(new
+                InputStreamReader(url.openStream(),"UTF-8"));
 String tmp;
 while((tmp = br.readLine()) != null){
     System.out.println(tmp);
@@ -558,7 +559,7 @@ Accept-Encoding: gzip, deflate
 ...
 ```
 
-- 字符串？
+- 字符串？ {:&.moveIn}
 - 数据？
 - 对象？
 
@@ -691,9 +692,8 @@ def setup_routing():
 [slide]
 # Servlet路由
 
-- web.xml:部署描述文件
-
-为什么使用XML作为描述文件?
+- web.xml:部署描述文件 {:&.moveIn}
+- 为什么使用XML作为描述文件?
 
 <!-- 很多语言使用语言自身来作为描述语言，Java为什么使用XML作为描述语言? -->
 
@@ -736,7 +736,8 @@ def setup_routing():
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
         <filter-class>
@@ -838,7 +839,7 @@ def setup_routing():
 # 对静态资源的处理
 
 - 配置Tomcat的defaultServlet来处理静态文件。注意：要写在DispatcherServlet的前面
-- 使用Spring静态资源处理配置。<mvc:default-servlet-handler/>或<mvc:resources/>(两者有什么区别?)
+- 使用Spring静态资源处理配置。< mvc:default-servlet-handler/>或< mvc:resources/>(两者有什么区别?)
 
 <!-- <mvc:default-servlet-handler/>将静态资源的处理经由Spring MVC框架交回Web应用服务器处理。而<mvc:resources/>更进一步，由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能。 -->
 
@@ -1276,13 +1277,13 @@ public static void main(String[] args) {
 [slide]
 # 为什么使用双亲委托模型
 
-**使用双亲委托模型主要是为了安全性.**
+- **使用双亲委托模型主要是为了安全性.** {:&.moveIn}
 - 如果不使用这种委托模式，那我们就可以随时使用自定义的Object来动态替代java核心api中定义的类型， 这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为Object已经在启动时就被引导类加载器（Bootstrcp ClassLoader） 加载，所以用户自定义的ClassLoader永远也无法加载一个自己写的Object，除非你改变JDK中ClassLoader搜索类的默认算法。
 
 [slide]
 # Class的唯一性判断
 
-JVM在判定两个class是否相同时，**不仅要判断两个类名是否相同，而且要判断是否由同一个类加载器实例加载的**。 只有两者同时满足的情况下，JVM才认为这两个class是相同的。就算两个class是同一份class字节码， 如果被两个不同的ClassLoader实例所加载，JVM也会认为它们是两个不同class。
+- JVM在判定两个class是否相同时，**不仅要判断两个类名是否相同，而且要判断是否由同一个类加载器实例加载的**。 只有两者同时满足的情况下，JVM才认为这两个class是相同的。就算两个class是同一份class字节码， 如果被两个不同的ClassLoader实例所加载，JVM也会认为它们是两个不同class。 {:&.moveIn}
 
 [slide]
 # 示例

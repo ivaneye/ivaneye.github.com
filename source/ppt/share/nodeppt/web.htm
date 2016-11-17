@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Web - By 王一帆</title>
+    <title>理解Web - By 王一帆</title>
     <link rel="stylesheet" media="all" href="./css/nodeppt.css">
     <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
     
@@ -21,8 +21,8 @@
 <div class="slides">
     <slides id="container">
         <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
-<h1>Web</h1>
-<h2>王一帆</h2>
+<h1>理解Web</h1>
+<h2>平台架构部 王一帆</h2>
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -56,7 +56,7 @@
 <ul>
 <li>根据主机名，会首先查找IP，首先查询hosts文件，成功则返回其对应ip地址，如果没有查询到，则去查询DNS服务器，成功就会返回ip，否则会报告连接错误。</li>
 </ul>
-
+<!-- 域名/主机名只是方便人类识别，机器识别的是数字,IP最终还是会被转化为数字。就像编程语言只是方便我们开发而已，机器只认识0和1 -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>发送http请求</h1>
@@ -77,7 +77,7 @@ Accept-Encoding: gzip, deflate
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>服务器处理请求</h1>
 <ul>
-<li>服务器读取HTTP请求中的内容，在经过解析主机，解析站点名称，解析访问资源后，会查找相关资源，如果查找成功，则返回状态码200，失败就会返回大名鼎鼎的404，在服务器监测到请求不存在的资源后，可以按照程序员设置的跳转到别的页面。所以有各种各样的404错误页面。</li>
+<li>服务器读取HTTP请求中的内容，在经过解析主机、解析站点名称、解析访问资源后，会查找相关资源，如果查找成功，则返回状态码200，失败就会返回大名鼎鼎的404，在服务器监测到请求不存在的资源后，可以按照程序员设置的跳转到别的页面。所以有各种各样的404错误页面。</li>
 </ul>
 
 </article></section></slide>
@@ -95,13 +95,101 @@ Accept-Encoding: gzip, deflate
 <img src="./web_file/02.jpg" alt="">
 <!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
 </article></section></slide>
-<slide class="slide"><section class="slide-wrapper"><article>
-<ul class="moveIn">
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>流程划分</h1>
+<ul class="fadeIn">
 <li>如何查找，定位资源</li>
 <li>如何发送请求</li>
 <li>如何处理请求</li>
 <li>如何返回响应</li>
 <li>如何展示</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>查找，定位资源</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>从访问对象开始</h1>
+<ul>
+<li>从软件方面来看，程序需要一种方法来访问对象</li>
+<li>可以通过声明变量来完成</li>
+<li>使用变量，实际就是一种查找、定位的过程</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>标识符</h1>
+<pre><code class="java">int num = 3;
+</code></pre>
+<ul>
+<li>上面的代码创建了一个名为num的标识符(identifier)</li>
+<li>标识符是一个名称，在这种情况下用来指定特定的内容</li>
+<li>那这个标识符指向明确吗？<!-- 当我说num的时候，我是在指3吗？答案是看情况 --></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>作用范围</h1>
+<pre><code class="java">public class VarTest {
+    int num = 1;
+
+    public void test(){
+        System.out.println(&quot;num = &quot; + num);
+        num = 3;
+        {
+            int num = 2;
+            System.out.println(&quot;num = &quot; + num);
+        }
+        System.out.println(&quot;num = &quot; + num);
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>扩大范围</h1>
+<pre><code class="java">public class VarTest {
+    int num = 1;
+}
+public class VarTest2 {
+    int num = 2;
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>逆向思考</h1>
+<ul>
+<li>“作用范围”的作用是什么?</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>确认资源</h1>
+<ul>
+<li>要确认资源，需要明确资源所在范围</li>
+<li>Java中（包名+类名+[方法名，属性名]）</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>互联网上如何确认资源呢？</h1>
+<!-- 从变量开始，引入标识符，继而引入URI -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>URI</h1>
+<ul>
+<li>URI:Uniform Resource Identifier</li>
+<li>URI = scheme &quot;:&quot; hier-part [ &quot;?&quot; query ] [ &quot;#&quot; fragment ]</li>
+<li>hier-part =<ul>
+<li>&quot;//&quot; authority path-abempty</li>
+<li>/ path-absolute</li>
+<li>/ path-rootless</li>
+<li>/ path-empty</li>
+</ul>
+</li>
 </ul>
 
 </article></section></slide>
@@ -117,17 +205,16 @@ Accept-Encoding: gzip, deflate
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>区别</h1>
 <ul>
-<li>URI:可以唯一标识某一资源的字符串</li>
-<li>URL:URL是URI的一种，不仅标识了Web 资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。</li>
-<li>URN:URN是URI的一种，用特定命名空间的名字标识资源。使用URN可以在不知道其网络位置及访问方式的情况下讨论资源。</li>
+<li>URI:按照规范定义的、可以唯一标识某一资源的字符串[RFC3986]</li>
+<li>URL:URL是URI的一种，不仅标识了Web资源，还指定了操作或者获取方式，同时指出了主要访问机制和网络位置。</li>
+<li>URN:URN是URI的一种。分两种情况，一种特指以urn方案开头的URI。另一种指包含了属性名的URI。它只是一个标识，并且不保证所表示的资源一定存在!</li>
 </ul>
-<img src="./web_file/01.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>例子</h1>
 <ul>
-<li><a href="http://www.example.com/hello.html" target="_blank">http://www.example.com/hello.html</a></li>
+<li><a href="http://www.example.com/hello.html?param=val#frag" target="_blank">http://www.example.com/hello.html?param=val#frag</a></li>
 </ul>
 
 </article></section></slide>
@@ -135,9 +222,9 @@ Accept-Encoding: gzip, deflate
 <h1>URL</h1>
 <p>这是一个URL,其中:</p>
 <ul>
-<li><strong>http</strong> 是定义如何访问资源的方式(协议类型)</li>
-<li><strong>www.example.com</strong> 域名</li>
-<li><strong>/hello.html</strong> 是资源存放的路径</li>
+<li><strong>http</strong> 是定义如何访问资源的方式(scheme,协议类型)</li>
+<li><strong>www.example.com</strong> 域名 (authority)</li>
+<li><strong>/hello.html</strong> 是资源存放的路径 (path)</li>
 </ul>
 <p><strong>所以它也是个URI</strong></p>
 
@@ -148,10 +235,79 @@ Accept-Encoding: gzip, deflate
 <ul>
 <li>www.example.com/hello.html</li>
 </ul>
-<!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
+
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
-<h1>发送http请求</h1>
+<h1>Java URL处理</h1>
+<ul>
+<li>URI</li>
+<li>URL</li>
+</ul>
+<pre><code>A URI is a uniform resource identifier while a URL is a uniform
+resource locator.  Hence every URL is a URI, abstractly speaking, but
+not every URI is a URL.  This is because there is another subcategory of
+URIs, uniform resource names (URNs), which name resources but do not
+specify how to locate them.
+</code></pre><!-- URI javadoc -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java URI</h1>
+<pre><code>getQuery():String
+getFragment():String
+getPath():String
+getPort():int
+getHost():String
+getAuthority():String
+getScheme():String
+toURL():URL
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java URL</h1>
+<pre><code>toURI():URI
+getFile():String
+getHost():String
+getPort():int
+getAuthority():String
+getPath():String
+getQuery():String
+openConnection():URLConnection
+openStream():InputStream
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java Example</h1>
+<pre><code class="java">URI uri = new URI(&quot;http://www.example.com/hello.html?param=val#frag&quot;);
+System.out.println(uri.getAuthority());
+System.out.println(uri.getPath());
+System.out.println(uri.getQuery());
+System.out.println(uri.getFragment());
+URL url = new URL(&quot;http://www.baidu.com&quot;);
+BufferedReader br = new BufferedReader(new
+                InputStreamReader(url.openStream(),&quot;UTF-8&quot;));
+String tmp;
+while((tmp = br.readLine()) != null){
+    System.out.println(tmp);
+}
+br.close();
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>输出</h1>
+<pre><code>www.example.com
+/hello.html
+param=val
+frag
+...
+</code></pre><!-- 流程细化：什么是URL,URI,如何根据URL找到服务 10p -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>发送请求</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HTTP请求</h1>
 <ul>
 <li>浏览器会把自身相关信息与请求相关信息封装成HTTP请求消息改送给服务器。</li>
 </ul>
@@ -167,52 +323,1184 @@ Accept-Encoding: gzip, deflate
 </code></pre>
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
-<h1>HTTP</h1>
+<h1>Request</h1>
+<ul>
+<li>请求首行</li>
+<li>请求头</li>
+<li>请求体</li>
+</ul>
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
-<h1>TCP/IP</h1>
+<h1>如何传输?</h1>
+<ul class="fadeIn">
+<li>TCP/IP </li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java中的协议</h1>
+<ul class="fadeIn">
+<li>接口(Interface)</li>
+<li>Protocol</li>
+</ul>
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>OSI七层模型</h1>
-<!-- 类似JavaIO的装饰模式 -->
+<ul>
+<li>应用层：针对特定应用的协议</li>
+<li>表示层：设备固有数据格式和网络标准数据格式的转换</li>
+<li>会话层：通信管理。负责建立和断开通信连接</li>
+<li>传输层：管理两个节点之间的数据传输</li>
+<li>网络层：地址管理与路由选择</li>
+<li>数据链路层：互连设备之间传送和识别数据帧</li>
+<li>物理层：以0,1代表电压的高低、灯光的闪灭<!-- 类似JavaIO的装饰模式和高阶函数 --></li>
+</ul>
+<p><strong>在处理由上层传过来的数据时可以附上当前分层的协议所必须的首部信息</strong></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>JavaIO</h1>
+<pre><code class="java">BufferedInputStream bi = new BufferedInputStream(
+                            new FileInputStream(filename));
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>装饰模式</h1>
+<ul>
+<li>动态地给一个对象添加一些额外的职责</li>
+</ul>
+<img src="./web_file/decorator.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>高阶函数</h1>
+<pre><code class="clojure">(send
+    (add-head
+    (add-footer msg)))
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java8高阶函数</h1>
+<pre><code class="java">Collections.sort(names,new Comparator&lt;String&gt;(){
+    @Override
+    public int compare(String first,String second){
+        return first.length() - second.length();
+    }
+});
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java8高阶函数</h1>
+<pre><code class="java">Collections.sort(names, (first, second) -&gt; first.length() - second.length());
+</code></pre>
+<!-- 发送出去了，就到了吗？没那么简单，还有各种中间环节 -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>各种中间环节</h1>
 <ul>
-<li>DNS</li>
-<li>代理</li>
-<li>反向代理</li>
 <li>路由器</li>
+<li>代理</li>
+<li>DNS</li>
+<li>网桥</li>
+<li>交换机</li>
+<li>网关</li>
+<li>反向代理</li>
 <li>中继器</li>
 <li>防火墙</li>
 <li>CDN</li>
+<li>...</li>
 </ul>
+<!-- web开发有涉及的，反向代理，从代理->反向代理 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>代理</h1>
+<img src="./web_file/proxy.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>反向代理</h1>
+<img src="./web_file/nproxy.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>CDN</h1>
+<img src="./web_file/cdn.jpg" alt="">
 <!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
+<!-- 历经千辛万苦终于找到了服务器，服务器需要对请求进行处理 -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>处理请求</h1>
+<!-- 处理请求流程细分 -->
+<ul>
+<li>接收http请求</li>
+<li>解析http请求</li>
+<li>处理http请求</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>接收http请求</h1>
+<ul>
+<li>ServerSocket</li>
+</ul>
+<pre><code class="java">ServerSocket serverSocket = null;
+int port = 8080;
+serverSocket = new ServerSocket(port, 1,
+                    InetAddress.getByName(&quot;127.0.0.1&quot;));
+
+Socket socket = serverSocket.accept();
+InputStream input = socket.getInputStream();
+OutputStream output = socket.getOutputStream();
+
+...
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>模型</h1>
+<img src="./web_file/04.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>阻塞IO/非阻塞IO/同步IO/异步IO</h1>
+<ul>
+<li>一个IO操作其实分成了两个步骤:发起IO请求和实际的IO操作</li>
+<li>阻塞IO和非阻塞IO的区别在于第一步：发起IO请求是否会被阻塞，如果阻塞直到完成那么就是传统的阻塞IO;如果不阻塞，那么就是非阻塞IO</li>
+<li>同步IO和异步IO的区别就在于第二个步骤是否阻塞，如果实际的IO读写阻塞请求进程，那么就是同步IO，因此阻塞IO、非阻塞IO、IO复用、信号驱动IO都是同步IO;如果不阻塞，而是操作系统帮你做完IO操作再将结果返回给你，那么就是异步IO</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>服务端(连接)[NIO]</h1>
+<pre><code class="java">//获取一个ServerSocket通道
+ServerSocketChannel serverChannel = ServerSocketChannel.open();
+serverChannel.configureBlocking(false);
+serverChannel.socket().bind(new InetSocketAddress(port));
+//获取通道管理器
+selector = Selector.open();
+//将通道管理器与通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件，
+serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>服务端(监听)[NIO]</h1>
+<pre><code class="java">while(true){
+   selector.select();//当有注册的事件到达时，方法返回，否则阻塞。
+   for(SelectionKey key : selector.selectedKeys()){
+       if(key.isAcceptable()){
+           ServerSocketChannel server = (ServerSocketChannel)key.channel();
+           SocketChannel channel = server.accept();
+           channel.write(ByteBuffer.wrap(new String(&quot;send message to client&quot;).getBytes()));
+           //在与客户端连接成功后，为客户端通道注册SelectionKey.OP_READ事件。
+           channel.register(selector, SelectionKey.OP_READ);
+       }else if(key.isReadable()){//有可读数据事件
+           SocketChannel channel = (SocketChannel)key.channel();
+           ByteBuffer buffer = ByteBuffer.allocate(10);
+           int read = channel.read(buffer);
+           byte[] data = buffer.array();
+           String message = new String(data);
+           System.out.println(&quot;receive message from client, size:&quot; + buffer.position() + &quot; msg: &quot; + message);
+       }
+   }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>模型[NIO]</h1>
+<img src="./web_file/06.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>半包问题</h1>
+<img src="./web_file/07.png" alt="">
+<img src="./web_file/08.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Reactor模型</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>AWT EVENTS</h1>
+<img src="./web_file/09.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Reactor中的组件</h1>
+<ul>
+<li><strong>Reactor</strong>:Reactor是IO事件的派发者。</li>
+<li><strong>Acceptor</strong>:Acceptor接受client连接，建立对应client的Handler，并向Reactor注册此Handler。</li>
+<li><strong>Handler</strong>:和一个client通讯的实体，按这样的过程实现业务的处理。一般在基本的Handler基础上还会有更进一步的层次划分， 用来抽象诸如decode，process和encoder这些过程。比如对Web Server而言，decode通常是HTTP请求的解析， process的过程会进一步涉及到Listner和Servlet的调用。业务逻辑的处理在Reactor模式里被分散的IO事件所打破， 所以Handler需要有适当的机制在所需的信息还不全（读到一半）的时候保存上下文，并在下一次IO事件到来的 时候（另一半可读了）能继续中断的处理。为了简化设计，Handler通常被设计成状态机，按GoF的state pattern来 实现。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Reactor单线程模型</h1>
+<img src="./web_file/10.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Reactor多线程模型</h1>
+<img src="./web_file/11.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>主从Reactor模型</h1>
+<img src="./web_file/12.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>解析http请求[Java]</h1>
+<pre><code class="java">private String parseUri(String requestString) {
+    int index1, index2;
+    index1 = requestString.indexOf(&#39; &#39;);
+    if (index1 != -1) {
+        index2 = requestString.indexOf(&#39; &#39;, index1 + 1);
+        if (index2 &gt; index1)
+            return requestString.substring(index1 + 1, index2);
+    }
+    return null;
+}
+</code></pre>
 <!-- Java处理HTTP,Socket编程,BIO,NIO,Thread,Reactor，30p -->
 </article></section></slide>
-<slide class="slide"><section class="slide-wrapper"><article>
-<p>#
-<!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p --></p>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>如何看待请求?</h1>
+<!-- 把请求解析为什么? -->
+<pre><code>GET /hello.html HTTP/1.1
+Accept: text/plain; text/html
+Accept-Language: en-gb
+Connection: Keep-Alive
+Host: www.example.com
+User-Agent: Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)
+Accept-Encoding: gzip, deflate
+
+...
+</code></pre><ul class="moveIn">
+<li>字符串？</li>
+<li>数据？</li>
+<li>对象？</li>
+</ul>
 
 </article></section></slide>
-<slide class="slide"><section class="slide-wrapper"><article>
-<p>#
-<!-- Servlet流程,基于XML,基于注解，注解讲解 30p --></p>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>把请求看作对象</h1>
+<ul>
+<li>Request对象</li>
+</ul>
+<pre><code class="java">Request
+    method:String
+    host:String
+    port:int
+    path:String
+    accept:String
+    ...
+</code></pre>
 
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>把请求看作数据</h1>
+<pre><code>{
+    method:&quot;GET&quot;
+    host:&quot;www.example.com&quot;
+    port:80
+    path:&quot;/hello.html&quot;
+    accept:&quot;text/plain; text/html&quot;
+}
+</code></pre><!-- 支线，OO VS Function Start-->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>面向对象VS函数式</h1>
+<ul>
+<li>定义一组对象，针对特定的对象编写特定的方法</li>
+<li>定义一组函数，操作少量的数据结构<!-- 表达式问题 --></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>表达式问题</h1>
+<ul>
+<li>贝尔实验室的Philip Wadler在1998年提出了表达式问题</li>
+<li>通过案例定义数据类型，在不重新编译现有代码的情况下可以将新的案例添加到数据类型和数据类型的新函数中，同时保留静态类型安全（例如，没有转换）</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>面向对象：轻松添加新的行（类型）</h1>
+<img src="./web_file/press01.png" alt="">
+<ul>
+<li>java.util.List 接口中的每一列都表示一种方法。为简单起见，它包括四种方法：List.add、List.get、List.clear 和 List.size。前四行中的每一行都表示实现 java.util.List 的一个类： ArrayList、LinkedList、Stack 和 Vector。这些行和列交叉处的单元格表示每一种类的方法的现有实现（通过标准 Java 类库提供）。在底部添加的第五行表示您可以编写的实现 java.util.List 的新类。对于行上的每一个单元格来说，您都可以编写在 java.util.List 中相应方法的您自己的实现，特定于您的新类。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>函数语言：轻松添加新的列（函数）</h1>
+<img src="./web_file/press02.png" alt="">
+<ul>
+<li>列表示 Clojure 的标准集合 API 中的函数：conj、nth、empty 和 count。同样，行表示 Clojure 的内置集合类型：list、vector、map 和 set。这些行和列交叉处的单元格表示 Clojure 提供的这些函数的现有实现。通过定义新的函数，您可以向表添加新的列。假设您的新函数是用 Clojure 的内置函数编写的，则它将能够自动支持所有相同的类型。</li>
+</ul>
+<!-- 支线，OO VS Function End-->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java的做法</h1>
+<ul>
+<li>HttpServletRequest</li>
+</ul>
+<pre><code>getCookies(): Cookie[]
+getDateHeader(String): long
+getHeader(String): String
+getHeaders(String): Enumeration
+getHeaderNames(): Enumeration
+getMethod(): String
+getContextPath(): String
+getQueryString(): String
+getRemoteUser(): String
+getRequestedSessionId(): String
+getRequestURI(): String
+getRequestURL(): StringBuffer
+getServletPath(): String
+getSession(boolean): HttpSession
+getSession(): HttpSession
+...
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Server</h1>
+<ul>
+<li>Tomcat</li>
+<li>Jetty</li>
+<li>Resin</li>
+</ul>
+<!-- 以上为server处理 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>如何定位资源？</h1>
+<ul>
+<li>/hello.html</li>
+</ul>
+<!-- 目前为止我们只是定位到了服务器，如何定位到资源呢?
+     就像我们定位到了类，我们如何定位到属性和方法? -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>路由(Clojure示例)</h1>
+<pre><code class="clojure">(defroutes app
+  (GET &quot;/&quot; [] &quot;&lt;h1&gt;Hello World&lt;/h1&gt;&quot;)
+  (GET &quot;/hello.html&quot; [] (render &quot;hello.html&quot;))
+  (POST &quot;/order/save&quot; [order] (save order))
+  (route/not-found &quot;&lt;h1&gt;Page not found&lt;/h1&gt;&quot;))
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>路由(Python示例)</h1>
+<pre><code class="python">@route(&#39;/hello/&lt;name&gt;&#39;)
+def index(name):
+  return &#39;&lt;b&gt;Hello {{name}}&lt;/b&gt;!&#39;
+</code></pre>
+<pre><code class="python">def setup_routing():
+  bottle.route(&#39;/&#39;, &#39;GET&#39;, index)
+  bottle.route(&#39;/edit&#39;, [&#39;GET&#39;, &#39;POST&#39;], edit)
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Servlet路由</h1>
+<ul class="moveIn">
+<li>web.xml:部署描述文件</li>
+<li>为什么使用XML作为描述文件?</li>
+</ul>
+<!-- 很多语言使用语言自身来作为描述语言，Java为什么使用XML作为描述语言? -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>web.xml</h1>
+<ul>
+<li>ServletContext初始化参数</li>
+<li>Session配置</li>
+<li>Servlet声明</li>
+<li>Servlet映射</li>
+<li>应用程序生命周期监听器类</li>
+<li>过滤器定义和过滤器映射</li>
+<li>MIME类型映射</li>
+<li>欢迎文件列表</li>
+<li>错误页面</li>
+<li>语言环境和编码映射</li>
+<li>安全配置，包括login-config，security-constraint，security-constraint，security-role-ref和run-as</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Servlet声明</h1>
+<!-- 与前面的路由配置做比较 -->
+<pre><code class="xml">&lt;servlet&gt;
+    &lt;servlet-name&gt;helloServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.focustech.hello.HelloServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;helloServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Spring配置</h1>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;3.0&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            org.springframework.web.filter.CharacterEncodingFilter
+        &lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;
+            org.springframework.web.context.ContextLoaderListener
+        &lt;/listener-class&gt;
+    &lt;/listener&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:spring/applicationContext.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Spring配置 续</h1>
+<pre><code class="xml">...
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.html&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+...
+&lt;servlet&gt;
+    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:spring/dispatcher-servlet.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+&lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;login.html&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+&lt;error-page&gt;
+    &lt;error-code&gt;404&lt;/error-code&gt;
+    &lt;location&gt;/nopage.html&lt;/location&gt;
+&lt;/error-page&gt;
+&lt;session-config&gt;
+    &lt;session-timeout&gt;360&lt;/session-timeout&gt;
+&lt;/session-config&gt;
+&lt;/web-app&gt;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>url-pattern</h1>
+<pre><code class="xml">&lt;filter-mapping&gt;
+    &lt;filter-name&gt;characterEncodingFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+...
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<ul>
+<li>&quot;/&quot;与&quot;/*&quot;有什么区别？</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Servlet规范</h1>
+<ul>
+<li>如果有完全匹配的路径，则直接调用此路径对应的servlet</li>
+<li>如果找不到完全匹配路径，则按最长路径匹配规则进行匹配</li>
+<li>如果URL包含了后缀(例如jsp)，那么就找能对这个后缀名处理的servlet</li>
+<li>如果前三个规则都没找到对应的servlet，则容器将为请求提供相关内容，例如使用default servlet来进行处理</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>/与/*比较</h1>
+<ul>
+<li>/*会覆盖所有其他的servlet请求，包括servlet容器提供的servlet，比如default servlet和JSP servlet</li>
+<li>/不会覆盖其它的servlet，但会匹配default请求</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>对静态资源的处理</h1>
+<ul>
+<li>配置Tomcat的defaultServlet来处理静态文件。注意：要写在DispatcherServlet的前面</li>
+<li>使用Spring静态资源处理配置。&lt; mvc:default-servlet-handler/&gt;或&lt; mvc:resources/&gt;(两者有什么区别?)</li>
+</ul>
+<!-- <mvc:default-servlet-handler/>将静态资源的处理经由Spring MVC框架交回Web应用服务器处理。而<mvc:resources/>更进一步，由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能。 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Filter顺序问题</h1>
+<pre><code class="xml">&lt;filter-mapping&gt;
+  &lt;filter-name&gt;f1&lt;/filter-name&gt;
+  &lt;url-pattern&gt;/a/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;f2&lt;/filter-name&gt;
+  &lt;servlet-name&gt;/a/b.do&lt;/servlet-name&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;f3&lt;/filter-name&gt;
+  &lt;url-pattern&gt;/a/c/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;f4&lt;/filter-name&gt;
+  &lt;servlet-name&gt;/a/d/e.do&lt;/servlet-name&gt;
+&lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+  &lt;filter-name&gt;f5&lt;/filter-name&gt;
+  &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</code></pre>
+<ul>
+<li>/a/s.do</li>
+<li>/a/b.do</li>
+<li>/a/d/e.do</li>
+<li>/b.do</li>
+<li>/a/c/p.do</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>答案</h1>
+<ul>
+<li>/a/s.do      1   5</li>
+<li>/a/b.do      1   5   2</li>
+<li>/a/d/e.do    1   5   4</li>
+<li>/b.do        5</li>
+<li>/a/c/p.do    1   3   5</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Filter顺序</h1>
+<ul>
+<li>将 filter-mapping 元素包含与请求匹配的 url-pattern的筛选器按其在 web.xml 部署描述符中出现的顺序添加到链中。</li>
+<li>将 filter-mapping 元素包含与请求匹配的 servlet-name 的筛选器添加在链中与 URL 模式匹配的筛选器之后。</li>
+<li>链上先进先出的，链中最后的项目往往是最初请求的资源。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Listener</h1>
+<pre><code class="xml">&lt;listener&gt;
+    &lt;listener-class&gt;
+        org.springframework.web.context.ContextLoaderListener
+    &lt;/listener-class&gt;
+&lt;/listener&gt;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>观察者模式</h1>
+<!-- 从观察者模式到监听器 -->
+<img src="./web_file/observer.jpg" alt="">
+<ul>
+<li>定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时, 所有依赖于它的对象都得到通知并被自动更新。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Subject</h1>
+<pre><code class="java">public abstract class Subject {
+    /**
+    * 用来保存注册的观察者对象
+    */
+    private List&lt;Observer&gt; list = new ArrayList&lt;Observer&gt;();
+    /**
+    * 注册观察者对象
+    * @param observer 观察者对象
+    */
+    public void attach(Observer observer){
+        list.add(observer);
+        System.out.println(&quot;Attached an observer&quot;);
+    }
+    /**
+    * 删除观察者对象
+    * @param observer 观察者对象
+    */
+    public void detach(Observer observer){
+        list.remove(observer);
+    }
+    /**
+    * 通知所有注册的观察者对象
+    */
+    public void nodifyObservers(String newState){
+        for(Observer observer : list){
+            observer.update(newState);
+        }
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ConcreteSubject</h1>
+<pre><code class="java">public class ConcreteSubject extends Subject{
+    private String state;
+    public String getState() {
+        return state;
+    }
+    public void change(String newState){
+        state = newState;
+        System.out.println(&quot;主题状态为：&quot; + state);
+        //状态发生改变，通知各个观察者
+        this.nodifyObservers(state);
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Observer</h1>
+<pre><code class="java">public interface Observer {
+    /**
+    * 更新接口
+    * @param state 更新的状态
+    */
+    public void update(String state);
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ConcreteObserver</h1>
+<pre><code class="java">public class ConcreteObserver implements Observer {
+    //观察者的状态
+    private String observerState;
+    @Override
+    public void update(String state) {
+        /**
+        * 更新观察者的状态，使其与目标的状态保持一致
+        */
+        observerState = state;
+        System.out.println(&quot;状态为：&quot;+observerState);
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Client</h1>
+<pre><code class="java">public class Client {
+    public static void main(String[] args) {
+        //创建主题对象
+        ConcreteSubject subject = new ConcreteSubject();
+        //创建观察者对象
+        Observer observer = new ConcreteObserver();
+        //将观察者对象登记到主题对象上
+        subject.attach(observer);
+        //改变主题对象的状态
+        subject.change(&quot;new state&quot;);
+    }
+}
+</code></pre>
+<!-- 默认Listener Start -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServletContextListener接口</h1>
+<ul>
+<li>[接口方法] contextInitialized()与 contextDestroyed()</li>
+<li>[接收事件] ServletContextEvent</li>
+<li>[触发场景] 在Container加载Web应用程序时（例如启动 Container之后），会呼叫contextInitialized()，而当容器移除Web应用程序时，会呼叫contextDestroyed ()方法。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServletContextAttributeListener</h1>
+<ul>
+<li>[接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()</li>
+<li>[接收事件] ServletContextAttributeEvent</li>
+<li>[触发场景] 若有对象加入为application（ServletContext）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、attributeRemoved()。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HttpSessionListener</h1>
+<ul>
+<li>[接口方法] sessionCreated()与sessionDestroyed ()</li>
+<li>[接收事件] HttpSessionEvent</li>
+<li>[触发场景] 在session （HttpSession）对象建立或被消灭时，会分别呼叫这两个方法。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HttpSessionAttributeListener</h1>
+<ul>
+<li>[接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()</li>
+<li>[接收事件] HttpSessionBindingEvent</li>
+<li>[触发场景] 若有对象加入为session（HttpSession）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、 attributeRemoved()。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HttpSessionActivationListener</h1>
+<ul>
+<li>[接口方法] sessionDidActivate()与 sessionWillPassivate()</li>
+<li>[接收事件] HttpSessionEvent</li>
+<li>[触发场景] Activate与Passivate是用于置换对象的动作，当session对象为了资源利用或负载平衡等原因而必须暂时储存至硬盘或其它储存器时（透 过对象序列化），所作的动作称之为Passivate，而硬盘或储存器上的session对象重新加载JVM时所采的动作称之为Activate，所以容易理解的，sessionDidActivate()与 sessionWillPassivate()分别于Activeate后与将Passivate前呼叫。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServletRequestListener</h1>
+<ul>
+<li>[接口方法] requestInitialized()与 requestDestroyed()</li>
+<li>[接收事件] RequestEvent</li>
+<li>[触发场景] 在request（HttpServletRequest）对象建立或被消灭时，会分别呼叫这两个方法。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServletRequestAttributeListener</h1>
+<ul>
+<li>[接口方法] attributeAdded()、 attributeReplaced()、attributeRemoved()</li>
+<li>[接收事件] HttpSessionBindingEvent</li>
+<li>[触发场景] 若有对象加入为request（HttpServletRequest）对象的属性，则会呼叫attributeAdded()，同理在置换属性与移除属性时，会分别呼叫attributeReplaced()、attributeRemoved()。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HttpSessionBindingListener</h1>
+<ul>
+<li>[接口方法] valueBound()与valueUnbound()</li>
+<li>[接收事件] HttpSessionBindingEvent</li>
+<li>[触发场景] 实现HttpSessionBindingListener接口的类别，其实例如果被加入至session（HttpSession）对象的属性中，则会 呼叫 valueBound()，如果被从session（HttpSession）对象的属性中移除，则会呼叫valueUnbound()，实现HttpSessionBindingListener接口的类别不需在web.xml中设定。<!-- 默认Listener End --></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ContextLoaderListener</h1>
+<pre><code class="java">public class ContextLoaderListener
+                extends ContextLoader
+                implements ServletContextListener{...}
+</code></pre>
+<ul>
+<li>启动Web容器时，自动装配ApplicationContext的配置信息</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>处理请求</h1>
+<pre><code class="Java">package com.focustech.hello;
+
+import java.io.*;
+import javax.servlet.http.*;
+import javax.servlet.*;
+
+public class HelloServlet extends HttpServlet{
+
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+   throws ServletException, IOException{
+      ...
+  }
+}
+</code></pre>
+<!-- 提问：servlet生命周期？ -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>如何将请求对象传递给业务方法?</h1>
+<ul class="moveIn">
+<li><strong>反射</strong> </li>
+</ul>
+<!-- 提问：如何反射? -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>反射</h1>
+<ul>
+<li>Class.forName()</li>
+<li>getClass().getClassLoader().loadClass()</li>
+</ul>
+<!-- 提问：两者的区别? -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>两者区别</h1>
+<ul>
+<li>Class.forName()装载的class已经被初始化</li>
+<li>getClass.getClassLoader().loadClass()装载的class还没有被link</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>元编程</h1>
+<p>什么叫元编程？</p>
+<ul class="moveIn">
+<li><strong>编写程序的程序!</strong></li>
+</ul>
+<!-- 3D打印机的例子 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>常见元编程技术</h1>
+<ul>
+<li>Lisp的宏</li>
+<li>C的宏</li>
+<li>C++的Template</li>
+<li>...</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>C的宏</h1>
+<pre><code class="c">#define x 1+1
+
+printf(&quot;x * x = %d\n&quot;,(x * x));
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Lisp的宏</h1>
+<pre><code class="clojure">(defmacro prt [x]
+    `(println (* ~x ~x)))
+
+(prt (+ 1 1) (+ 1 1))
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Java元编程</h1>
+<ul class="moveIn">
+<li><strong>注解</strong> </li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>注解</h1>
+<ul>
+<li>注解为我们在代码中添加信息提供了一种形式化的方法,使我们可以在稍后某个时刻非常方便地使用这些数据.</li>
+<li>注解可以提供用来完整的描述程序所需要的信息,而这些信息是无法用Java来表达的</li>
+<li>注解本身并不做任何事情</li>
+<li>需要注解处理程序,来对注解来进行处理</li>
+</ul>
+<p><strong>特殊语法的文本</strong></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>示例</h1>
+<pre><code class="java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyTest {
+    public Class clz() default Object.class;
+    public String value();
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>元注解</h1>
+<pre><code>@Target     表示该注解可以用于什么地方
+            CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,PARAMETER,TYPE
+@Retention  表示需要在什么级别保存注解信息 SOURCE,CLASS,RUNTIME
+@Documented 将此注解包含在Javadoc中
+@Inherited  允许子类继承父类的注解
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>注解元素</h1>
+<ul>
+<li>基本类型</li>
+<li>String</li>
+<li>Class</li>
+<li>enum</li>
+<li>Annotation</li>
+<li>及其数组</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>注解的使用</h1>
+<pre><code class="java">public class Dog {
+    @MyTest(&quot;testShout&quot;)   //@MyTest(value=&quot;testShout&quot;)
+    public String shout(){
+        return &quot;wawawa&quot;;
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>处理方法</h1>
+<pre><code class="java">public static void main(String[] args) {
+    Class clz = Class.forName(&quot;com.focus.ann.Dog&quot;);
+    Dog dog = (Dog) clz.newInstance();
+    Method[] methods = clz.getMethods();
+    Method initMethod = null;
+    for(Method m : methods){
+        MyTest myTest = m.getAnnotation(MyTest.class);
+        if(myTest != null){
+            m.invoke(dog,new Object[]{});
+        }
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Web中的注解</h1>
+<ul>
+<li>@WebServlet</li>
+<li>@WebFilter</li>
+<li>@WebInitParam</li>
+<li>@WebListener</li>
+<li>@MultipartConfig:表示请求期望是 mime/multipart 类型</li>
+</ul>
+<!-- Java规范实现,服务器，数据转换，HttpServletRequest,HttpServletResponse结构。实现思考！数据结构VS数据对象! 20p -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Servlet架构</h1>
+<img src="./web_file/10.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>模块化</h1>
+<ul>
+<li>OSGi</li>
+<li>Jigsaw</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ClassLoader</h1>
+<img src="./web_file/classloader.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>双亲委托模型</h1>
+<ul>
+<li>首先由最顶层的类加载器Bootstrap ClassLoader试图加载，如果没加载到，</li>
+<li>则把任务转交给Extension ClassLoader试图加载，如果也没加载到，</li>
+<li>则转交给App ClassLoader 进行加载，如果它也没有加载得到的话，</li>
+<li>则返回给委托的发起者，由它到指定的文件系统或网络等URL中加载该类。</li>
+<li>如果它们都没有加载到这个类时，则抛出ClassNotFoundException异常。</li>
+<li>否则将这个找到的类生成一个类的定义，并将它加载到内存当中，最后返回这个类在内存中的Class实例对象</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>为什么使用双亲委托模型</h1>
+<ul class="moveIn">
+<li><strong>使用双亲委托模型主要是为了安全性.</strong></li>
+<li>如果不使用这种委托模式，那我们就可以随时使用自定义的Object来动态替代java核心api中定义的类型， 这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为Object已经在启动时就被引导类加载器（Bootstrcp ClassLoader） 加载，所以用户自定义的ClassLoader永远也无法加载一个自己写的Object，除非你改变JDK中ClassLoader搜索类的默认算法。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Class的唯一性判断</h1>
+<ul class="moveIn">
+<li>JVM在判定两个class是否相同时，<strong>不仅要判断两个类名是否相同，而且要判断是否由同一个类加载器实例加载的</strong>。 只有两者同时满足的情况下，JVM才认为这两个class是相同的。就算两个class是同一份class字节码， 如果被两个不同的ClassLoader实例所加载，JVM也会认为它们是两个不同class。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>示例</h1>
+<pre><code class="java">import com.sun.nio.zipfs.ZipFileStore;
+public class Test {
+    public static void main(String[] args) {
+        System.out.println(&quot;1&quot;.getClass().getClassLoader());
+        System.out.println(ZipFileStore.class.getClassLoader());
+        System.out.println(A.class.getClassLoader());
+    }
+}
+class A{}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>输出</h1>
+<pre><code>null                          //BootStrap ClassLoader输出为null
+sun.misc.Launcher$ExtClassLoader@3e10c986
+sun.misc.Launcher$AppClassLoader@610f7612
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>自定义ClassLoader</h1>
+<ul>
+<li>继承java.lang.ClassLoader</li>
+<li>重写父类的findClass方法</li>
+<li><strong>如没有特殊的要求，一般不建议重写loadClass搜索类的算法</strong></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Tomcat ClassLoader</h1>
+<p>Java Web服务器需要解决以下四个问题：</p>
+<ul>
+<li>同一个Web服务器里，各个Web项目之间各自使用的Java类库要互相隔离。</li>
+<li>同一个Web服务器里，各个Web项目之间可以提供共享的Java类库。</li>
+<li>服务器为了不受Web项目的影响，应该使服务器的类库与应用程序的类库互相独立。</li>
+<li>对于支持JSP的Web服务器，应该支持热插拔（hotswap）功能。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Tomcat5</h1>
+<img src="./web_file/tomcat5.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Tomcat6</h1>
+<img src="./web_file/tomcat6.jpg" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Tomcat7</h1>
+<img src="./web_file/tomcat7.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>对比</h1>
+<ul>
+<li>Tomcat5,6,7的ClassLoader结构略有不同。</li>
+<li>Tomcat6中将CommonClassLoader,CatalinaClassLoader,SharedClassLoader合并，就一个CommonClassLoader.</li>
+<li>Tomcat7中没有ExtensionClassLoader.</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>资源隔离</h1>
+<p>从上图可以看出，为了解决jar隔离和共享的问题。对于每个webapp,Tomcat都会创建一个WebAppClassLoader来加载应用，这样就保证了每个应用加载进来的class都是不同的(因为ClassLoader不同)! 而共享的jar放在tomcat-home/lib目录下，由CommonClassLoader来加载。通过双亲委托模式，提供给其下的所有webapp共享</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>特别说明</h1>
+<p><strong>对于WebAppClassLoader是违反双亲委托模型的。如果加载的是jre或者servlet api则依然是双亲委托模型。 而如果不是的话，则会先尝试自行加载，如果找不到再委托父加载器加载。 这个应该是可以理解的，因为应用的class是由WebAppClassLoader加载的，是项目私有的</strong></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>web模块</h1>
+<ul>
+<li>编写一个类继承自Servlet，将该类打成JAR包，并且在JAR包的META-INF目录下放置一个 web-fragment.xml文件：</li>
+</ul>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-fragment
+    xmlns=http://java.sun.com/xml/ns/javaee
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;3.0&quot;
+    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd&quot;
+    metadata-complete=&quot;true&quot;&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;fragment&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;footmark.servlet.FragmentServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;fragment&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/fragment&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-fragment&gt;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>OSGi模块化</h1>
+<ul>
+<li>OSGi通过自定义ClassLoader实现包级别的访问权限控制</li>
+<li>通过自定义ClassLoader实现多版本控制(一个bundle可以发布多个版本，而jar不能多版本共存)</li>
+<li>可独立部署和卸载</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>OSGi ClassLoader</h1>
+<img src="./web_file/OSGi_ClassLoader.png" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Cookie与Session</h1>
+<ul>
+<li>Cookies是存储在客户端计算机上的文本文件，并保留了各种信息。</li>
+<li>当下一次浏览器向 Web 服务器发送任何请求时，浏览器会把这些 Cookies 信息发送到服务器，服务器将使用这些信息来识别用户。</li>
+<li>而Session通过在服务器端记录信息确定用户身份。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>新增Cookie</h1>
+<pre><code class="java">Cookie cookie = new Cookie(&quot;username&quot;,&quot;admin&quot;);   // 新建Cookie
+cookie.setMaxAge(Integer.MAX_VALUE);           // 设置生命周期为MAX_VALUE
+cookie.setDomain(domain);
+cookie.setPath(&quot;/&quot;);
+response.addCookie(cookie);                    // 输出到客户端
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>获取Cookie</h1>
+<pre><code class="java">Cookie cookies = request.getCookies();
+for (int i = 0; i &lt; cookies.length; i++){
+  cookie = cookies[i];
+  System.out.print(&quot;名称：&quot; + cookie.getName( ) + &quot;，&quot;);
+  System.out.print(&quot;值：&quot; + cookie.getValue( )+&quot; &lt;br/&gt;&quot;);
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Session操作</h1>
+<pre><code class="java">// 如果不存在 session 会话，则创建一个 session 对象
+HttpSession session = request.getSession(true);
+session.setAttribute(key, value);
+session.setMaxInactiveInterval(30*60);//30分钟超时
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>浏览器关闭Cookie</h1>
+<ul class="moveIn">
+<li>实际上使用Session时，还是会使用Cookie</li>
+<li>会在响应的头部新增一个Set-Cookie头保存SessionID</li>
+<li>当再次请求时，请求会新增Cookie头，内容为SessionID，发送给服务器来获得相应的会话</li>
+<li>如果浏览器关闭了Cookie，如果使用Session，则需要对url进行encode.</li>
+<li>response.encodeURL(&quot;...&quot;)</li>
+</ul>
+<!-- Servlet流程,基于XML,基于注解，注解讲解 30p -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>JDBC</h1>
 <pre><code class="java">try{
    String url = &quot;jdbc:mysql://localhost:3306/blog?characterEncoding=utf8&quot;;
    Class.forName(&quot;com.mysql.jdbc.Driver&quot;); //这是干嘛用的?
+   //Class.forName(&quot;org.gjt.mm.mysql.Driver&quot;);//和上面的区别？
    Connection conn = DriverManager.getConnection(url,&quot;root&quot;,&quot;root&quot;);
    Statement stmt = conn.createStatement();
-   String sql = &quot;insert into articles (title,content) values (&#39;&quot; + title + &quot;&#39;,&#39;&quot; + content + &quot;&#39;);&quot;;
+   String sql = &quot;insert into articles (title,content) values (&#39;&quot;
+                    + title + &quot;&#39;,&#39;&quot; + content + &quot;&#39;);&quot;;
    stmt.executeUpdate(sql);
    conn.close();
 }catch(Exception e){
@@ -222,13 +1510,346 @@ Accept-Encoding: gzip, deflate
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
-<h1>JDBC架构</h1>
-<!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
-</article></section></slide>
-<slide class="slide"><section class="slide-wrapper"><article>
-<p>#
-<!-- HTML,CSS,JS 展示数据 10p --></p>
+<h1>JDBC API</h1>
+<ul>
+<li>DriverManager: 这个类管理数据库驱动程序的列表。从Java应用程序的连接请求匹配的合适的数据库驱动程序，使用通讯子协议。第一个JDBC驱动程序识别某个子协议将被用来建立一个数据库连接。</li>
+<li>Driver: 此接口处理与数据库服务器的通信。将直接与驱动程序对象很少。相反，您可以使用DriverManager隔离对象，这种类型的管理对象。它也抽象与驱动程序对象与工作相关的细节</li>
+<li>Connection : 此接口与用于接触一个数据库的所有方法。连接对象通信的情况下，即，所有的通信是只通过与数据库连接对象。</li>
+<li>Statement : 使用接口提交到数据库的SQL语句创建的对象。一些派生的接口接受，除了执行存储过程的参数。</li>
+<li>ResultSet: 这些对象保存后，使用Statement对象执行SQL查询从数据库中检索数据。它作为一个迭代器，让您可以通过它的数据移动。</li>
+<li>SQLException: 这个类处理的数据库应用程序中发生的任何错误。</li>
+</ul>
 
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>JDBC架构</h1>
+<img src="./web_file/db01.gif" alt="">
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Class.forName作用</h1>
+<ul>
+<li>将Driver自身，添加到DriverManager列表中</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>com.mysql.jdbc.Driver</h1>
+<pre><code class="java">public class Driver extends NonRegisteringDriver
+    implements java.sql.Driver {
+    ...
+    static {
+        DriverManager.registerDriver(new Driver());
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>static关键字</h1>
+<ul>
+<li>static标示的属性或方法,是类属性或方法</li>
+<li>static标示的属性或方法直接使用类来调用</li>
+<li>非static标示的属性或方法,是对象属性或方法</li>
+<li>在非静态方法中可以访问静态方法</li>
+<li>在静态方法中不可以调用非静态方法</li>
+<li>可以使用this来调用静态方法或静态属性</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>类加载顺序一</h1>
+<pre><code class="java">public class LoadTest1 {
+    int num = 3;
+    int str = prt(num);
+    static int static_str = sprt(&quot;初始化static_str&quot;);
+
+    {System.out.println(&quot;LoadTest1:初始化块&quot;);}
+
+    static{
+        System.out.println(&quot;LoadTest1:静态初始化块&quot;);
+    }
+
+    public LoadTest1(){
+        System.out.println(&quot;LoadTest1:默认构造方法 &quot; + getNum());
+    }
+
+    public int prt(int num){
+        System.out.println(&quot;LoadTest1: &quot; + num);
+        return 0;
+    }
+
+    public static int sprt(String text){
+        System.out.println(&quot;LoadTest1: &quot; + text);
+        return 0;
+    }
+
+    public int getNum() { return num; }
+
+    public static void main(String[] args){
+        LoadTest1 loadTest = new LoadTest1();
+        LoadTest1 loadTest1 = new LoadTest1();
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>结果</h1>
+<pre><code>LoadTest1: 初始化static_str
+LoadTest1:静态初始化块
+LoadTest1: 3
+LoadTest1:初始化块
+LoadTest1:默认构造方法 3
+
+LoadTest1: 3
+LoadTest1:初始化块
+LoadTest1:默认构造方法 3
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>类加载顺序二</h1>
+<pre><code class="java">public class LoadTest2 extends LoadTest1 {
+    int num = 5;
+    int str = prt(num);
+    private static int static_str = sprt(&quot;初始化static_str&quot;);
+
+    {System.out.println(&quot;LoadTest2:初始化块&quot;);}
+
+    static{
+        System.out.println(&quot;LoadTest2:静态初始化块&quot;);
+    }
+
+    public LoadTest2(){
+        System.out.println(&quot;LoadTest2:默认构造方法 &quot; + getNum());
+    }
+
+    public int prt(int num){
+        System.out.println(&quot;LoadTest2:&quot; + num);
+        return 0;
+    }
+
+    public static int sprt(String text){
+        System.out.println(&quot;LoadTest2:&quot; + text);
+        return 0;
+    }
+
+    public int getNum() { return num; }
+
+    public static void main(String[] args){
+        LoadTest1 loadTest = new LoadTest2();
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>结果</h1>
+<pre><code>LoadTest1: 初始化static_str
+LoadTest1:静态初始化块
+LoadTest2:初始化static_str
+LoadTest2:静态初始化块
+LoadTest2:3           ???
+LoadTest1:初始化块
+LoadTest1:默认构造方法 0       ???
+LoadTest2:5
+LoadTest2:初始化块
+LoadTest2:默认构造方法 5
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>org.gjt.mm.mysql.Driver</h1>
+<pre><code class="java">public class Driver extends com.mysql.jdbc.Driver{
+    ...
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>SPI</h1>
+<ul>
+<li>Service Provider Interface</li>
+<li>为某个接口寻找服务实现的机制</li>
+</ul>
+<pre><code>在面向的对象里，我们一般推荐基于接口编程。方便替换实现。为了实现可配置化，Java提供了SPI
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>示例</h1>
+<pre><code class="java">package com.focustech.search;
+
+public interface Search {  
+   public List search(String keyword);  
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>示例</h1>
+<pre><code class="java">package com.focustech.search.impl;
+
+public interface SearchImplA {  
+   public List search(String keyword){
+       ...
+   }  
+}
+</code></pre>
+<pre><code class="java">package com.focustech.search.impl;
+
+public interface SearchImplB {  
+   public List search(String keyword){
+       ...
+   }  
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>IOC</h1>
+<pre><code class="java">public class Caller{
+    @Autowired
+    private Search search;
+
+    public void call(){
+        ...
+        search.search(&quot;keyword&quot;);
+        ...
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServiceLoader</h1>
+<ul>
+<li>SearchImplA所属jar包添加<strong>META-INF/services/com.focustech.search.Search</strong>文件</li>
+</ul>
+<pre><code>com.focustech.search.impl.SearchImplA
+</code></pre><ul>
+<li>SearchImplB所属jar包添加<strong>META-INF/services/com.focustech.search.Search</strong>文件</li>
+</ul>
+<pre><code>com.focustech.search.impl.SearchImplB
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServiceLoader调用</h1>
+<pre><code class="java">public class Caller{
+    private Search search;
+
+    public Caller(){
+        ServiceLoader&lt;Search&gt; serviceLoader = ServiceLoader.load(Search.class);  
+        Iterator&lt;Search&gt; searchs = serviceLoader.iterator();  
+        if (searchs.hasNext()) {  
+            search = searchs.next();  
+        }
+    }
+
+    public void call(){
+        ...
+        search.search(&quot;keyword&quot;);
+        ...
+    }
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ServiceLoader在JDBC中的应用</h1>
+<ul>
+<li>DriverManager</li>
+</ul>
+<pre><code>static {
+    loadInitialDrivers();
+    println(&quot;JDBC DriverManager initialized&quot;);
+}
+
+private static void loadInitialDrivers() {
+    ...
+    ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);
+    Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();
+    try{
+        while(driversIterator.hasNext()) {
+            driversIterator.next();
+        }
+    } catch(Throwable t) {
+    // Do nothing
+    }
+    ...
+}
+</code></pre><!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>返回响应</h1>
+<pre><code>HTTP/1.1 200 OK
+Date: Sat, 31 Dec 2005 23:59:59 GMT
+Content-Type: text/html;charset=ISO-8859-1
+Content-Length: 122
+
+＜html＞
+＜head＞
+＜title＞hello＜/title＞
+＜/head＞
+＜body＞
+＜!-- body content --＞
+＜/body＞
+＜/html＞
+</code></pre><ul>
+<li>状态行</li>
+<li>消息报头</li>
+<li>响应正文</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>HttpServletResponse</h1>
+<pre><code>addCookie(Cookie): void
+containsHeader(String): boolean
+encodeURL(String): String
+encodeRedirectURL(String): String
+sendError(int, String): void
+sendError(int): void
+sendRedirect(String): void
+setHeader(String, String): void
+addHeader(String, String): void
+setStatus(int): void
+...
+</code></pre>
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>回写响应</h1>
+<pre><code class="Java">public void doGet(HttpServletRequest request,
+                HttpServletResponse response)
+throws ServletException, IOException{
+  PrintWriter out = response.getWriter();
+  out.println(&quot;Hello&quot;);
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Format Body</h1>
+<ul>
+<li>json</li>
+<li>模板</li>
+</ul>
+<!-- 返回响应 10p-->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>客户端接收</h1>
+<ul>
+<li>浏览器渲染</li>
+<li>HTML</li>
+<li>JavaScript</li>
+<li>CSS</li>
+</ul>
+<!-- 吕翔讲解 -->
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>考试</h1>
+<ul class="moveIn">
+<li>木有考试!!!</li>
+</ul>
+<!-- 针对Web的理解，可以以任意形式总结给我，一起讨论! -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>谢谢</h1>
