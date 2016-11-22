@@ -1,18 +1,19 @@
 /* Base16 Atelier Heath Dark - Theme */
 /* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/heath) */
 /* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+/* https://github.com/jmblog/color-themes-for-highlightjs */
 
-/* Atelier-Heath Comment */
-.hljs-comment {
+/* Atelier Heath Dark Comment */
+.hljs-comment,
+.hljs-title {
   color: #9e8f9e;
 }
 
-/* Atelier-Heath Red */
+/* Atelier Heath Dark Red */
 .hljs-variable,
 .hljs-attribute,
 .hljs-tag,
 .hljs-regexp,
-.hljs-name,
 .ruby .hljs-constant,
 .xml .hljs-tag .hljs-title,
 .xml .hljs-pi,
@@ -24,9 +25,10 @@
   color: #ca402b;
 }
 
-/* Atelier-Heath Orange */
+/* Atelier Heath Dark Orange */
 .hljs-number,
 .hljs-preprocessor,
+.hljs-pragma,
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
@@ -34,29 +36,28 @@
   color: #a65926;
 }
 
-/* Atelier-Heath Yellow */
-.ruby .hljs-class .hljs-title,
-.css .hljs-rule .hljs-attribute {
+/* Atelier Heath Dark Yellow */
+.hljs-ruby .hljs-class .hljs-title,
+.css .hljs-rules .hljs-attribute {
   color: #bb8a35;
 }
 
-/* Atelier-Heath Green */
+/* Atelier Heath Dark Green */
 .hljs-string,
 .hljs-value,
 .hljs-inheritance,
 .hljs-header,
 .ruby .hljs-symbol,
 .xml .hljs-cdata {
-  color: #918b3b;
+  color: #379a37;
 }
 
-/* Atelier-Heath Aqua */
-.hljs-title,
+/* Atelier Heath Dark Aqua */
 .css .hljs-hexcolor {
   color: #159393;
 }
 
-/* Atelier-Heath Blue */
+/* Atelier Heath Dark Blue */
 .hljs-function,
 .python .hljs-decorator,
 .python .hljs-title,
@@ -68,7 +69,7 @@
   color: #516aec;
 }
 
-/* Atelier-Heath Purple */
+/* Atelier Heath Dark Purple */
 .hljs-keyword,
 .javascript .hljs-function {
   color: #7b59c0;
@@ -77,10 +78,9 @@
 .hljs {
   display: block;
   overflow-x: auto;
-  background: #1b181b;
+  background: #292329;
   color: #ab9bab;
   padding: 0.5em;
-  -webkit-text-size-adjust: none;
 }
 
 .coffeescript .javascript,

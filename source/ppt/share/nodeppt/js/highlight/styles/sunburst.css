@@ -10,10 +10,11 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
   padding: 0.5em;
   background: #000;
   color: #f8f8f8;
-  -webkit-text-size-adjust: none;
 }
 
-.hljs-comment {
+.hljs-comment,
+.hljs-template_comment,
+.hljs-javadoc {
   color: #aeaeae;
   font-style: italic;
 }
@@ -41,8 +42,7 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
 .apache .hljs-cbracket,
 .hljs-date,
 .tex .hljs-command,
-.coffeescript .hljs-attribute,
-.hljs-name {
+.coffeescript .hljs-attribute {
   color: #65b042;
 }
 
@@ -66,9 +66,11 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 .hljs-class .hljs-title,
-.hljs-type,
+.haskell .hljs-type,
 .smalltalk .hljs-class,
-.hljs-doctag {
+.hljs-javadoctag,
+.hljs-yardoctag,
+.hljs-phpdoc {
   text-decoration: underline;
 }
 
@@ -85,7 +87,7 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 .css .hljs-tag,
-.hljs-rule .hljs-property,
+.hljs-rules .hljs-property,
 .hljs-pseudo,
 .tex .hljs-special {
   color: #cda869;
@@ -95,11 +97,11 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
   color: #9b703f;
 }
 
-.hljs-rule .hljs-keyword {
+.hljs-rules .hljs-keyword {
   color: #c5af75;
 }
 
-.hljs-rule .hljs-value {
+.hljs-rules .hljs-value {
   color: #cf6a4c;
 }
 

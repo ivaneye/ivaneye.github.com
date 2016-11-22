@@ -11,7 +11,6 @@ based on dark.css by Ivan Sagalaev
   padding: 0.5em;
   background: #3f3f3f;
   color: #dcdcdc;
-  -webkit-text-size-adjust: none;
 }
 
 .hljs-keyword,
@@ -40,8 +39,7 @@ based on dark.css by Ivan Sagalaev
 .dos .hljs-envvar,
 .dos .hljs-stream,
 .hljs-variable,
-.apache .hljs-sqbracket,
-.hljs-name {
+.apache .hljs-sqbracket {
   color: #efdcbc;
 }
 
@@ -60,9 +58,9 @@ based on dark.css by Ivan Sagalaev
 }
 
 .dos .hljs-keyword,
-.hljs-decorator,
+.python .hljs-decorator,
 .hljs-title,
-.hljs-type,
+.haskell .hljs-type,
 .diff .hljs-header,
 .ruby .hljs-class .hljs-parent,
 .apache .hljs-tag,
@@ -85,10 +83,11 @@ based on dark.css by Ivan Sagalaev
 .hljs-preprocessor,
 .hljs-pragma,
 .hljs-built_in,
+.hljs-javadoc,
 .smalltalk .hljs-class,
 .smalltalk .hljs-localvars,
 .smalltalk .hljs-array,
-.css .hljs-rule .hljs-value,
+.css .hljs-rules .hljs-value,
 .hljs-attr_selector,
 .hljs-pseudo,
 .apache .hljs-cbracket,
@@ -100,7 +99,8 @@ based on dark.css by Ivan Sagalaev
 .hljs-shebang,
 .diff .hljs-addition,
 .hljs-comment,
-.hljs-annotation,
+.java .hljs-annotation,
+.hljs-template_comment,
 .hljs-pi,
 .hljs-doctype {
   color: #7f9f7f;

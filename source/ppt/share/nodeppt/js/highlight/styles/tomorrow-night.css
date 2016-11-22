@@ -4,7 +4,8 @@
 /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
 
 /* Tomorrow Comment */
-.hljs-comment {
+.hljs-comment,
+.hljs-title {
   color: #969896;
 }
 
@@ -37,7 +38,7 @@
 
 /* Tomorrow Yellow */
 .ruby .hljs-class .hljs-title,
-.css .hljs-rule .hljs-attribute {
+.css .hljs-rules .hljs-attribute {
   color: #f0c674;
 }
 
@@ -46,14 +47,12 @@
 .hljs-value,
 .hljs-inheritance,
 .hljs-header,
-.hljs-name,
 .ruby .hljs-symbol,
 .xml .hljs-cdata {
   color: #b5bd68;
 }
 
 /* Tomorrow Aqua */
-.hljs-title,
 .css .hljs-hexcolor {
   color: #8abeb7;
 }
@@ -82,7 +81,6 @@
   background: #1d1f21;
   color: #c5c8c6;
   padding: 0.5em;
-  -webkit-text-size-adjust: none;
 }
 
 .coffeescript .javascript,

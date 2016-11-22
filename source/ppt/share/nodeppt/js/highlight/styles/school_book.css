@@ -10,7 +10,6 @@ School Book style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
   padding: 15px 0.5em 0.5em 30px;
   font-size: 11px !important;
   line-height:16px !important;
-  -webkit-text-size-adjust: none;
 }
 
 pre{
@@ -24,6 +23,8 @@ pre{
 .hljs-change,
 .hljs-winutils,
 .hljs-flow,
+.lisp .hljs-title,
+.clojure .hljs-built_in,
 .nginx .hljs-title,
 .tex .hljs-special {
   color:#005599;
@@ -38,9 +39,9 @@ pre{
 
 .hljs-string,
 .hljs-title,
-.hljs-type,
+.haskell .hljs-type,
 .hljs-tag .hljs-value,
-.css .hljs-rule .hljs-value,
+.css .hljs-rules .hljs-value,
 .hljs-preprocessor,
 .hljs-pragma,
 .ruby .hljs-symbol,
@@ -50,6 +51,7 @@ pre{
 .django .hljs-template_tag,
 .django .hljs-variable,
 .smalltalk .hljs-class,
+.hljs-javadoc,
 .ruby .hljs-string,
 .django .hljs-filter .hljs-argument,
 .smalltalk .hljs-localvars,
@@ -63,14 +65,14 @@ pre{
 .apache .hljs-cbracket,
 .nginx .hljs-built_in,
 .tex .hljs-command,
-.coffeescript .hljs-attribute,
-.hljs-name {
+.coffeescript .hljs-attribute {
   color: #2c009f;
 }
 
 .hljs-comment,
-.hljs-annotation,
-.hljs-decorator,
+.java .hljs-annotation,
+.python .hljs-decorator,
+.hljs-template_comment,
 .hljs-pi,
 .hljs-doctype,
 .hljs-deletion,
@@ -82,9 +84,9 @@ pre{
 .hljs-keyword,
 .hljs-literal,
 .css .hljs-id,
-.hljs-doctag,
+.hljs-phpdoc,
 .hljs-title,
-.hljs-type,
+.haskell .hljs-type,
 .vbscript .hljs-built_in,
 .rsl .hljs-built_in,
 .smalltalk .hljs-class,

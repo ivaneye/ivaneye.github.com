@@ -1,18 +1,19 @@
 /* Base16 Atelier Seaside Dark - Theme */
-/* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/seaside) */
+/* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/seaside/) */
 /* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+/* https://github.com/jmblog/color-themes-for-highlightjs */
 
-/* Atelier-Seaside Comment */
-.hljs-comment {
+/* Atelier Seaside Dark Comment */
+.hljs-comment,
+.hljs-title {
   color: #809980;
 }
 
-/* Atelier-Seaside Red */
+/* Atelier Seaside Dark Red */
 .hljs-variable,
 .hljs-attribute,
 .hljs-tag,
 .hljs-regexp,
-.hljs-name,
 .ruby .hljs-constant,
 .xml .hljs-tag .hljs-title,
 .xml .hljs-pi,
@@ -24,9 +25,10 @@
   color: #e6193c;
 }
 
-/* Atelier-Seaside Orange */
+/* Atelier Seaside Dark Orange */
 .hljs-number,
 .hljs-preprocessor,
+.hljs-pragma,
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
@@ -34,13 +36,13 @@
   color: #87711d;
 }
 
-/* Atelier-Seaside Yellow */
-.ruby .hljs-class .hljs-title,
-.css .hljs-rule .hljs-attribute {
-  color: #98981b;
+/* Atelier Seaside Dark Yellow */
+.hljs-ruby .hljs-class .hljs-title,
+.css .hljs-rules .hljs-attribute {
+  color: #c3c322;
 }
 
-/* Atelier-Seaside Green */
+/* Atelier Seaside Dark Green */
 .hljs-string,
 .hljs-value,
 .hljs-inheritance,
@@ -50,13 +52,12 @@
   color: #29a329;
 }
 
-/* Atelier-Seaside Aqua */
-.hljs-title,
+/* Atelier Seaside Dark Aqua */
 .css .hljs-hexcolor {
   color: #1999b3;
 }
 
-/* Atelier-Seaside Blue */
+/* Atelier Seaside Dark Blue */
 .hljs-function,
 .python .hljs-decorator,
 .python .hljs-title,
@@ -68,7 +69,7 @@
   color: #3d62f5;
 }
 
-/* Atelier-Seaside Purple */
+/* Atelier Seaside Dark Purple */
 .hljs-keyword,
 .javascript .hljs-function {
   color: #ad2bee;
@@ -77,10 +78,9 @@
 .hljs {
   display: block;
   overflow-x: auto;
-  background: #131513;
+  background: #242924;
   color: #8ca68c;
   padding: 0.5em;
-  -webkit-text-size-adjust: none;
 }
 
 .coffeescript .javascript,

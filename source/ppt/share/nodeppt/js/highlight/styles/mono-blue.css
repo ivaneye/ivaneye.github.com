@@ -6,11 +6,6 @@
   overflow-x: auto;
   padding: 0.5em;
   background: #eaeef3;
-  -webkit-text-size-adjust: none;
-}
-
-.hljs,
-.hljs-list .hljs-built_in {
   color: #00193a;
 }
 
@@ -19,12 +14,13 @@
 .hljs-important,
 .hljs-request,
 .hljs-header,
-.hljs-doctag {
+.hljs-javadoctag {
   font-weight: bold;
 }
 
 .hljs-comment,
-.hljs-chunk {
+.hljs-chunk,
+.hljs-template_comment {
   color: #738191;
 }
 
@@ -40,13 +36,13 @@
 .hljs-argument,
 .hljs-link_label,
 .hljs-blockquote,
-.hljs-header,
-.hljs-name {
+.hljs-header {
   color: #0048ab;
 }
 
 .hljs-decorator,
 .hljs-prompt,
+.hljs-yardoctag,
 .hljs-subst,
 .hljs-symbol,
 .hljs-doctype,
@@ -56,6 +52,7 @@
 .hljs-pi,
 .hljs-attribute,
 .hljs-attr_selector,
+.hljs-javadoc,
 .hljs-xmlDocTag,
 .hljs-deletion,
 .hljs-shebang,

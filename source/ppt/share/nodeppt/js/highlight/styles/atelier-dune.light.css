@@ -1,18 +1,19 @@
 /* Base16 Atelier Dune Light - Theme */
 /* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/dune) */
 /* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+/* https://github.com/jmblog/color-themes-for-highlightjs */
 
-/* Atelier-Dune Comment */
-.hljs-comment {
+/* Atelier Dune Light Comment */
+.hljs-comment,
+.hljs-title {
   color: #7d7a68;
 }
 
-/* Atelier-Dune Red */
+/* Atelier Dune Light Red */
 .hljs-variable,
 .hljs-attribute,
 .hljs-tag,
 .hljs-regexp,
-.hljs-name,
 .ruby .hljs-constant,
 .xml .hljs-tag .hljs-title,
 .xml .hljs-pi,
@@ -24,9 +25,10 @@
   color: #d73737;
 }
 
-/* Atelier-Dune Orange */
+/* Atelier Dune Light Orange */
 .hljs-number,
 .hljs-preprocessor,
+.hljs-pragma,
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
@@ -34,13 +36,13 @@
   color: #b65611;
 }
 
-/* Atelier-Dune Yellow */
-.ruby .hljs-class .hljs-title,
-.css .hljs-rule .hljs-attribute {
-  color: #ae9513;
+/* Atelier Dune Light Yellow */
+.hljs-ruby .hljs-class .hljs-title,
+.css .hljs-rules .hljs-attribute {
+  color: #cfb017;
 }
 
-/* Atelier-Dune Green */
+/* Atelier Dune Light Green */
 .hljs-string,
 .hljs-value,
 .hljs-inheritance,
@@ -50,13 +52,12 @@
   color: #60ac39;
 }
 
-/* Atelier-Dune Aqua */
-.hljs-title,
+/* Atelier Dune Light Aqua */
 .css .hljs-hexcolor {
   color: #1fad83;
 }
 
-/* Atelier-Dune Blue */
+/* Atelier Dune Light Blue */
 .hljs-function,
 .python .hljs-decorator,
 .python .hljs-title,
@@ -68,7 +69,7 @@
   color: #6684e1;
 }
 
-/* Atelier-Dune Purple */
+/* Atelier Dune Light Purple */
 .hljs-keyword,
 .javascript .hljs-function {
   color: #b854d4;
@@ -80,7 +81,6 @@
   background: #fefbec;
   color: #6e6b5e;
   padding: 0.5em;
-  -webkit-text-size-adjust: none;
 }
 
 .coffeescript .javascript,

@@ -8,7 +8,6 @@
   overflow-x: auto;
   padding: 0.5em;
   background: #282b2e;
-  -webkit-text-size-adjust: none;
 }
 
 .hljs-keyword,
@@ -16,6 +15,8 @@
 .hljs-change,
 .hljs-winutils,
 .hljs-flow,
+.lisp .hljs-title,
+.clojure .hljs-built_in,
 .nginx .hljs-title,
 .css .hljs-id,
 .tex .hljs-special {
@@ -78,7 +79,7 @@
 .hljs-bullet,
 .hljs-subst,
 .hljs-emphasis,
-.hljs-type,
+.haskell .hljs-type,
 .hljs-preprocessor,
 .hljs-pragma,
 .ruby .hljs-class .hljs-parent,
@@ -86,6 +87,7 @@
 .django .hljs-template_tag,
 .django .hljs-variable,
 .smalltalk .hljs-class,
+.hljs-javadoc,
 .django .hljs-filter .hljs-argument,
 .smalltalk .hljs-localvars,
 .smalltalk .hljs-array,
@@ -97,8 +99,7 @@
 .apache .hljs-tag,
 .apache .hljs-cbracket,
 .tex .hljs-command,
-.hljs-prompt,
-.hljs-name {
+.hljs-prompt {
   color: #8cbbad;
 }
 
@@ -107,10 +108,11 @@
 }
 
 .hljs-comment,
-.hljs-annotation,
+.java .hljs-annotation,
 .hljs-blockquote,
 .hljs-horizontal_rule,
-.hljs-decorator,
+.python .hljs-decorator,
+.hljs-template_comment,
 .hljs-pi,
 .hljs-deletion,
 .hljs-shebang,
@@ -122,10 +124,10 @@
 .hljs-keyword,
 .hljs-literal,
 .css .hljs-id,
-.hljs-doctag,
+.hljs-phpdoc,
 .hljs-title,
 .hljs-header,
-.hljs-type,
+.haskell .hljs-type,
 .vbscript .hljs-built_in,
 .rsl .hljs-built_in,
 .smalltalk .hljs-class,

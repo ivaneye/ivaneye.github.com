@@ -8,11 +8,12 @@
   padding: 0.5em;
   background: #000;
   color: #f8f8f8;
-  -webkit-text-size-adjust: none;
 }
 
 .hljs-shebang,
-.hljs-comment {
+.hljs-comment,
+.hljs-template_comment,
+.hljs-javadoc {
   color: #7c7c7c;
 }
 
@@ -56,10 +57,12 @@
 .hljs-pi,
 .hljs-decorator,
 .tex .hljs-special,
-.hljs-type,
+.haskell .hljs-type,
 .hljs-constant,
 .smalltalk .hljs-class,
-.hljs-doctag,
+.hljs-javadoctag,
+.hljs-yardoctag,
+.hljs-phpdoc,
 .nginx .hljs-built_in {
   color: #ffffb6;
 }
@@ -69,8 +72,7 @@
 .hljs-number,
 .hljs-variable,
 .vbscript,
-.hljs-literal,
-.hljs-name {
+.hljs-literal {
   color: #c6c5fe;
 }
 
@@ -78,7 +80,7 @@
   color: #96cbfe;
 }
 
-.css .hljs-rule .hljs-property,
+.css .hljs-rules .hljs-property,
 .css .hljs-id {
   color: #ffffb6;
 }

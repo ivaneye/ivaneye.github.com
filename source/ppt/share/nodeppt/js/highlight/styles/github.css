@@ -10,11 +10,12 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   padding: 0.5em;
   color: #333;
   background: #f8f8f8;
-  -webkit-text-size-adjust: none;
 }
 
 .hljs-comment,
-.diff .hljs-header {
+.hljs-template_comment,
+.diff .hljs-header,
+.hljs-javadoc {
   color: #998;
   font-style: italic;
 }
@@ -22,6 +23,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-keyword,
 .css .rule .hljs-keyword,
 .hljs-winutils,
+.javascript .hljs-title,
 .nginx .hljs-title,
 .hljs-subst,
 .hljs-request,
@@ -33,30 +35,33 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-number,
 .hljs-hexcolor,
 .ruby .hljs-constant {
-  color: #008080;
+  color: #099;
 }
 
 .hljs-string,
 .hljs-tag .hljs-value,
-.hljs-doctag,
+.hljs-phpdoc,
 .tex .hljs-formula {
   color: #d14;
 }
 
 .hljs-title,
 .hljs-id,
+.coffeescript .hljs-params,
 .scss .hljs-preprocessor {
   color: #900;
   font-weight: bold;
 }
 
-.hljs-list .hljs-keyword,
+.javascript .hljs-title,
+.lisp .hljs-title,
+.clojure .hljs-title,
 .hljs-subst {
   font-weight: normal;
 }
 
 .hljs-class .hljs-title,
-.hljs-type,
+.haskell .hljs-type,
 .vhdl .hljs-literal,
 .tex .hljs-command {
   color: #458;
@@ -65,7 +70,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 .hljs-tag,
 .hljs-tag .hljs-title,
-.hljs-rule .hljs-property,
+.hljs-rules .hljs-property,
 .django .hljs-tag .hljs-keyword {
   color: #000080;
   font-weight: normal;
@@ -73,8 +78,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 .hljs-attribute,
 .hljs-variable,
-.lisp .hljs-body,
-.hljs-name {
+.lisp .hljs-body {
   color: #008080;
 }
 
@@ -85,14 +89,14 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-symbol,
 .ruby .hljs-symbol .hljs-string,
 .lisp .hljs-keyword,
-.clojure .hljs-keyword,
-.scheme .hljs-keyword,
 .tex .hljs-special,
 .hljs-prompt {
   color: #990073;
 }
 
-.hljs-built_in {
+.hljs-built_in,
+.lisp .hljs-title,
+.clojure .hljs-built_in {
   color: #0086b3;
 }
 
