@@ -81,6 +81,10 @@ Accept-Encoding: gzip, deflate
 - 如何展示
 
 [slide]
+
+![](/web_file/Web.png)
+
+[slide]
 # 查找，定位资源
 
 [slide]
@@ -1748,6 +1752,21 @@ private static void loadInitialDrivers() {
     ...
 }
 ```
+
+[slide]
+# JNDI
+
+![](/web_file/jndiarch.gif)
+
+[slide]
+# JNDI API
+
+- javax.naming
+- javax.naming.directory
+- javax.naming.ldap
+- javax.naming.event
+- javax.naming.spi
+
 <!-- 数据持久化处理!JDBC流程解析，实现! 20P -->
 
 [slide]
@@ -1822,8 +1841,6 @@ throws ServletException, IOException{
 
 [slide]
 # 考试
-
-- 木有考试!!! {:&.moveIn}
 
 <!-- 针对Web的理解，可以以任意形式总结给我，一起讨论! -->
 
