@@ -65,6 +65,9 @@ Accept-Encoding: gzip, deflate
 - 浏览器得到返回数据后可以会提取数据，然后调用解析内核进行翻译，最后显示出页面。
 - 之后浏览器会对其引用的文件比如图片，CSS，JS等文件不断进行上述过程，直到所有文件都被下载下来之后，网页就会显示出来。
 
+[slide]
+<!-- 整体流程 -->
+![](/web_file/02.jpg)
 <!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
 
 [slide]
@@ -75,10 +78,6 @@ Accept-Encoding: gzip, deflate
 - 如何处理请求
 - 如何返回响应
 - 如何展示
-
-[slide]
-
-![](/web_file/Web.png)
 
 [slide]
 # 查找，定位资源
@@ -1871,8 +1870,8 @@ throws ServletException, IOException{
 <!-- 吕翔讲解 -->
 
 [slide]
-<!-- 整体流程 -->
-![](/web_file/02.jpg)
+
+![](/web_file/Web.png)
 
 [slide]
 # 考试

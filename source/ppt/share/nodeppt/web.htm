@@ -1,7 +1,8 @@
 <!--
     Powered By nodePPT - This is probably the best web presentation tool so far!
-    version: 1.2.3
+    version: 1.4.2
     site: https://github.com/ksky521/nodePPT
+    date: 
 -->
 <!doctype html>
 <html>
@@ -10,9 +11,11 @@
     <title>理解Web - By 王一帆</title>
     <link rel="stylesheet" media="all" href="./css/nodeppt.css">
     <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
-    <link rel="stylesheet" media="print" href="./css/pdf.css">
+    
     <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
     <link rel="stylesheet" href="./css/font-awesome.css">
+    
+<link rel="stylesheet" href="./css/theme.dark.css">
 </head>
 <body>
 <div class="slides">
@@ -85,7 +88,13 @@ Accept-Encoding: gzip, deflate
 <li>浏览器得到返回数据后可以会提取数据，然后调用解析内核进行翻译，最后显示出页面。</li>
 <li>之后浏览器会对其引用的文件比如图片，CSS，JS等文件不断进行上述过程，直到所有文件都被下载下来之后，网页就会显示出来。</li>
 </ul>
-<!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<!-- 整体流程 -->
+<p><img src="./web_file/02.jpg" alt="">
+<!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P --></p>
+
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>流程划分</h1>
@@ -96,10 +105,6 @@ Accept-Encoding: gzip, deflate
 <li>如何返回响应</li>
 <li>如何展示</li>
 </ul>
-
-</article></section></slide>
-<slide class="slide"><section class="slide-wrapper"><article>
-<p><img src="./web_file/Web.png" alt=""></p>
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -368,7 +373,7 @@ Accept-Encoding: gzip, deflate
 <ul>
 <li>动态地给一个对象添加一些额外的职责</li>
 </ul>
-<p><img src="./web_file/decorator.jpg" alt=""></p>
+<img src="./web_file/decorator.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -415,17 +420,17 @@ Accept-Encoding: gzip, deflate
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>代理</h1>
-<p><img src="./web_file/proxy.jpg" alt=""></p>
+<img src="./web_file/proxy.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>反向代理</h1>
-<p><img src="./web_file/nproxy.jpg" alt=""></p>
+<img src="./web_file/nproxy.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>CDN</h1>
-<p><img src="./web_file/cdn.jpg" alt=""></p>
+<img src="./web_file/cdn.jpg" alt="">
 <!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
 <!-- 历经千辛万苦终于找到了服务器，服务器需要对请求进行处理 -->
 </article></section></slide>
@@ -459,7 +464,7 @@ OutputStream output = socket.getOutputStream();
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>模型</h1>
-<p><img src="./web_file/04.png" alt=""></p>
+<img src="./web_file/04.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -510,13 +515,13 @@ serverChannel.register(selector, SelectionKey.OP_ACCEPT);
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>模型[NIO]</h1>
-<p><img src="./web_file/06.png" alt=""></p>
+<img src="./web_file/06.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>半包问题</h1>
-<p><img src="./web_file/07.png" alt=""></p>
-<p><img src="./web_file/08.png" alt=""></p>
+<img src="./web_file/07.png" alt="">
+<img src="./web_file/08.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -525,7 +530,7 @@ serverChannel.register(selector, SelectionKey.OP_ACCEPT);
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>AWT EVENTS</h1>
-<p><img src="./web_file/09.jpg" alt=""></p>
+<img src="./web_file/09.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -539,17 +544,17 @@ serverChannel.register(selector, SelectionKey.OP_ACCEPT);
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Reactor单线程模型</h1>
-<p><img src="./web_file/10.png" alt=""></p>
+<img src="./web_file/10.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Reactor多线程模型</h1>
-<p><img src="./web_file/11.png" alt=""></p>
+<img src="./web_file/11.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>主从Reactor模型</h1>
-<p><img src="./web_file/12.png" alt=""></p>
+<img src="./web_file/12.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -630,7 +635,7 @@ Accept-Encoding: gzip, deflate
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>面向对象：轻松添加新的行（类型）</h1>
-<p><img src="./web_file/press01.png" alt=""></p>
+<img src="./web_file/press01.png" alt="">
 <ul>
 <li>java.util.List 接口中的每一列都表示一种方法。为简单起见，它包括四种方法：List.add、List.get、List.clear 和 List.size。前四行中的每一行都表示实现 java.util.List 的一个类： ArrayList、LinkedList、Stack 和 Vector。这些行和列交叉处的单元格表示每一种类的方法的现有实现（通过标准 Java 类库提供）。在底部添加的第五行表示您可以编写的实现 java.util.List 的新类。对于行上的每一个单元格来说，您都可以编写在 java.util.List 中相应方法的您自己的实现，特定于您的新类。</li>
 </ul>
@@ -638,7 +643,7 @@ Accept-Encoding: gzip, deflate
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>函数语言：轻松添加新的列（函数）</h1>
-<p><img src="./web_file/press02.png" alt=""></p>
+<img src="./web_file/press02.png" alt="">
 <ul>
 <li>列表示 Clojure 的标准集合 API 中的函数：conj、nth、empty 和 count。同样，行表示 Clojure 的内置集合类型：list、vector、map 和 set。这些行和列交叉处的单元格表示 Clojure 提供的这些函数的现有实现。通过定义新的函数，您可以向表添加新的列。假设您的新函数是用 Clojure 的内置函数编写的，则它将能够自动支持所有相同的类型。</li>
 </ul>
@@ -927,7 +932,7 @@ def index(name):
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>观察者模式</h1>
 <!-- 从观察者模式到监听器 -->
-<p><img src="./web_file/observer.jpg" alt=""></p>
+<img src="./web_file/observer.jpg" alt="">
 <ul>
 <li>定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时, 所有依赖于它的对象都得到通知并被自动更新。</li>
 </ul>
@@ -1281,7 +1286,7 @@ public @interface MyTest {
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Servlet架构</h1>
-<p><img src="./web_file/10.jpg" alt=""></p>
+<img src="./web_file/10.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1294,7 +1299,7 @@ public @interface MyTest {
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>ClassLoader</h1>
-<p><img src="./web_file/classloader.jpg" alt=""></p>
+<img src="./web_file/classloader.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1367,17 +1372,17 @@ sun.misc.Launcher$AppClassLoader@610f7612
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Tomcat5</h1>
-<p><img src="./web_file/tomcat5.jpg" alt=""></p>
+<img src="./web_file/tomcat5.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Tomcat6</h1>
-<p><img src="./web_file/tomcat6.jpg" alt=""></p>
+<img src="./web_file/tomcat6.jpg" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>Tomcat7</h1>
-<p><img src="./web_file/tomcat7.png" alt=""></p>
+<img src="./web_file/tomcat7.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1434,7 +1439,7 @@ sun.misc.Launcher$AppClassLoader@610f7612
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>OSGi ClassLoader</h1>
-<p><img src="./web_file/OSGi_ClassLoader.png" alt=""></p>
+<img src="./web_file/OSGi_ClassLoader.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1519,7 +1524,7 @@ session.setMaxInactiveInterval(30*60);//30分钟超时
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>JDBC架构</h1>
-<p><img src="./web_file/db01.gif" alt=""></p>
+<img src="./web_file/db01.gif" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1811,7 +1816,7 @@ private static void loadInitialDrivers() {
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
 <h1>架构</h1>
-<p><img src="./web_file/jndiarch.gif" alt=""></p>
+<img src="./web_file/jndiarch.gif" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1892,8 +1897,7 @@ throws ServletException, IOException{
 <!-- 吕翔讲解 -->
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article>
-<!-- 整体流程 -->
-<p><img src="./web_file/02.jpg" alt=""></p>
+<img src="./web_file/Web.png" alt="">
 
 </article></section></slide>
 <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
@@ -1904,17 +1908,13 @@ throws ServletException, IOException{
 <h1>谢谢</h1>
 
 </article></section></slide>
-        <!--slide class="slide thank-you-slide segue nobackground">
-            <article class="flexbox vleft auto-fadein">
-                <h2>Q &amp; A</h2>
-                <h3>&lt;Thank You!&gt;</h3>
-            </article>
-        </slide-->
-        <slide class="slide logoslide dark nobackground">
+        
+
+        <!-- <slide class="slide logoslide dark nobackground">
             <article class="flexbox vcenter">
-              <h2 style="color: white;">Powered By nodePPT v1.2.3</h2>
+                <h2 style="color: white;">Powered By nodePPT v1.4.2</h2>
             </article>
-          </slide>
+        </slide> -->
         <div class="slideTip" id="tip"></div>
     </slides>
 </div>
@@ -1933,7 +1933,7 @@ throws ServletException, IOException{
 <script>
 var base = location.protocol + '//' + location.host;
 
-var path = location.pathname.split('/').filter(function(v){
+var path = (location.pathname + '#').split('/').filter(function(v){
     return !!v;
 });
 path.pop();
@@ -1967,13 +1967,13 @@ Slide.init({
     
     tipID: 'tip'
 });
-MixJS.loadJS('highlight/hljs-0.8.js',function(){
+MixJS.loadJS('highlight/highlight.pack.js',function(){
     hljs.tabReplace = '  ';
     hljs.initHighlightingOnLoad();
 });
 </script>
 
-<link rel="stylesheet" href="./css/theme.dark.css">
+
 <!--placeholder-->
 </body>
 </html>
