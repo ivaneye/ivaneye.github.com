@@ -12,7 +12,7 @@ highlighter : pygments
 
 paginate: 7 #6
 paginate_path: "page/:num"
-exclude: [ "README.md",".idea",".iml",".name",".Node"]
+exclude: [ "README.md",".idea",".iml",".name",".Node",".tags"]
 encoding: "utf-8"
 comments: true
 
@@ -30,7 +30,7 @@ destination: _site
 name: wangyifan
 title: 从0到1
 description: "思考，执行，表达！"
-meta_description: "Architecturer"
+meta_description: "思考,执行,表达,架构,编程"
 meta_keywords: "思考,执行,表达,架构,编程"
 url: http://ivaneye.com
 production_url: http://ivaneye.com
@@ -73,4 +73,4 @@ compress_html:
   ignore:
     envs: all
 
-exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md",".tags", "Rakefile", "changelog.md"]
