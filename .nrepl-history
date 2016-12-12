@@ -1,0 +1,2 @@
+(print "helo")
+(doc print)
