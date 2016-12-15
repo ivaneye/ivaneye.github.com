@@ -7,7 +7,7 @@
 
 pre, code {
   font-size: 14px;
-  font-family: Monaco,Verdana,"Microsoft YaHei","微软雅黑",STXihei,"华文细黑",'Courier New', Consolas, Inconsolata, Courier, monospace;
+  font-family: Monaco,Verdana，"droid sans fallback"，monospace,"Microsoft YaHei","微软雅黑",STXihei,"华文细黑",'Courier New', Consolas, Inconsolata, Courier, monospace;
   /*font-family: Roboto, 'Courier New', Consolas, Inconsolata, Courier, monospace;*/
   margin: auto 5px;
 }
@@ -34,8 +34,8 @@ pre code {
 }
 
 strong, b{
-  /*color: #BF360C;*/
-  color: #ff7e79;
+  color: #BF360C;
+  /*color: #ff7e79;*/
 }
 
 em, i {
@@ -107,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1.3em 0 1em;
   padding: 0;
   font-style: bold !important;
-  color: #009688 !important;
+  color: rgb(42, 161, 152) !important;
   margin: 1.5em 5px !important;
   padding: 0.5em 1em !important;
 }
@@ -154,6 +154,11 @@ h6 {
   padding-left: 9px;
   border-left: 1px solid #ff7e79;
 }
+
+a:link {color: rgb(42, 161, 152);}
+a:visited{color:rgb(42, 161, 152);}
+a:active{color:rgb(42, 161, 152);}
+a:hover {color:#ff7e79}
 
 
 table {
