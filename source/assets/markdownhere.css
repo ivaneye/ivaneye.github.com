@@ -7,7 +7,8 @@
 
 pre, code {
   font-size: 14px;
-  font-family: Roboto, 'Courier New', Consolas, Inconsolata, Courier, monospace;
+  font-family: Monaco,Verdana,"Microsoft YaHei","微软雅黑",STXihei,"华文细黑",'Courier New', Consolas, Inconsolata, Courier, monospace;
+  /*font-family: Roboto, 'Courier New', Consolas, Inconsolata, Courier, monospace;*/
   margin: auto 5px;
 }
 
@@ -24,7 +25,8 @@ pre {
 }
 
 pre code {
-  white-space: pre;
+  background-color: #F8F8F8;
+  /*white-space: pre;*/
   overflow: auto;
   border-radius: 3px;
   padding: 1px 1px;
@@ -32,7 +34,8 @@ pre code {
 }
 
 strong, b{
-  color: #BF360C;
+  /*color: #BF360C;*/
+  color: #ff7e79;
 }
 
 em, i {
@@ -40,7 +43,7 @@ em, i {
 }
 
 hr {
-  border: 1px solid #BF360C;
+  border: 1px solid #ff7e79;
   margin: 1.5em auto;
 }
 
@@ -120,28 +123,28 @@ h2 {
   font-size: 1.4em;
   margin: 40px 10px 20px 0;
   padding-left: 9px;
-  border-left: 6px solid #ff7e79;
+  border-left: 5px solid #ff7e79;
 }
 
 h3 {
   font-size: 1.3em;
   margin: 40px 10px 20px 0;
   padding-left: 9px;
-  border-left: 6px solid #ff7e79;
+  border-left: 4px solid #ff7e79;
 }
 
 h4 {
   font-size: 1.2em;
   margin: 40px 10px 20px 0;
   padding-left: 9px;
-  border-left: 6px solid #ff7e79;
+  border-left: 3px solid #ff7e79;
 }
 
 h5 {
   font-size: 1em;
   margin: 40px 10px 20px 0;
   padding-left: 9px;
-  border-left: 6px solid #ff7e79;
+  border-left: 2px solid #ff7e79;
 }
 
 h6 {
@@ -149,7 +152,7 @@ h6 {
   color: #777;
   margin: 40px 10px 20px 0;
   padding-left: 9px;
-  border-left: 6px solid #ff7e79;
+  border-left: 1px solid #ff7e79;
 }
 
 
