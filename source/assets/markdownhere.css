@@ -2,13 +2,13 @@
   font-size: 16px;
   line-height: 1.8em;
   letter-spacing: 0.1em;
+  color:#333333;
 }
 
 
 pre, code {
   font-size: 14px;
-  font-family: Monaco,Verdana,"droid sans fallback",monospace,"Microsoft YaHei","微软雅黑",STXihei,"华文细黑",'Courier New', Consolas, Inconsolata, Courier, monospace;
-  /*font-family: Roboto, 'Courier New', Consolas, Inconsolata, Courier, monospace;*/
+  font-family: Roboto，"Noto Sans CJK SC", "Source Han Sans CN","Microsoft YaHei","微软雅黑",STXihei,"华文细黑",'Courier New', Consolas, Inconsolata, Courier, monospace;
   margin: auto 5px;
 }
 
