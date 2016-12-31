@@ -1,3 +1,6 @@
 Sitemap: https://ivaneye.com/sitemap.xml
 User-agent: *
 Disallow: /ppt
+Disallow: /404
+Disallow: /tags
+Disallow: /categories
