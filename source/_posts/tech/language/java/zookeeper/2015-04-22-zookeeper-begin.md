@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-04-22
 title: ZooKeeper安装与Java调用
 categories: zookeeper
 tags: [java,zookeeper]

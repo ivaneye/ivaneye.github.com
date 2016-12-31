@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-10-16
 title:  内向也是一种优势
 categories: [book]
 tags: [book,read]

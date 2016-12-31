@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-11-24
 title: Go语言初探
 categories: [golang]
 tags: [golang,language]

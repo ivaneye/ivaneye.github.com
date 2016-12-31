@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-10-20
 title: 评李笑来的知乎live
 categories: [think]
 tags: [think]

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2014-05-11
 title: Clojure教程-Record和Protocol
 categories: clojure
 tags: [clojure]

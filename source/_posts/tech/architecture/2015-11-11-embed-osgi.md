@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-11-11
 title: 实时发布-嵌入式OSGi的应用
 categories: [architecture]
 tags: [architecture,osgi]

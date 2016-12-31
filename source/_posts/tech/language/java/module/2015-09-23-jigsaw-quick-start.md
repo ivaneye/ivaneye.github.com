@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-09-23
 title: Java模块化:jigsaw初体验
 categories: module
 tags: [jigsaw,java,module]

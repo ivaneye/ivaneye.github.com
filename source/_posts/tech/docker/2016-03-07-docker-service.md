@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-03-07
 title: Docker与服务化
 categories: [docker]
 tags: [docker]

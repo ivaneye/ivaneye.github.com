@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-03-03
 title: 刨根问底-02为什么Java接口中的成员变量被设计为必须是public static final的？
 categories: [why]
 tags: [why,java]

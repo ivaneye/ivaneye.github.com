@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-06
 title: 快学Scala习题解答—第四章 映射和元组
 categories: scala
 tags: [java,scala]
@@ -211,4 +212,3 @@ abstract def zip[B](that: GenIterable[B]): StringOps[(A, B)]
 
 GenIterable是可遍历对象需要包含的trait，对于String来说，它是可遍历的。但是它的遍历是遍历单个字母。
 所以拉链就针对每个字母来进行。
-

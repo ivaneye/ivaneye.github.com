@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-14
 title: 快学Scala习题解答—第十二章 高阶函数
 categories: scala
 tags: [java,scala]
@@ -167,4 +168,3 @@ object Test extends App {
 ```
 
 需要换名和柯里化
-

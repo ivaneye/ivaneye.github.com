@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-11-06
 title:  学习方法
 categories: [book]
 tags: [book,read,think]

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-05
 title: 快学Scala习题解答—第三章 数组相关操作
 categories: scala
 tags: [java,scala]

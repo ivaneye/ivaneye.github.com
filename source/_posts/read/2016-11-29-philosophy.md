@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-11-29
 title: 哲学是个什么鬼?
 categories: [book]
 tags: [read,book]

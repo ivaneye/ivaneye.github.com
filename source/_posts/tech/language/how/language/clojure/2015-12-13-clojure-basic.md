@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-12-13
 title: Clojure环境与语法
 categories: train
 tags: [how,language,clojure]

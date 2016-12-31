@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-11-03
 title: Java环境与语法
 categories: train
 tags: [how,language,java]

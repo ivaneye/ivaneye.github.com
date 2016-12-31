@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-05-20
 title: ClassLoader
 categories: jvm
 tags: [classloader,tomcat,osgi]
@@ -225,7 +226,7 @@ public synchronized void reload() {
 - Step 3: 检查是否在Require-Bundle中声明
         检查是否在Require-Bundle中声明。如果是，则将类加载请求委托给required bundle的类加载器。
 
-- Step 4: 检查是否bundle内部类 
+- Step 4: 检查是否bundle内部类
         检查是否是该bundle内部的类，即当前JAR文件中的类。
 
 - Step5:  检查fragment

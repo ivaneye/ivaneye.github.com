@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-04-01
 title: 自用Java开发框架
 categories: [mycode]
 tags: [java,framework]

@@ -1,0 +1,24 @@
+@startuml
+usecase uc as "Enroll in a course
+--
+Extension Points:
+fill out payment method"
+
+uc ---> Enroller
+uc ---> Student
+uc ---> EnrollmentClerk
+
+uc .> (View Menu of courses):<<include>>
+
+note top of uc
+1. 登记者首先查看课程清单(用例#1)
+2. 登记者从清单中选择一门要登记的课程
+3. 系统提示登记者输入学生姓名，电话，传真，电子邮件
+4. 系统提示登记者选择支付方式
+
+扩展点:填写支付方式
+1. 登记者提交登记表单
+2. 系统向学生和登记处工作人员发送确认登记的电子邮件
+3. 并要求登记者打印确认信息，在上面签字，并把它传真到一个指定的号码
+end note
+@enduml

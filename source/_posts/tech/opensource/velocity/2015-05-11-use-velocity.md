@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-05-11
 title: 读源码-Velocity使用
 categories: [velocity]
 tags: [opensource,velocity,java]
@@ -25,21 +26,21 @@ published: false
 - 多行注释：
 
 ```
-#* 
-Thus begins a multi-line comment. 
-Online visitors won't see this text 
-because the Velocity Templating Engine will ignore it. 
+#*
+Thus begins a multi-line comment.
+Online visitors won't see this text
+because the Velocity Templating Engine will ignore it.
 *#
 ```
 
 - Javadoc-style 注释：
 
 ```
-#** This is a VTL comment block and may 
-be used to store such information as the 
-document author and versioning information: 
-@author 
-@version 5 
+#** This is a VTL comment block and may
+be used to store such information as the
+document author and versioning information:
+@author
+@version 5
 *#
 ```
 
@@ -67,14 +68,14 @@ underscore ("_")
 比如：
 
 ```
-$customer.Address 
+$customer.Address
 $purchase.Total
 ```
 
 - 方法：
 
 ```
-$purchase.getTotal() 
+$purchase.getTotal()
 $page.setTitle( "My Home Page" )
 ```
 
@@ -87,7 +88,7 @@ $page.setTitle( "My Home Page" )
 ## 循环：
 
 ```
-#foreach( $mud in $mudsOnSpecial ) 
+#foreach( $mud in $mudsOnSpecial )
 
 #end
 $foreach.count 1...
@@ -131,11 +132,11 @@ $foreach.index 0...
 ## 动态执行VTL:
 
 ```
-#evaluate 
-#set($source1 = "abc") 
-#set($select = "1") 
-#set($dynamicsource = "$source$select") 
-## $dynamicsource is now the string '$source1' 
+#evaluate
+#set($source1 = "abc")
+#set($select = "1")
+#set($dynamicsource = "$source$select")
+## $dynamicsource is now the string '$source1'
 #evaluate($dynamicsource)
 ```
 
@@ -144,8 +145,8 @@ $foreach.index 0...
 ```
 #define
 定义一段VTL，供调用
-#define( $block )Hello $who#end 
-#set( $who = 'World!' ) 
+#define( $block )Hello $who#end
+#set( $who = 'World!' )
 $block
 ```
 
@@ -155,9 +156,9 @@ $block
 #macro
 #define定义了变量，#macro定义了操作
 
-#macro( d ) 
+#macro( d )
 ##d为方法名，如果需要参数，在d后面添加，空格隔开
-<tr><td></td></tr> 
+<tr><td></td></tr>
 #end
 #d()
 ```
@@ -165,8 +166,8 @@ $block
 ## 宏$!bodyContent
 
 ```
-#macro( d ) 
-<tr><td>$!bodyContent</td></tr> 
+#macro( d )
+<tr><td>$!bodyContent</td></tr>
 #end
 
 #@d()Hello!#end
@@ -175,12 +176,12 @@ $block
 ## 转意符：
 
 ```
-## The following line defines $email in this template: 
-#set( $email = "foo" ) 
-$email 
+## The following line defines $email in this template:
+#set( $email = "foo" )
+$email
 \$email
 结果：
-foo 
+foo
 $email
 ```
 
@@ -197,61 +198,61 @@ $email
 代码如下：
 
 ```java
-import java.io.StringWriter; 
-import org.apache.velocity.VelocityContext; 
-import org.apache.velocity.Template; 
-import org.apache.velocity.app.Velocity; 
-import org.apache.velocity.exception.ResourceNotFoundException; 
-import org.apache.velocity.exception.ParseErrorException; 
-import org.apache.velocity.exception.MethodInvocationException; 
+import java.io.StringWriter;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.Template;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.MethodInvocationException;
 
-Velocity.init(); 
-VelocityContext context = new VelocityContext(); 
-context.put( "name", new String("Velocity") ); 
-Template template = null; 
-try { 
-template = Velocity.getTemplate("mytemplate.vm"); 
-} catch( ResourceNotFoundException rnfe ) { 
-// couldn't find the template 
+Velocity.init();
+VelocityContext context = new VelocityContext();
+context.put( "name", new String("Velocity") );
+Template template = null;
+try {
+template = Velocity.getTemplate("mytemplate.vm");
+} catch( ResourceNotFoundException rnfe ) {
+// couldn't find the template
 } catch( ParseErrorException pee ) {
-// syntax error: problem parsing the template 
-} catch( MethodInvocationException mie ) { 
-// something invoked in the template // threw an exception 
-} catch( Exception e ) {} 
-StringWriter sw = new StringWriter(); 
+// syntax error: problem parsing the template
+} catch( MethodInvocationException mie ) {
+// something invoked in the template // threw an exception
+} catch( Exception e ) {}
+StringWriter sw = new StringWriter();
 template.merge( context, sw );
 ```
 
-## Singleton与Separate 
+## Singleton与Separate
 
 Singleton模式下，jvm中只有一个Velocity实例，应用中可方便配置，代码如下:
 
 ```java
-import org.apache.velocity.app.Velocity; 
-import org.apache.velocity.Template; 
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.Template;
 
-... /* * Configure the engine - as an example, we are using * ourselves as the logger - see logging examples */ 
+... /* * Configure the engine - as an example, we are using * ourselves as the logger - see logging examples */
 
-Velocity.setProperty( Velocity.RUNTIME_LOG_LOGSYSTEM, this); 
+Velocity.setProperty( Velocity.RUNTIME_LOG_LOGSYSTEM, this);
 
-/* * now initialize the engine */ 
+/* * now initialize the engine */
 
-Velocity.init(); 
-... 
+Velocity.init();
+...
 Template t = Velocity.getTemplate("foo.vm");
 ```
 
 Separate模式下,jvm中会有多个Velocity实例，每个velocity可单独配置，针对各自的需求可调用不同的velocity.
 
 ```java
-import org.apache.velocity.app.VelocityEngine; 
-import org.apache.velocity.Template; 
-... 
-/* * create a new instance of the engine */ 
-VelocityEngine ve = new VelocityEngine(); 
-/* * configure the engine. In this case, we are using * ourselves as a logger (see logging examples..) */ 
-ve.setProperty( VelocityEngine.RUNTIME_LOG_LOGSYSTEM, this); 
-/* * initialize the engine */ ve.init(); 
-... 
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.Template;
+...
+/* * create a new instance of the engine */
+VelocityEngine ve = new VelocityEngine();
+/* * configure the engine. In this case, we are using * ourselves as a logger (see logging examples..) */
+ve.setProperty( VelocityEngine.RUNTIME_LOG_LOGSYSTEM, this);
+/* * initialize the engine */ ve.init();
+...
 Template t = ve.getTemplate("foo.vm");
 ```

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-07
 title: 快学Scala习题解答—第五章 类
 categories: scala
 tags: [java,scala]
@@ -199,4 +200,3 @@ class Employ{
 ```
 
 个人更喜欢第二种方式，简单明了。
-

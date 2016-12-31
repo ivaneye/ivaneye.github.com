@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2014-08-29
 title: Clojure教程-命名空间
 categories: clojure
 tags: [clojure]

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-12-02
 title: Go语言手册（Version of August 5, 2015）
 categories: train
 tags: [how,language,go]

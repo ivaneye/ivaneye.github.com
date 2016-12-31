@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-12-22
 title: 逆向工程《硅谷来信》学写作
 categories: [think]
 tags: [think,随笔]

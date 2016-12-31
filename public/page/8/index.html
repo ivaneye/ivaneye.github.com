@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>思考，执行，表达！</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">思考，执行，表达！</h1><a id="logo" href="/.">思考，执行，表达！</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h2 class="post-title"><a href="/2014/08/29/namespace.html">Clojure教程-命名空间</a></h2><div class="post-meta">2014-08-29</div><a data-thread-key="2014/08/29/namespace.html" href="/2014/08/29/namespace.html#comments" class="ds-thread-count"></a><div class="post-content"><h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>本文翻译自<a href="http://clojure-doc.org/articles/language/namespaces.html">Clojure Namespaces and Vars</a></p>
+<p>本文涵盖如下内容:</p>
+<ul>
+<li>Clojure命名空间和var概述</li>
+<li>如何定义命名空间</li>
+<li>如何使用其它命名空间里的函数</li>
+<li>require,refer和use</li>
+<li>常见错误和典型错误,以及导致这些错误的原因</li>
+<li>命名空间和代码管理</li>
+</ul>
+<p>版权:</p>
+<p>This work is licensed under a Creative Commons Attribution 3.0 Unported License (including images &amp; stylesheets). The source is available on Github.</p>
+<p>涵盖Clojure版本:Clojure 1.5</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Clojure的函数通过命名空间来组织.Clojure命名空间和Java的包或者Python的模块很类似.命名空间实际上就是个map,将名字映射到了var上.在大部分情况下,这些var持有这些函数.</p>
+<h1 id="定义一个命名空间"><a href="#定义一个命名空间" class="headerlink" title="定义一个命名空间"></a>定义一个命名空间</h1><p>一般情况下使用clojure.core/ns宏来定义命名空间.最基本的形式下,它将名字作为符号.</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">ns</span></span> superlib.core)</div></pre></td></tr></table></figure>
+<p>命名空间可以由点号切割的好多段组成</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">ns</span></span> megacorp.service.core)</div></pre></td></tr></table></figure>
+<p>需要注意的是,请尽量避免使用单段的命名空间,以免与其它开发人员的命名空间相冲突.如果库或者应用属于某个组织,那么建议以如下形式作为命名空间.[组织名称].[包名|应用名].[函数组名]<br>例如</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">ns</span></span> clojurewerkz.welle.kv)</div><div class="line"></div><div class="line">(<span class="name"><span class="builtin-name">ns</span></span> megacorp.search.indexer.core)</div></pre></td></tr></table></figure></div><p class="readmore"><a href="/2014/08/29/namespace.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/05/11/record_protocol.html">Clojure教程-Record和Protocol</a></h2><div class="post-meta">2014-05-11</div><a data-thread-key="2014/05/11/record_protocol.html" href="/2014/05/11/record_protocol.html#comments" class="ds-thread-count"></a><div class="post-content"><p>本文翻译自:<a href="http://www.jayway.com/2013/02/05/learn-clojure-using-records-and-protocols/">Learn Clojure using records and protocols</a></p>
+<p>当我对Clojure的括号不再疑惑后,另一个让我质疑为何要学习Clojure的问题是使用REPL很爽,但是我怎么来构建大型项目?”.</p>
+<p>实际上,由于我的面向对象编程经验,我其实要问的是”我怎么才能将函数封装到类似class的东西里面去?”.</p>
+<p>在本文中,我将会介绍一种类似于Java的方式来构建大型的Clojure项目.</p>
+<p>通过这种方式,希望你在学习Clojure的时候不会有太大的差异感!</p>
+<p>在Java中,我们出于各种目的而使用类.例如典型的使用Spring的web应用,你会看到类似下面的结构:</p>
+<ul>
+<li>Data transfer objects(DTO)</li>
+<li>Services(REST API,controllers,DAO)</li>
+<li>Rich object</li>
+</ul>
+<p>DTO实际上就是个结构体,他没有任何的行为(即方法).为了最小化样板代码,我趋向于使用pulibc final属性去实现DTO.我认为DTO就是个模板(schema),它就像一个REST服务输出的文件.但是我发现很多客户端开发人员可不关注这个,而只关注代码形式.有时你会看到DTO被作为数据库访问的一部分.这些DTO被称为贫血模型.(译者注:猜测作者的意思是,有些开发人员不管类是DTO还是DAO,只要结构相同就随便用!)</p>
+<p>Service实际上是包含了方法和注入了辅助Service的单例对象.不同的辅助Service提供了不同的服务.除了实现了接口外,Service只是包含了方法,和占位符很类似.单例模式导致的一个问题就是,新手无法预见到多线程里共享相同的实例出现意外的结果.他们将状态保存到私有属性里,而不需要从一个对象传递到另一个对象.很方便,但是是错误的做法.</p>
+<p>Rich object是面向对象语言中的思想.即将数据及和数据相关的操作封装到一个类里面.我可没说getter和setter是相关操作!但是,rich object类在项目中用得较少.取而代之的是使用DTO作为Service的输入和输出.使用DAO来访问数据库,然后返回DTO.我没说这种方法是错误的,我好奇的是,既然对于目前的Java架构是好是坏我们都无法确认,那为什么还要强求使用Clojure去实现类似的东西呢?</p></div><p class="readmore"><a href="/2014/05/11/record_protocol.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/03/15/function.html">Clojure教程-函数</a></h2><div class="post-meta">2014-03-15</div><a data-thread-key="2014/03/15/function.html" href="/2014/03/15/function.html#comments" class="ds-thread-count"></a><div class="post-content"><p>本文翻译自<a href="http://clojure-doc.org/articles/language/functions.html">Functions in Clojure</a></p>
+<p>本文包括如下内容:</p>
+<ul>
+<li>如何定义函数</li>
+<li>如何执行函数</li>
+<li>多元数函数(Multi-arity Functions)</li>
+<li>不定参函数(Variadic Functions)</li>
+<li>高阶函数</li>
+<li>其它函数相关内容</li>
+</ul>
+<p>版权:</p>
+<p>This work is licensed under a Creative Commons Attribution 3.0 Unported License (including images &amp; stylesheets). The source is available on Github.</p>
+<h1 id="针对Clojure版本"><a href="#针对Clojure版本" class="headerlink" title="针对Clojure版本"></a>针对Clojure版本</h1><p>Clojure 1.5</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Clojure是函数式编程语言.自然的,函数是Clojure非常重要的一部分.</p>
+<h1 id="如何定义函数"><a href="#如何定义函数" class="headerlink" title="如何定义函数"></a>如何定义函数</h1><p>函数定义一般使用defn宏:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">defn</span></span> round</div><div class="line">  [d precision]</div><div class="line">  (<span class="name"><span class="builtin-name">let</span></span> [factor (<span class="name">Math/pow</span> <span class="number">10</span> precision)]</div><div class="line">    (/ (<span class="name">Math/floor</span> (<span class="name"><span class="builtin-name">*</span></span> d factor)) factor)))</div></pre></td></tr></table></figure>
+<p>类型提示有时能避免编译器使用反射,从而能生成更高效的字节码.但是,基本上你没必要使用类型提示.后期优化时再考虑.</p>
+<p>函数可以添加注释文档,给API添加文档说明是个好习惯:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">defn</span></span> round</div><div class="line">  <span class="string">"Round down a double to the given precision (number of significant digits)"</span></div><div class="line">  [d precision]</div><div class="line">  (<span class="name"><span class="builtin-name">let</span></span> [factor (<span class="name">Math/pow</span> <span class="number">10</span> precision)]</div><div class="line">    (/ (<span class="name">Math/floor</span> (<span class="name"><span class="builtin-name">*</span></span> d factor)) factor)))</div></pre></td></tr></table></figure>
+<p>在Clojure中函数参数可以有类型提示,不过是可选的.</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">defn</span></span> round</div><div class="line">  [<span class="comment">^double</span> d <span class="comment">^long</span> precision]</div><div class="line">  (<span class="name"><span class="builtin-name">let</span></span> [factor (<span class="name">Math/pow</span> <span class="number">10</span> precision)]</div><div class="line">    (/ (<span class="name">Math/floor</span> (<span class="name"><span class="builtin-name">*</span></span> d factor)) factor)))</div></pre></td></tr></table></figure>
+<p>函数还可以定义前置和后置条件来限制函数的参数和返回值.</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">defn</span></span> round</div><div class="line">  <span class="string">"Round down a double to the given precision (number of significant digits)"</span></div><div class="line">  [<span class="comment">^double</span> d <span class="comment">^long</span> precision]</div><div class="line">  &#123;<span class="symbol">:pre</span> [(<span class="name">not-nil?</span> d) (<span class="name">not-nil?</span> precision)]&#125;</div><div class="line">  (<span class="name"><span class="builtin-name">let</span></span> [factor (<span class="name">Math/pow</span> <span class="number">10</span> precision)]</div><div class="line">    (/ (<span class="name">Math/floor</span> (<span class="name"><span class="builtin-name">*</span></span> d factor)) factor)))</div></pre></td></tr></table></figure>
+<p>在上面的例子中,我们使用了前置条件来检查两个参数是否为nil.</p>
+<p>not-nil?宏(或函数),没有在该例子中展示,我们假设它已经在其它地方实现了.</p></div><p class="readmore"><a href="/2014/03/15/function.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/02/19/math.html">Clojure教程-数学计算</a></h2><div class="post-meta">2014-02-19</div><a data-thread-key="2014/02/19/math.html" href="/2014/02/19/math.html#comments" class="ds-thread-count"></a><div class="post-content"><p>本文翻译自<a href="http://clojure-doc.org/articles/cookbooks/math.html" target="_blank" rel="external">Mathematics with Clojure</a></p>
+<p>本文包含了使用Clojure的内建函数,扩展包和部分JDK功能进行数学计算.</p></div><p class="readmore"><a href="/2014/02/19/math.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/02/08/file.html">Clojure教程-文件处理</a></h2><div class="post-meta">2014-02-08</div><a data-thread-key="2014/02/08/file.html" href="/2014/02/08/file.html#comments" class="ds-thread-count"></a><div class="post-content"><p>本文翻译自<a href="http://clojure-doc.org/articles/cookbooks/files_and_directories.html">Working with Files and Directories in Clojure</a></p>
+<p>本文介绍使用Clojure的clojure.java.io命名空间下的函数以及JDK相关方法来操作文件和目录.</p>
+<p>版权:</p>
+<p>This work is licensed under a Creative Commons Attribution 3.0 Unported License (including images &amp; stylesheets). The source is available on Github.</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>请注意,在下面的例子中,”io”是clojure.java.io命名空间的简写引用.请确保你的ns宏包含如下代码:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="symbol">:require</span> [clojure.java.io <span class="symbol">:as</span> io])</div></pre></td></tr></table></figure>
+<p>或者在REPL中加载了:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name">require</span> '[clojure.java.io <span class="symbol">:as</span> io])</div></pre></td></tr></table></figure>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="将文件读到字符串中"><a href="#将文件读到字符串中" class="headerlink" title="将文件读到字符串中"></a>将文件读到字符串中</h2><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">def</span></span> a-long-string (<span class="name"><span class="builtin-name">slurp</span></span> <span class="string">"foo.txt"</span>))</div></pre></td></tr></table></figure>
+<p>注意,你可以给slurp函数传递url.请看<a href="http://clojuredocs.org/clojure_core/clojure.core/slurp">slurp文档</a></p>
+<h2 id="一行一行的读取文件"><a href="#一行一行的读取文件" class="headerlink" title="一行一行的读取文件"></a>一行一行的读取文件</h2><p>假设你想针对文件的每行内容调用my-func函数,并返回结果序列:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="name"><span class="builtin-name">with-open</span></span> [rdr (<span class="name">io/reader</span> <span class="string">"foo.txt"</span>)]</div><div class="line">  (<span class="name"><span class="builtin-name">doall</span></span> (<span class="name"><span class="builtin-name">map</span></span> my-func (<span class="name"><span class="builtin-name">line-seq</span></span> rdr))))</div></pre></td></tr></table></figure>
+<p>doall函数是必须的,因为map函数返回的是个lazy序列.line-seq返回的每行内容没有是去除了末尾的回车标记的,且空行将返回空字符串.</p></div><p class="readmore"><a href="/2014/02/08/file.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/02/05/string.html">Clojure教程-字符串处理</a></h2><div class="post-meta">2014-02-05</div><a data-thread-key="2014/02/05/string.html" href="/2014/02/05/string.html#comments" class="ds-thread-count"></a><div class="post-content"><p>本文翻译自<a href="http://clojure-doc.org/articles/cookbooks/strings.html">Strings</a></p>
+<p>本文内容包括使用Clojure内建的函数和标准库来操作字符串,以及JDK中的相关操作.</p>
+<p>版权:</p>
+<p>This work is licensed under a Creative Commons Attribution 3.0 Unported License (including images &amp; stylesheets).</p>
+<p>源代码在<a href="https://github.com/clojuredocs/guides">Github</a>上.</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li>Clojure中的字符串就是Java字符串.你可以使用Java中的相应方法来对其进行处理.</li>
+<li>Java字符串是不可变的,所以能很方便的在Clojure中使用</li>
+<li>你不能给Java字符串添加元数据</li>
+<li>Clojure提供一些方便的符号</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">"foo"</span>    java.lang.String</div><div class="line"><span class="comment">#"\d"    java.util.regex.Pattern (正则表达式,匹配一个数字)</span></div><div class="line">\f       java.lang.Character (表示<span class="string">'f'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>注意</strong>:<br>人类的大脑和计算机之间还是有很大的差异的.所以Java的字符串(UTF-16编码)并不能像人们所认为的那样很好的和字符一一对应.比如说,一个Unicode的位和我们所认为的字符的一位是无法对应的(像韩国韩语尊宝,这些词由多个字符组成.)同样的,一个Unicode位可能是由2个UTF-16字符组成.</li>
+</ul>
+<h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><p>一些例子用到了clojure.string,clojure.edn和clojure.pprint.我们假设你的ns宏里面已经包含了如下内容:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="symbol">:require</span> [clojure.string <span class="symbol">:as</span> str]</div><div class="line">          [clojure.edn <span class="symbol">:as</span> edn]</div><div class="line">          [clojure.pprint <span class="symbol">:as</span> pp])</div></pre></td></tr></table></figure>
+<p>或者在REPL里面,你需要载入:</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="name">require</span> '[clojure.string <span class="symbol">:as</span> str])</div><div class="line">(<span class="name">require</span> '[clojure.edn <span class="symbol">:as</span> edn])</div><div class="line">(<span class="name">require</span> '[clojure.pprint <span class="symbol">:as</span> pp])</div></pre></td></tr></table></figure></div><p class="readmore"><a href="/2014/02/05/string.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/02/02/basic.html">Clojure教程-基本语法</a></h2><div class="post-meta">2014-02-02</div><a data-thread-key="2014/02/02/basic.html" href="/2014/02/02/basic.html#comments" class="ds-thread-count"></a><div class="post-content"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>学习一门语言最好的方法就是去使用它。我们就从一个小例子来学习Clojure语法.</p>
+<h1 id="核心语法"><a href="#核心语法" class="headerlink" title="核心语法"></a>核心语法</h1><p>首先先来看一下Clojure的核心语法。</p>
+<p>Clojure的使用的是Lisp语法,又叫S表达式。核心语法非常的简单。但是对于熟悉c系语法(c,c++,java)的朋友来说，第一次接触会非常的不习惯。</p>
+<ul>
+<li>所有代码以”(“开始,”)”结束。即所有的代码都被()包裹</li>
+<li>“(“后的第一个数据被当作函数或者宏来调用</li>
+<li>接着的数据被当作参数传递</li>
+<li>如果想原样返回数据，在”(“前面添加”‘“。此写法是(quote (…))的简写</li>
+</ul>
+<p>以前面的hello world程序为例。</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name">println</span> <span class="string">"Hello World"</span>)</div></pre></td></tr></table></figure>
+<p>它以”(“开始，后面跟的是函数println，接着空格跟的是参数”HelloWorld”，最后”)”结尾。</p>
+<p>了解了如上规则，你就基本学会了Clojure的大部分语法。</p>
+<p>下面比较一下Clojure,Java,Python,Ruby的一些语法.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Clojure 表达式</th>
+<th style="text-align:left">对应的 Java 语法</th>
+<th style="text-align:left">对应的 Python 语法</th>
+<th style="text-align:left">对应的 Ruby 语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">(not k)</td>
+<td style="text-align:left">!k</td>
+<td style="text-align:left">not k</td>
+<td style="text-align:left">not k or !k</td>
+</tr>
+<tr>
+<td style="text-align:left">(inc a)</td>
+<td style="text-align:left">a++、++a、a += 1、a + 1^a</td>
+<td style="text-align:left">a += 1、a + 1</td>
+<td style="text-align:left">a += 1</td>
+</tr>
+<tr>
+<td style="text-align:left">(/ (+ x y) 2)</td>
+<td style="text-align:left">(x + y) / 2</td>
+<td style="text-align:left">(x + y) / 2</td>
+<td style="text-align:left">(x + y) / 2</td>
+</tr>
+<tr>
+<td style="text-align:left">(instance? java. util.List al)</td>
+<td style="text-align:left">al instanceof java.util.List</td>
+<td style="text-align:left">isinstance(al,list)</td>
+<td style="text-align:left">al.is_a? Array</td>
+</tr>
+<tr>
+<td style="text-align:left">(if (not a) (inc b) (dec b))</td>
+<td style="text-align:left">!a ? b + 1 : b - 1</td>
+<td style="text-align:left">b + 1 if not a else b-1</td>
+<td style="text-align:left">!a ? b + 1 : b - 1</td>
+</tr>
+<tr>
+<td style="text-align:left">(Math/pow 2 10)^c</td>
+<td style="text-align:left">Math.pow(2, 10)</td>
+<td style="text-align:left">pow(2, 10)</td>
+<td style="text-align:left">2 ** 10</td>
+</tr>
+<tr>
+<td style="text-align:left">(.someMethod someObj “foo” (.otherMethod otherObj 0))</td>
+<td style="text-align:left">someObj.someMethod(“foo” , otherObj.otherMethod(0))</td>
+<td style="text-align:left">someObj.someMethod(“foo” , otherObj.otherMethod(0))</td>
+<td style="text-align:left">someObj.someMethod(“foo” , otherObj.otherMethod(0))</td>
+</tr>
+</tbody>
+</table>
+<p>可以看出Clojure的语法有高度的一致性，即使你不熟悉S表达式，但是依据上面的原则，可以看懂它想表达的是一个什么意思。</p>
+<p>而对于其他三门语言，如果你没有一个个的学习相应的语法，你还是比较难理解它的意思的。</p>
+<h1 id="代码功能"><a href="#代码功能" class="headerlink" title="代码功能"></a>代码功能</h1><p>了解了核心语法，我们就可以来编写代码了。我们要编写的代码功能很简单，进行简繁翻译，其中过滤不需要翻译以及需要特殊翻译的文字。我们将分几步来完成:</p>
+<ul>
+<li>读取简繁字典</li>
+<li>进行简繁翻译</li>
+<li>读取不需要翻译的文字</li>
+<li>过滤不翻译的文字</li>
+<li>提供给Java调用</li>
+<li>打包</li>
+</ul></div><p class="readmore"><a href="/2014/02/02/basic.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2014/02/01/first_step.html">Clojure教程-环境搭建与Hello World</a></h2><div class="post-meta">2014-02-01</div><a data-thread-key="2014/02/01/first_step.html" href="/2014/02/01/first_step.html#comments" class="ds-thread-count"></a><div class="post-content"><h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>Clojure是JVM上的一种语言，其语法是Lisp格式，所以称为是JVM上的Lisp方言。</p>
+<p>Clojure依赖于JDK。请确保你的机器上安装了JDK6+。Clojure的安装非常的简单。<br>可以分为两种方式:</p>
+<ul>
+<li>通过Leiningen安装</li>
+<li>手动安装</li>
+</ul>
+<p>通过Leiningen是比较普遍也很方便的方式。我们先通过Leiningen来安装。</p>
+<h2 id="通过Leiningen安装"><a href="#通过Leiningen安装" class="headerlink" title="通过Leiningen安装"></a>通过Leiningen安装</h2><p>Leiningen和Maven比较类似，是Clojure语言的管理工具。其实它就是基于Maven<br>构建的。我们先来安装Leiningen</p>
+<ul>
+<li>首先下载<a href="https://raw.github.com/technomancy/leiningen/stable/bin/lein">lein<br>script</a></li>
+<li>将lein script放置到你的path下(linux下直接放到用户目录下即可)，保存文<br>件名叫lein。</li>
+<li>将其权限设置为可执行(chmod a+x lein)</li>
+<li>打开shell，输入lein即可</li>
+</ul>
+<p>leiningen会自动下载需要的依赖。运行完成后,Clojure开发环境即安装完成。</p>
+<h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>leiningen需要以项目为单位才能运行。比如你想运行一个hello.clj程序，如果<br>你通过leiningen来运行，则hello.clj需要在lein项目内，且设置为core，才能<br>运行,比较麻烦(这个问题在Maven中同样存在)。</p>
+<p>而通过手动安装可以解决这个问题。</p>
+<ul>
+<li>首先下载<a href="http://repo1.maven.org/maven2/org/clojure/clojure/1.5.1/clojure-1.5.1.zip">Clojure</a>,<br>目前稳定版本是1.5.1</li>
+<li>解压到任意位置，其中最主要的文件就是clojure-1.5.1.jar</li>
+<li>在path下编写脚本clj,输入如下内容</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">java -jar /home/ivan/soft/clojure-1.5.1/clojure-1.5.1.jar <span class="variable">$1</span></div><div class="line"> <span class="comment">#clojure.jar请输入你本机的路径</span></div></pre></td></tr></table></figure>
+<p>这样就可以执行单个的Clojure文件了</p></div><p class="readmore"><a href="/2014/02/01/first_step.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2013/10/02/upgrading.html">Luminus手册-升级</a></h2><div class="post-meta">2013-10-02</div><a data-thread-key="2013/10/02/upgrading.html" href="/2013/10/02/upgrading.html#comments" class="ds-thread-count"></a><div class="post-content"><h1 id="Upgrading-to-the-Latest-Version"><a href="#Upgrading-to-the-Latest-Version" class="headerlink" title="Upgrading to the Latest Version"></a>Upgrading to the Latest Version</h1><p>不幸的是，框架无法自动从老版本升级到新版本。主要原因是新版本的依赖可能会有接口方面的修改，导致老代码无法正常运行。</p></div><p class="readmore"><a href="/2013/10/02/upgrading.html">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2013/10/01/useful_libraries.html">Luminus手册-实用库</a></h2><div class="post-meta">2013-10-01</div><a data-thread-key="2013/10/01/useful_libraries.html" href="/2013/10/01/useful_libraries.html#comments" class="ds-thread-count"></a><div class="post-content"><p>Luminus的目标是从细粒度来方便你开发web应用。所以它默认包含了很多库包。</p>
+<p>包括lib-noir提供一般工具，Selmer/Hiccup提供HTML模板,Timbre提供日志功能，<br>Tower提供国际化等等其他包。</p>
+<p>当然，还有很多的包能给web开发带来便利。</p></div><p class="readmore"><a href="/2013/10/01/useful_libraries.html">阅读更多</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/9/">下一页</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://ivaneye.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/architecture/">architecture</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/book/">book</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/clojure/">clojure</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/consensus/">consensus</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/designpattern/">designpattern</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/how/">how</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/io/">io</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jdk/">jdk</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/junit3/">junit3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/junit4/">junit4</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/jvm/">jvm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/lighttable/">lighttable</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/luminus/">luminus</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/module/">module</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mycode/">mycode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/think/">think</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/thread/">thread</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/train/">train</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/why/">why</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/xmind/">xmind</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/zookeeper/">zookeeper</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/jvm/" style="font-size: 15px;">jvm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/other/" style="font-size: 15px;">other</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/review/" style="font-size: 15px;">review</a> <a href="/tags/read/" style="font-size: 15px;">read</a> <a href="/tags/think/" style="font-size: 15px;">think</a> <a href="/tags/concept/" style="font-size: 15px;">concept</a> <a href="/tags/architecture/" style="font-size: 15px;">architecture</a> <a href="/tags/designpattern/" style="font-size: 15px;">designpattern</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/clojure/" style="font-size: 15px;">clojure</a> <a href="/tags/osgi/" style="font-size: 15px;">osgi</a> <a href="/tags/proxy/" style="font-size: 15px;">proxy</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/golang/" style="font-size: 15px;">golang</a> <a href="/tags/language/" style="font-size: 15px;">language</a> <a href="/tags/graphviz/" style="font-size: 15px;">graphviz</a> <a href="/tags/cdraw/" style="font-size: 15px;">cdraw</a> <a href="/tags/framework/" style="font-size: 15px;">framework</a> <a href="/tags/luminus/" style="font-size: 15px;">luminus</a> <a href="/tags/xmind/" style="font-size: 15px;">xmind</a> <a href="/tags/transactional/" style="font-size: 15px;">transactional</a> <a href="/tags/index/" style="font-size: 15px;">index</a> <a href="/tags/thread/" style="font-size: 15px;">thread</a> <a href="/tags/scala/" style="font-size: 15px;">scala</a> <a href="/tags/opensource/" style="font-size: 15px;">opensource</a> <a href="/tags/jdk/" style="font-size: 15px;">jdk</a> <a href="/tags/junit3/" style="font-size: 15px;">junit3</a> <a href="/tags/junit4/" style="font-size: 15px;">junit4</a> <a href="/tags/lighttable/" style="font-size: 15px;">lighttable</a> <a href="/tags/theme/" style="font-size: 15px;">theme</a> <a href="/tags/how/" style="font-size: 15px;">how</a> <a href="/tags/io/" style="font-size: 15px;">io</a> <a href="/tags/reactor/" style="font-size: 15px;">reactor</a> <a href="/tags/classloader/" style="font-size: 15px;">classloader</a> <a href="/tags/tomcat/" style="font-size: 15px;">tomcat</a> <a href="/tags/jigsaw/" style="font-size: 15px;">jigsaw</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/why/" style="font-size: 15px;">why</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/consensus/" style="font-size: 15px;">consensus</a> <a href="/tags/paxos/" style="font-size: 15px;">paxos</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/12/18/iwant.html">散弹枪知识与狙击枪知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/29/philosophy.html">哲学是个什么鬼?</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/27/lunch.html">巴菲特午餐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/cost.html">为时间买单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/nas.html">Mybooklive修复</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/vote.html">李狗嗨与美国大选</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/learn.html">如何高效学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/01/machine.html">与机器赛跑</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/30/salary.html">平均薪酬×××，你拖后腿了吗？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/20/zhihulive.html">评李笑来的知乎live</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="null" title="null" target="_blank"></a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">思考，执行，表达！.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'ivanpig'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

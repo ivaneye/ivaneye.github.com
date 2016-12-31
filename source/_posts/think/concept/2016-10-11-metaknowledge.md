@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-10-11
 title: 元认知
 categories: [think]
 tags: [think,concept]

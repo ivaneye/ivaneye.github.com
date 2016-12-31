@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-04
 title: 快学Scala习题解答—第二章 控制结构和函数
 categories: scala
 tags: [java,scala]

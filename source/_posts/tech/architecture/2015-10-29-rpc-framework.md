@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-10-29
 title: 分布式服务框架的架构思路
 categories: [architecture]
 tags: [architecture,rpc,distributed]

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-03
 title: 快学Scala习题解答—第一章 基础
 categories: scala
 tags: [java,scala]
@@ -143,4 +144,3 @@ take,drop,takeRight和dropRight这些字符串函数是做什么用的？和subs
 take是从字符串首开始获取字符串,drop是从字符串首开始去除字符串。
 takeRight和dropRight是从字符串尾开始操作。 这四个方法都是单方向的。
 如果我想要字符串中间的子字符串，那么需要同时调用drop和dropRight，或者使用substring
-

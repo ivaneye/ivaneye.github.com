@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-15
 title: 快学Scala习题解答—第十三章 集合
 categories: scala
 tags: [java,scala]

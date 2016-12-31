@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-03-10
 title: 一图胜千言:事务管理
 categories: [xmind]
 tags: [xmind,transactional]

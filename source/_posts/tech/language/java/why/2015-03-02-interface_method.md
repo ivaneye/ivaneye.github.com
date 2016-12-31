@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-03-02
 title: 刨根问底-01为什么Java接口中的方法默认是public？
 categories: [why]
 tags: [why,java]
@@ -121,4 +122,3 @@ public访问控制是任何的类都可以访问！
 - 不像默认访问控制符，需要在相同的包下才告诉你
 
 综上所述，接口方法设为public为最合适选择!
-

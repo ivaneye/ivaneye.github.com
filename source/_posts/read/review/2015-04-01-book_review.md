@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-04-01
 title:  如何读书相关书籍书评
 categories: [book]
 tags: [book,review]

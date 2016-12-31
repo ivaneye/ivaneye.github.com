@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-10
 title: 快学Scala习题解答—第八章 继承
 categories: scala
 tags: [java,scala]
@@ -201,4 +202,3 @@ class Stack[A] protected (protected val elems: List[A])
 
 请解释protected关键字的含义。(提示：回顾我们在第5章中关于私有构造器的讨论)
 此构造方法只能被其子类来调用,而不能被外界直接调用
-

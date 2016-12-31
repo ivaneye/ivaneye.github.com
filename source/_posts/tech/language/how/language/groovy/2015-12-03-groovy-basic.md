@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-12-03
 title: Groovy环境与语法
 categories: train
 tags: [how,language,Groovy]

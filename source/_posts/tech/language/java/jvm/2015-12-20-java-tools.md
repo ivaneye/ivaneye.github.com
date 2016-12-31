@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-12-20
 title: Java工具集
 categories: jvm
 tags: [java,cmd,tool]

@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2015-10-29
 title: Docker初探
 categories: [docker]
 tags: [docker]

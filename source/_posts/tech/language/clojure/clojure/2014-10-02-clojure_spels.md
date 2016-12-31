@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2014-10-02
 title: Clojure进阶:使用Clojure编写文字冒险游戏
 categories: clojure
 tags: [clojure]

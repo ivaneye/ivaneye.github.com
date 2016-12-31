@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-02-15
 title:  我的管理实践---《人件》读后感
 categories: [book]
 tags: [book,review]

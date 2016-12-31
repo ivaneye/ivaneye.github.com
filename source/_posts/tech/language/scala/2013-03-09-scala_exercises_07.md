@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2013-03-09
 title: 快学Scala习题解答—第七章 包和引入
 categories: scala
 tags: [java,scala]
@@ -215,4 +216,3 @@ object Test extends App{
 ------------------------------------------------------------
 
 直接比对java.lang下的类和scala包下的类即可
-
