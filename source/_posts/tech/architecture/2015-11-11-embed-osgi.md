@@ -51,7 +51,7 @@ OSGi是如何做到这些的呢？其实OSGi实现了一套自身的ClassLoader�
 
 以及其上的一些应用，方便在OSGi上进行开发，比如Karaf,ServiceMix等。
 
-<!-- more -->
+
 
 # OSGi的使用方式
 

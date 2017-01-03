@@ -49,7 +49,7 @@ object MilesToKilometers extends UnitConversion{
 }
 ```
 
-<!-- more -->
+
 
 定义一个扩展自java.awt.Point的Origin对象。为什么说这实际上不是个好主意？(仔细看Point类的方法)
 ---------------------------------------------------------------------------------------------

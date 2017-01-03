@@ -55,7 +55,7 @@ Repetition  = "{" Expression "}" .
 
 实现限制：为兼容其它工具，若 UTF-8 编码的字节序标记（U+FEFF）为源文本中的第一个 Unicode 码点， 那么编译器就会忽略它。
 
-<!-- more -->
+
 
 # 字符
 

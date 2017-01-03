@@ -49,7 +49,7 @@ public interface Person{
 
 这样子类就能访问了！但是外部如何访问呢？方法是有的:
 
-<!-- more -->
+
 
 ```java
 public interface Person{

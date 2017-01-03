@@ -45,7 +45,7 @@ Scala code runner version 2.11.7 -- Copyright 2002-2013, LAMP/EPFL
 -   输入scalac Hello.scala
 -   输入scala Hello
 
-<!-- more -->
+
 
 # 代码组成
 

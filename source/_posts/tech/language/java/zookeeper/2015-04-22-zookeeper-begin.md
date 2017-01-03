@@ -30,7 +30,7 @@ set /test test              //给/test目录设值
 get /test                   //获取/test目录的值
 ```
 
-<!-- more -->
+
 
 # Java操作
 

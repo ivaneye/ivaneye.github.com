@@ -12,6 +12,6 @@ author: wangyifan
 [xmind文件下载](/mind/transaction.xmind)
 
 
-<!-- more -->
+
 
 ![](/assets/mind/transaction.png)

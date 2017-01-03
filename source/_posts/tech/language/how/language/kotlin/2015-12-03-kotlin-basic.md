@@ -49,7 +49,7 @@ object Hello {
 -   输入scalac Hello.scala
 -   输入scala Hello
 
-<!-- more -->
+
 
 # 代码组成
 

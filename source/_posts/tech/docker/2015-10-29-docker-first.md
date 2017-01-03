@@ -34,7 +34,7 @@ boot2docker ip
 ```
 可以获取Docker的IP。默认的用户名和密码是： docker/tcuser
 
-<!-- more -->
+
 
 # 下载镜像
 

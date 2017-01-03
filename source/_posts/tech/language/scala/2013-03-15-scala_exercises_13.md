@@ -62,7 +62,7 @@ def indexs(str:String):Map[Char,ListBuffer[Int]]={
 println(indexs("Mississippi"))
 ```
 
-<!-- more -->
+
 
 
 编写一个函数，从一个整型链表中去除所有的零值。

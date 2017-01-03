@@ -59,7 +59,7 @@ java -jar /home/ivan/soft/clojure-1.5.1/clojure-1.5.1.jar $1
 
 这样就可以执行单个的Clojure文件了
 
-<!-- more -->
+
 
 HelloWorld
 ==========

@@ -59,7 +59,7 @@ func main() {
 - golang的启动方法也叫main，不过没有参数，且这个方法必须要在main这个包里
 - golang没有访问权限控制符，它的访问控制是靠大小写来控制的(看到这你能理解为什么Println的P要大写了吧?)
 
-<!-- more -->
+
 
 # go fmt
 

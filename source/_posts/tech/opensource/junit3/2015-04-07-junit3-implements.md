@@ -46,7 +46,7 @@ public interface Test {
 }
 ```
 
-<!-- more -->
+
 
 Test接口有两个方法
 

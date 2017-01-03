@@ -46,7 +46,7 @@ def reorderArray(arr:Array[Int]):Array[Int]={
 println(reorderArray(Array(1,2,3,4,5)).mkString(","))
 ```
 
-<!-- more -->
+
 
 重复前一个练习，不过这一次生成一个新的值交换过的数组。用for/yield
 -----------------------------------------------------------------

@@ -49,7 +49,7 @@ object Hello {
 -   输入Groovyc Hello.Groovy
 -   输入Groovy Hello
 
-<!-- more -->
+
 
 # 代码组成
 

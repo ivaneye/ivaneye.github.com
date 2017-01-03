@@ -65,7 +65,7 @@ public Result run(Runner runner) {
 - 添加监听器
 - 执行测试
 
-<!-- more -->
+
 
 # JUnit4ClassRunner
 

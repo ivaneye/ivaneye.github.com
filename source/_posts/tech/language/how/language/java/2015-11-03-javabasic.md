@@ -59,7 +59,7 @@ public class Hello{
 -   输入javac Hello.java
 -   输入java Hello
 
-<!-- more -->
+
 
 # 代码组成
 

@@ -48,7 +48,7 @@ public protocol Person{
 
 上面的接口就定义了一个"协议",这个协议就是:"所有遵循这个协议(实现此接口)的类，必然有一个叫做say()的方法"。
 
-<!-- more -->
+
 
 ```java
 public class PersonA implements Person{

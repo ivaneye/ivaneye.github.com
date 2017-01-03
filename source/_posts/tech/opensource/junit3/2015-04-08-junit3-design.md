@@ -52,7 +52,7 @@ public void run(final TestResult result) {
 
 在这里，Protectable中封装了不同的执行逻辑，然后传递给runProtected方法来执行。
 
-<!-- more -->
+
 
 # startTest和endTest方法
 

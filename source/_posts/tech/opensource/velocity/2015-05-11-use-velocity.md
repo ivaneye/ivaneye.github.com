@@ -44,7 +44,7 @@ document author and versioning information:
 *#
 ```
 
-<!-- more -->
+
 
 ## 引用：
 

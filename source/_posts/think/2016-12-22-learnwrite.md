@@ -6,7 +6,6 @@ categories: [think]
 tags: [think,随笔]
 avatarimg: "/img/head.jpg"
 author: wangyifan
-published: false
 
 ---
 
