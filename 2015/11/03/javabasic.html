@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Java环境与语法 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2015/11/03/javabasic.html">
+<meta property="og:title" content=" Java环境与语法 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Java环境与语法 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2015/11/03/javabasic.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Java环境与语法</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2015-11-03"> 2015-11-03
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2015/11/03/javabasic.html#disqus_thread" data-disqus-identifier="/2015/11/03/javabasic">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>简介</h1>
+<p>本文是对<a href="/2015/11/01/language.html">如何学习一门编程语言</a>的具体实践-Java语言第一篇。</p>
+<p>前面说了基础语法是很简单的，如果有语言基础，比较好的方法是过一遍<a href="http://learnxinyminutes.com/">Learn X in Y minutes</a>。</p>
+<p>下文是在公司给毕业生做培训时的PPT，可做参考！</p>
+<h1>Java环境搭建</h1>
+<ul>
+<li>  到<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle官方网站</a>下载相应操作系统的JDK进行安装</li>
+<li>  打开命令行,输入</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">java -version
+</code></pre></div>
+<p>得到如下信息，则表示搭建成功!</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">java version <span class="s2">&quot;1.8.0&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.8.0-b132<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 25.0-b70, mixed mode<span class="o">)</span>
+</code></pre></div>
+<p>Java中需要理解两个路径：</p>
+<ul>
+<li>  path是系统查找程序的路径</li>
+<li>  classpath是Java查找类的路径</li>
+</ul>
+<h1>第一个程序</h1>
+<ul>
+<li>  创建文件Hello.java</li>
+<li>  输入如下代码</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//例子代码</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;(1 + 1) * 3 + (1 + 2) = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>  打开命令行,切换到文件所在路径</li>
+<li>  输入javac Hello.java</li>
+<li>  输入java Hello</li>
+</ul>
+<!-- more -->
+<h1>代码组成</h1>
+<hr>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//例子代码</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;(1 + 1) * 3 + (1 + 2) = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>  注释</li>
+<li>  标识符(Hello,args)</li>
+<li>  关键字(public,class,static,void)</li>
+<li>  字面量(字符串) (&quot;(1 + 1) * 3 + (1 + 2) = &quot;)</li>
+<li>  变量(args,a,b)</li>
+<li>  类</li>
+<li>  方法</li>
+</ul>
+<h2>注释</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//单行注释</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/*</span>
+<span class="cm">多行注释</span>
+<span class="cm">*/</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**</span>
+<span class="cm"> * javadoc注释</span>
+<span class="cm"> */</span>
+</code></pre></div>
+<h2>标识符</h2>
+<ul>
+<li>  标识符由字母（A-Z或者a-z）,美元符（\$）、下划线（_）或数字组成</li>
+<li>  标识符都应该以字母（A-Z或者a-z）,美元符（\$）、或者下划线（_）开始</li>
+<li>  关键字不能用作标识符</li>
+<li>  标识符是大小写敏感的</li>
+<li>  合法标识符举例：age、\$salary、~value~、_~1value~</li>
+<li>  非法标识符举例：123abc、-salary</li>
+</ul>
+<h2>关键字</h2>
+<p><img src="/assets/how/language/javase/javabasic/3.jpg" alt=""></p>
+<h2>字面量</h2>
+<ul>
+<li>  字符串:&quot;Hello&quot;</li>
+<li>  字符:&#39;H&#39;,&#39;e&#39;,&#39;l&#39;,&#39;l&#39;,&#39;o&#39;</li>
+<li>  布尔值:true,false</li>
+<li>  数值:1,2.4</li>
+</ul>
+<h2>变量</h2>
+<ul>
+<li>  变量就是一个命名的内存块</li>
+<li>  变量只能存储一种具体类型的数据</li>
+<li>  使用变量之前必须声明(变量名和类型)</li>
+<li><p>使用前需要初始化</p></li>
+<li><p>局部变量:方法或语句块内部</p></li>
+<li><p>成员变量:方法外,类内部</p></li>
+</ul>
+<h2>类和对象</h2>
+<ul>
+<li>  类是对一个特定类型对象的描述,它定义了一种新的类型</li>
+<li>  类定义中的成员变量可以是任意类型</li>
+<li>  对象是类的实体,使用关键字new来创建</li>
+</ul>
+<h2>方法</h2>
+<ul>
+<li>  实例方法</li>
+<li>  静态方法(static)</li>
+<li>  方法调用[递归调用]</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">);</span>
+        <span class="n">Hello</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h1>基本类型</h1>
+<hr>
+<p><img src="/assets/how/language/javase/javabasic/4.jpg" alt=""></p>
+<h2>使用递归来计算基本类型的范围</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">p</span><span class="o">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="o">(--</span><span class="n">num</span><span class="o">);</span>  <span class="c1">//--num 与 num--</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">caculateRange</span><span class="o">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="nf">p</span><span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">+</span> <span class="n">caculateRange</span><span class="o">(--</span><span class="n">num</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h1>数组</h1>
+<hr>
+<p>数组是相同类型的,用一个标示符名称封装到一起的一个对象序列或基本类型数据序列</p>
+<h2>一维数组</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">arr</span><span class="o">[];</span>
+<span class="c1">//初始化</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">};</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>  <span class="c1">//默认初始化</span>
+<span class="c1">//使用,下标从0开始</span>
+<span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+</code></pre></div>
+<h2>多维数组</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">int</span><span class="o">[][]</span> <span class="n">arr</span> <span class="o">=</span> <span class="o">{</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">},{</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">}};</span>
+<span class="kt">int</span><span class="o">[][][]</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">2</span><span class="o">][</span><span class="mi">3</span><span class="o">][</span><span class="mi">4</span><span class="o">];</span>
+<span class="c1">//每一维长度可以不同</span>
+</code></pre></div>
+<h1>运算符(操作符)</h1>
+<hr>
+<p><strong>运算符指明对操作数的运算方式</strong></p>
+<ul>
+<li>  算术运算符</li>
+<li>  关系运算符</li>
+<li>  位运算符</li>
+<li>  逻辑运算符</li>
+<li>  赋值运算符</li>
+<li>  其他运算符</li>
+</ul>
+<h2>算术运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">+    加法 - 相加运算符两侧的值
+-    减法 - 左操作数减去右操作数
+*    乘法 - 相乘操作符两侧的值
+/    除法 - 左操作数除以右操作数
+%    取模 - 右操作数除左操作数的余数
+++   自增 - 操作数的值增加1
+-    自减 - 操作数的值减少1
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+     <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+     <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+     <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+     <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a + b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a - b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a * b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;b / a = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">b</span> <span class="o">/</span> <span class="n">a</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;b % a = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">b</span> <span class="o">%</span> <span class="n">a</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;c % a = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">c</span> <span class="o">%</span> <span class="n">a</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a++   = &quot;</span> <span class="o">+</span>  <span class="o">(</span><span class="n">a</span><span class="o">++)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;b--   = &quot;</span> <span class="o">+</span>  <span class="o">(</span><span class="n">a</span><span class="o">--)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;d++   = &quot;</span> <span class="o">+</span>  <span class="o">(</span><span class="n">d</span><span class="o">++)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;++d   = &quot;</span> <span class="o">+</span>  <span class="o">(++</span><span class="n">d</span><span class="o">)</span> <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>关系运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">==</span>   检查如果两个操作数的值是否相等，如果相等则条件为真
+<span class="o">=</span>!   检查如果两个操作数的值是否相等，如果值不相等则条件为真
+&gt;    检查左操作数的值是否大于右操作数的值，如果是那么条件为真
+&lt;    检查左操作数的值是否小于右操作数的值，如果是那么条件为真
+&gt;<span class="o">=</span>   检查左操作数的值是否大于或等于右操作数的值，如果是那么条件为真
+&lt;<span class="o">=</span>   检查左操作数的值是否小于或等于右操作数的值，如果是那么条件为真
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+     <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+     <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a == b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a != b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &gt; b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &lt; b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;b &gt;= a = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;b &lt;= a = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="o">)</span> <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>位运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="p">&amp;</span>    按位与操作符，当且仅当两个操作数的某一位都非0时候结果的该位才为1
+<span class="p">|</span>    按位或操作符，只要两个操作数的某一位有一个非0时候结果的该位就为1
+^    按位异或操作符，两个操作数的某一位不相同时候结果的该位就为1
+~    按位补运算符翻转操作数的每一位
+&lt;&lt;   按位左移运算符。左操作数按位左移右操作数指定的位数
+&gt;&gt;   按位右移运算符。左操作数按位右移右操作数指定的位数
+&gt;&gt;&gt;      按位右移补零操作符。左操作数的值按右操作数指定的位数右移，移动得到的空位以零填充。
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+     <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">60</span><span class="o">;</span> <span class="cm">/* 60 = 0011 1100 */</span>
+     <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">13</span><span class="o">;</span> <span class="cm">/* 13 = 0000 1101 */</span>
+     <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="o">;</span>       <span class="cm">/* 12 = 0000 1100 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &amp; b = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="o">;</span>       <span class="cm">/* 61 = 0011 1101 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a | b = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="o">;</span>       <span class="cm">/* 49 = 0011 0001 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a ^ b = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="o">;</span>          <span class="cm">/*-61 = 1100 0011 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;~a = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="o">;</span>     <span class="cm">/* 240 = 1111 0000 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &lt;&lt; 2 = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="o">;</span>     <span class="cm">/* 215 = 1111 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &gt;&gt; 2  = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span><span class="o">;</span>     <span class="cm">/* 215 = 0000 1111 */</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &gt;&gt;&gt; 2 = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>逻辑运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">&amp;&amp;</span>   称为逻辑与运算符。当且仅当两个操作数都为真，条件才为真
+<span class="o">||</span>   称为逻辑或操作符。如果任何两个操作数任何一个为真，条件为真
+!    称为逻辑非运算符。用来反转操作数的逻辑状态。如果条件为true，则逻辑非运算符将得到false。
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+     <span class="kt">boolean</span> <span class="n">a</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+     <span class="kt">boolean</span> <span class="n">b</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a &amp;&amp; b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span><span class="o">&amp;&amp;</span><span class="n">b</span><span class="o">));</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;a || b = &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span><span class="o">||</span><span class="n">b</span><span class="o">)</span> <span class="o">);</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;!(a &amp;&amp; b) = &quot;</span> <span class="o">+</span> <span class="o">!(</span><span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="o">));</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>赋值运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">=</span>    简单的赋值运算符，将右操作数的值赋给左侧操作数
++<span class="o">=</span>   加和赋值操作符，它把左操作数和右操作数相加赋值给左操作数
+-<span class="o">=</span>   减和赋值操作符，它把左操作数和右操作数相减赋值给左操作数
+*<span class="o">=</span>   乘和赋值操作符，它把左操作数和右操作数相乘赋值给左操作数
+/<span class="o">=</span>   除和赋值操作符，它把左操作数和右操作数相除赋值给左操作数
+%<span class="o">=</span>   取模和赋值操作符，它把左操作数和右操作数取模后赋值给左操作数
+&lt;&lt;<span class="o">=</span>  左移位赋值运算符
+&gt;&gt;<span class="o">=</span>  右移位赋值运算符
+<span class="p">&amp;</span><span class="o">=</span>   按位与赋值运算符
+^<span class="o">=</span>   按位异或赋值操作符
+<span class="p">|</span><span class="o">=</span>   按位或赋值操作符
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+     <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;c = a + b = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;c += a  = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">-=</span> <span class="n">a</span> <span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;c -= a = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">c</span> <span class="o">*=</span> <span class="n">a</span> <span class="o">;</span>
+     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;c *= a = &quot;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">);</span>
+     <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">15</span><span class="o">;</span> <span class="n">c</span> <span class="o">/=</span> <span class="n">a</span> <span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>三目运算符</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">variable <span class="nv">x</span> <span class="o">=</span> <span class="o">(</span>expression<span class="o">)</span> ? value <span class="k">if</span> <span class="nb">true</span> : value <span class="k">if</span> <span class="nb">false</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">,</span> <span class="n">b</span><span class="o">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">?</span> <span class="mi">20</span><span class="o">:</span> <span class="mi">30</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">&quot;Value of b is : &quot;</span> <span class="o">+</span>  <span class="n">b</span> <span class="o">);</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">10</span><span class="o">)</span> <span class="o">?</span> <span class="mi">20</span><span class="o">:</span> <span class="mi">30</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">&quot;Value of b is : &quot;</span> <span class="o">+</span> <span class="n">b</span> <span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>instanceof</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="o">(</span> Object reference variable <span class="o">)</span> instanceof  <span class="o">(</span>class/interface <span class="nb">type</span><span class="o">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="s">&quot;James&quot;</span> <span class="k">instanceof</span> <span class="n">String</span><span class="o">;</span>
+</code></pre></div>
+<h2>运算符优先级</h2>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">后缀     <span class="o">()</span> <span class="o">[]</span> . <span class="o">(</span>点操作符<span class="o">)</span>
+一元   ++ - ！ ~
+乘性   * / %
+加性   + -
+移位   &gt;&gt; &gt;&gt;&gt;  &lt;&lt;
+关系   &gt;&gt; <span class="o">=</span> &lt;&lt; <span class="o">=</span>
+相等   <span class="o">==</span>  !<span class="o">=</span>
+按位与  <span class="p">&amp;</span>
+按位异或     ^
+按位或  <span class="p">|</span>
+逻辑与  <span class="o">&amp;&amp;</span>
+逻辑或  <span class="o">||</span>
+条件   ? ：
+赋值   <span class="o">=</span> +<span class="o">=</span> -<span class="o">=</span> *<span class="o">=</span> /<span class="o">=</span> %<span class="o">=</span> &gt;&gt;<span class="o">=</span> &lt;&lt;<span class="o">=</span> ＆<span class="o">=</span> ^<span class="o">=</span> <span class="p">|</span><span class="o">=</span>
+逗号   ,
+</code></pre></div>
+<h1>控制执行流程</h1>
+<hr>
+<ul>
+<li>if-else</li>
+<li>switch</li>
+<li>while</li>
+<li>do-while</li>
+<li>for</li>
+<li>foreach</li>
+<li>break</li>
+<li>continue</li>
+<li>return</li>
+</ul>
+<h2>if</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span><span class="o">(</span><span class="n">布尔表达式</span><span class="o">)</span> <span class="o">{</span>
+   <span class="c1">//如果布尔表达式为true将执行的语句</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+      <span class="k">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;这是 if 语句&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>if...else</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span><span class="o">(</span><span class="n">布尔表达式</span><span class="o">){</span>
+   <span class="c1">//如果布尔表达式的值为true</span>
+<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+   <span class="c1">//如果布尔表达式的值为false</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+      <span class="k">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;这是 if 语句&quot;</span><span class="o">);</span>
+      <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;这是 else 语句&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>if...else if...else</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span><span class="o">(</span><span class="n">布尔表达式</span> <span class="mi">1</span><span class="o">){</span>
+   <span class="c1">//如果布尔表达式 1的值为true执行代码</span>
+<span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">布尔表达式</span> <span class="mi">2</span><span class="o">){</span>
+   <span class="c1">//如果布尔表达式 2的值为true执行代码</span>
+<span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">布尔表达式</span> <span class="mi">3</span><span class="o">){</span>
+   <span class="c1">//如果布尔表达式 3的值为true执行代码</span>
+<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+   <span class="c1">//如果以上布尔表达式都不为true执行代码</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+      <span class="k">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">10</span> <span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Value of X is 10&quot;</span><span class="o">);</span>
+      <span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">20</span> <span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Value of X is 20&quot;</span><span class="o">);</span>
+      <span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">30</span> <span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Value of X is 30&quot;</span><span class="o">);</span>
+      <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;This is else statement&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>if嵌套</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+      <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+      <span class="k">if</span><span class="o">(</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">30</span> <span class="o">){</span>
+         <span class="k">if</span><span class="o">(</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">10</span> <span class="o">){</span>
+             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;X = 30 and Y = 10&quot;</span><span class="o">);</span>
+          <span class="o">}</span>
+       <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>switch</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">switch</span><span class="o">(</span><span class="n">expression</span><span class="o">){</span>
+    <span class="k">case</span> <span class="n">value</span> <span class="o">:</span>
+       <span class="c1">//语句</span>
+       <span class="k">break</span><span class="o">;</span> <span class="c1">//可选</span>
+    <span class="k">case</span> <span class="n">value</span> <span class="o">:</span>
+       <span class="c1">//语句</span>
+       <span class="k">break</span><span class="o">;</span> <span class="c1">//可选</span>
+    <span class="c1">//你可以有任意数量的case语句</span>
+    <span class="k">default</span> <span class="o">:</span> <span class="c1">//可选</span>
+       <span class="c1">//语句</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>注意点</h2>
+<ul>
+<li>  switch语句中的变量类型只能为byte、short、int或者char,enum. <strong>JDK7开始支持String</strong></li>
+<li>  switch语句可以拥有多个case语句。每个case后面跟一个要比较的值和冒号。</li>
+<li>  case语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。</li>
+<li>  当变量的值与case语句的值相等时，那么case语句之后的语句开始执行，直到break语句出现才会跳出switch语句。</li>
+<li>  当遇到break语句时，switch语句终止。程序跳转到switch语句后面的语句执行。</li>
+<li>  switch语句可以包含一个default分支，该分支必须是switch语句的最后一个分支。default在没有case语句的值和变量值相等的时候执行。</li>
+</ul>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">char</span> <span class="n">grade</span> <span class="o">=</span> <span class="sc">&#39;C&#39;</span><span class="o">;</span>
+      <span class="k">switch</span><span class="o">(</span><span class="n">grade</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">case</span> <span class="sc">&#39;A&#39;</span> <span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Excellent!&quot;</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+         <span class="k">case</span> <span class="sc">&#39;B&#39;</span> <span class="o">:</span>
+         <span class="k">case</span> <span class="sc">&#39;C&#39;</span> <span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Well done&quot;</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+         <span class="k">case</span> <span class="sc">&#39;D&#39;</span> <span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;You passed&quot;</span><span class="o">);</span>
+         <span class="k">case</span> <span class="sc">&#39;F&#39;</span> <span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Better try again&quot;</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+         <span class="k">default</span> <span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Invalid grade&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Your grade is &quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>while</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">while</span><span class="o">(</span> <span class="n">布尔表达式</span> <span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//循环内容</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+      <span class="k">while</span><span class="o">(</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">)</span> <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;value of x : &quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">);</span>
+         <span class="n">x</span><span class="o">++;</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>do-while</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">do</span> <span class="o">{</span>
+       <span class="c1">//代码语句</span>
+<span class="o">}</span><span class="k">while</span><span class="o">(</span><span class="n">布尔表达式</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+      <span class="k">do</span><span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;value of x : &quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">);</span>
+         <span class="n">x</span><span class="o">++;</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="o">}</span><span class="k">while</span><span class="o">(</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>for</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span><span class="o">(</span><span class="n">初始化</span><span class="o">;</span> <span class="n">布尔表达式</span><span class="o">;</span> <span class="n">更新</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//代码语句</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>  最先执行初始化步骤。可以声明并初始化一个或多个循环控制变量，也可以是空语句。</li>
+<li>  然后，检测布尔表达式的值。如果为true，循环体被执行。如果为false，循环终止，开始执行循环体后面的语句。</li>
+<li>  执行一次循环后，更新循环控制变量。</li>
+<li>  再次检测布尔表达式。循环执行上面的过程。</li>
+</ul>
+<h2>实例</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;value of x : &quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">);</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>foreach</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span><span class="o">(</span><span class="n">声明语句</span> <span class="o">:</span> <span class="n">表达式</span><span class="o">)</span> <span class="o">{</span>
+   <span class="c1">//代码句子</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]){</span>
+      <span class="kt">int</span><span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">50</span><span class="o">};</span>
+      <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">){</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span> <span class="n">x</span> <span class="o">);</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="n">String</span><span class="o">[]</span> <span class="n">names</span> <span class="o">={</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Larry&quot;</span><span class="o">,</span> <span class="s">&quot;Tom&quot;</span><span class="o">,</span> <span class="s">&quot;Lacy&quot;</span><span class="o">};</span>
+      <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">:</span> <span class="n">names</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span> <span class="n">name</span> <span class="o">);</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>break</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">50</span><span class="o">};</span>
+      <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">if</span><span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">30</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">break</span><span class="o">;</span>
+         <span class="o">}</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>continue</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">50</span><span class="o">};</span>
+      <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">if</span><span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">30</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">continue</span><span class="o">;</span>
+         <span class="o">}</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>labeled break与labeled continue</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">50</span><span class="o">};</span>
+        <span class="nl">outer:</span> <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">:</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">;</span><span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">30</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span> <span class="n">outer</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;outer&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>return</h2>
+<ul>
+<li> 跳出当前方法,并返回方法所需要的值(如果有返回值的话)</li>
+</ul>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Java环境与语法&amp;url=http://ivaneye.com/2015/11/03/javabasic.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2015/11/03/javabasic.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2015/11/03/javabasic';
+    var disqus_title = 'Java环境与语法';
+    var disqus_url = 'http://ivaneye.com/2015/11/03/javabasic.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/11/03/javabasic" data-title="Java环境与语法" data-url="http://ivaneye.com/2015/11/03/javabasic.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

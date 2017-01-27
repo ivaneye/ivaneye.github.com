@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Clojure教程-Record和Protocol | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2014/05/11/record_protocol.html">
+<meta property="og:title" content=" Clojure教程-Record和Protocol | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Clojure教程-Record和Protocol | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2014/05/11/record_protocol.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Clojure教程-Record和Protocol</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2014-05-11"> 2014-05-11
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2014/05/11/record_protocol.html#disqus_thread" data-disqus-identifier="/2014/05/11/record_protocol">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <p>本文翻译自:<a href="http://www.jayway.com/2013/02/05/learn-clojure-using-records-and-protocols/">Learn Clojure using records and protocols</a></p>
+<p>当我对Clojure的括号不再疑惑后,另一个让我质疑为何要学习Clojure的问题是使用REPL很爽,但是我怎么来构建大型项目?&quot;.</p>
+<p>实际上,由于我的面向对象编程经验,我其实要问的是&quot;我怎么才能将函数封装到类似class的东西里面去?&quot;.</p>
+<p>在本文中,我将会介绍一种类似于Java的方式来构建大型的Clojure项目.</p>
+<p>通过这种方式,希望你在学习Clojure的时候不会有太大的差异感!</p>
+<p>在Java中,我们出于各种目的而使用类.例如典型的使用Spring的web应用,你会看到类似下面的结构:</p>
+<ul>
+<li>  Data transfer objects(DTO)</li>
+<li>  Services(REST API,controllers,DAO)</li>
+<li>  Rich object</li>
+</ul>
+<p>DTO实际上就是个结构体,他没有任何的行为(即方法).为了最小化样板代码,我趋向于使用pulibc final属性去实现DTO.我认为DTO就是个模板(schema),它就像一个REST服务输出的文件.但是我发现很多客户端开发人员可不关注这个,而只关注代码形式.有时你会看到DTO被作为数据库访问的一部分.这些DTO被称为贫血模型.(译者注:猜测作者的意思是,有些开发人员不管类是DTO还是DAO,只要结构相同就随便用!)</p>
+<p>Service实际上是包含了方法和注入了辅助Service的单例对象.不同的辅助Service提供了不同的服务.除了实现了接口外,Service只是包含了方法,和占位符很类似.单例模式导致的一个问题就是,新手无法预见到多线程里共享相同的实例出现意外的结果.他们将状态保存到私有属性里,而不需要从一个对象传递到另一个对象.很方便,但是是错误的做法.</p>
+<p>Rich object是面向对象语言中的思想.即将数据及和数据相关的操作封装到一个类里面.我可没说getter和setter是相关操作!但是,rich object类在项目中用得较少.取而代之的是使用DTO作为Service的输入和输出.使用DAO来访问数据库,然后返回DTO.我没说这种方法是错误的,我好奇的是,既然对于目前的Java架构是好是坏我们都无法确认,那为什么还要强求使用Clojure去实现类似的东西呢?</p>
+<!-- more -->
+<p>先不管这么多,我们先看怎么在Clojure中做类似的事情?我直接给出如何做!</p>
+<p>首先,DTO就是数据,而Clojure擅长数据处理,例如map,list和set.但是如果你想要类似结构体的东西,Clojure里提供了record.如果你了解Scala你会发现这玩样和case class很像.定义record的方式如下:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defrecord </span><span class="nv">Person</span> <span class="p">[</span><span class="nv">firstName</span> <span class="nv">lastName</span><span class="p">])</span>
+</code></pre></div>
+<p>这实际上创建了一个叫Person的Java类,它包含两个不可变的属性以及实现了hashCode和equals方法.record的行为模式和map很像,所以大部分适用于map的方法都适用与record!需要注意的是,虽然Clojure是动态类型,但是你可以使用类型提示来标示特定类型:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defrecord </span><span class="nv">Person</span> <span class="p">[</span><span class="o">^</span><span class="nv">String</span> <span class="nv">firstName</span> <span class="o">^</span><span class="nv">String</span> <span class="nv">lastName</span><span class="p">])</span>
+</code></pre></div>
+<p>好,那现在我们来看看如何定义Service!让我们将问题分解为组织相关函数,定义接口及依赖注入!</p>
+<p>和Java不同,Clojure提供了多种组织相关函数的方法.使用哪种方式完全取决于你想做什么.</p>
+<p>首先,在Clojure中,函数不需要定义到一个类里面.取而代之的是,他们通过命名空间类管理,命名空间类似于Java中的包.如果你没有任何特别的要求,那么建议使用命名空间来管理函数.</p>
+<p>如果你想定义类似class的东西,你需要先定义接口!那你需要使用protocol!你可以把它当做和Java中的接口类似的东西.实际上,除了使用protocol你也可以直接使用Java的接口,因为Clojure可以直接访问Java代码!创建protocol的方式如下:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defprotocol </span><span class="nv">Greet</span>
+    <span class="p">(</span><span class="nf">sayHello</span> <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+</code></pre></div>
+<p>这和下面的代码功能相同:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Greet</span><span class="o">{</span>
+    <span class="n">Object</span> <span class="nf">sayHello</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>有两点需要注意:</p>
+<ul>
+<li>  你需要将this包含在参数列表中!在面向对象语言中默认都包含了this,在类内部调用时默认包含了this.而在外部调用方法时,是使用对象名称.方法名,比如person.sayHello().而Clojure是函数式的,方法在前,调用方式如下(sayHello person)</li>
+<li>  方法返回的是Object.这是因为Clojure是函数式的,我们努力使其没有副作用.返回值为void的方法,实际上大部分是为了其副作用的!</li>
+</ul>
+<p>实现protocol可以使用如下代码:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defrecord </span><span class="nv">Person</span> <span class="p">[</span><span class="nv">firstName</span> <span class="nv">lastName</span><span class="p">]</span>
+    <span class="nv">Greet</span>
+    <span class="p">(</span><span class="nf">sayHello</span> <span class="p">[</span><span class="nv">this</span><span class="p">]</span> <span class="p">(</span><span class="nb">print </span><span class="s">&quot;Hello,my name is &quot;</span> <span class="nv">firstName</span><span class="p">)))</span>
+</code></pre></div>
+<p>最后就是依赖注入了!结论是:依赖注入对与Clojure来说不是必要的!可以看看下面两篇文章!</p>
+<ul>
+<li>  <a href="http://tech.puredanger.com/2010/03/01/dependency-injection-clojure/">Dependency injection in
+Clojure</a></li>
+<li>  <a href="http://stackoverflow.com/questions/13085370/what-is-the-clojure-equivalent-to-google-guice">What is the Clojure equivalent to Google
+Guice?</a></li>
+</ul>
+<h1>总结</h1>
+<p>从Java过渡到Scala相对来说比较简单,因为你可以在Scala中编写类Java的代码,然后再慢慢过渡到函数式代码编写上.但是对于Clojure来说,没有这个过渡过程,所以比较难于适应!但是通过使用record和protocol可以使你能在Clojure中做类似Java的事情,从而简化你的过渡难度!</p>
+<h1>个人感受</h1>
+<p>不知道是英文不行,还是作者行文有问题!感觉作者的文字不够流畅!按照原文直译,总感觉不通顺!故做了删减调整!</p>
+<p>对于依赖注入提供的两篇文章,评论比文章好得多!特别是第二篇的第一个评论!其实本文就简单介绍了Clojure的record和protocol入门而已!</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Clojure教程-Record和Protocol&amp;url=http://ivaneye.com/2014/05/11/record_protocol.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2014/05/11/record_protocol.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2014/05/11/record_protocol';
+    var disqus_title = 'Clojure教程-Record和Protocol';
+    var disqus_url = 'http://ivaneye.com/2014/05/11/record_protocol.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2014/05/11/record_protocol" data-title="Clojure教程-Record和Protocol" data-url="http://ivaneye.com/2014/05/11/record_protocol.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

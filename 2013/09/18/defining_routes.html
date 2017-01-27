@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Luminus手册-路由定义 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/09/18/defining_routes.html">
+<meta property="og:title" content=" Luminus手册-路由定义 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Luminus手册-路由定义 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/09/18/defining_routes.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Luminus手册-路由定义</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-09-18"> 2013-09-18
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/09/18/defining_routes.html#disqus_thread" data-disqus-identifier="/2013/09/18/defining_routes">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>Defining routes</h1>
+<p>Luminus使用Compojure来定义应用的路由.路由由HTTP请求方法和接受它的URI，
+参数和以及相应的处理程序组成。Compojure定义了所有标准HTTP请求的路由，
+比如ANY,DELETE,GET,HEAD,OPTIONS,PATCH,POST和PUT。</p>
+<p>例如：如果我们想定义一个应用，它指向/，/返回&quot;Hello World!&quot;字符串。我们
+可以这样写:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defroutes</span> <span class="nv">app-routes</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/&quot;</span> <span class="p">[]</span> <span class="s">&quot;Hello World!&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>如果你想构建一个路由来响应POST请求，我们可以这样写：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">POST</span> <span class="s">&quot;/hello&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span> <span class="p">(</span><span class="nb">str </span><span class="s">&quot;Welcome &quot;</span> <span class="nv">id</span><span class="p">))</span>
+</code></pre></div>
+<p>有些路由需要访问请求的map，我们只需要在路由上定义第二个参数就可以了。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/foo&quot;</span> <span class="nv">request</span> <span class="p">(</span><span class="nf">interpose</span> <span class="s">&quot;, &quot;</span> <span class="p">(</span><span class="nb">keys </span><span class="nv">request</span><span class="p">)))</span>
+</code></pre></div>
+<p>上面的路由读出请求map中所有的key并展示出来。结果如下:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">:ssl-client-cert, :remote-addr, :scheme, :query-params, :session, :form-params,
+:multipart-params, :request-method, :query-string, :route-params, :content-type,
+:cookies, :uri, :server-name, :params, :headers, :content-length, :server-port,
+:character-encoding, :body, :flash
+</code></pre></div>
+<p>Compojure还提供了一些有用的函数来处理请求map和表单参数。例如，在
+guestbook应用的例子中，我们看到了如下的路由定义:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">POST</span> <span class="s">&quot;/&quot;</span>  <span class="p">[</span><span class="nb">name </span><span class="nv">message</span><span class="p">]</span> <span class="p">(</span><span class="nf">save-message</span> <span class="nb">name </span><span class="nv">message</span><span class="p">))</span>
+</code></pre></div>
+<!-- more -->
+<p>这个路由从参数中获取到name和message的值，并将其绑定到相同名字的变量上。
+我们能像使用其他定义的变量那样来使用他们。我们也可以直接在路由中使用Clojure的解构。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/:foo&quot;</span> <span class="p">{</span> <span class="p">{</span><span class="nv">foo</span> <span class="s">&quot;foo&quot;</span><span class="p">}</span> <span class="ss">:params</span><span class="p">}</span>
+  <span class="p">(</span><span class="nb">str </span><span class="s">&quot;Foo = &quot;</span> <span class="nv">foo</span><span class="p">))</span>
+</code></pre></div>
+<p>实际上，Compojure还提供了解构部分参数，并将其他参数构建为一个map的功能。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="nv">x</span> <span class="nv">y</span> <span class="o">&amp;</span> <span class="nv">z</span><span class="p">]</span>
+<span class="nv">x</span> <span class="nb">-&gt; </span><span class="s">&quot;foo&quot;</span>
+<span class="nv">y</span> <span class="nb">-&gt; </span><span class="s">&quot;bar&quot;</span>
+<span class="nv">z</span> <span class="nb">-&gt; </span><span class="p">{</span><span class="ss">:v</span> <span class="s">&quot;baz&quot;</span>, <span class="ss">:w</span> <span class="s">&quot;qux&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p>上面的代码中,参数x和y被绑定到了变量上，而v和w还在叫z的map中。
+最后，如果我们需要获取完整的请求，我们可以这样做：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/&quot;</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span> <span class="ss">:as</span> <span class="nv">r</span><span class="p">]</span> <span class="p">(</span><span class="nb">str </span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">r</span><span class="p">))</span>
+</code></pre></div>
+<p>这里我们将表单参数绑定到了x和y上，而完整的请求则绑定到了变量r上。</p>
+<h1>Organizing application routes</h1>
+<p>对路由管理的最佳实践就是对其统一管理。Compojure提供了defroutes宏来方便
+我们作这样的处理。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defroutes</span> <span class="nv">auth-routes</span>
+  <span class="p">(</span><span class="nf">POST</span> <span class="s">&quot;/login&quot;</span> <span class="p">[</span><span class="nv">id</span> <span class="nv">pass</span><span class="p">]</span> <span class="p">(</span><span class="nf">login</span> <span class="nv">id</span> <span class="nv">pass</span><span class="p">))</span>
+  <span class="p">(</span><span class="nf">POST</span> <span class="s">&quot;/logout&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">logout</span><span class="p">)))</span>
+<span class="p">(</span><span class="nf">defroutes</span> <span class="nv">app-routes</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">home</span><span class="p">))</span>
+  <span class="p">(</span><span class="nf">route/resources</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">route/not-found</span> <span class="s">&quot;Not Found&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>对于路径相似的路由，可以使用context来简化管理。
+例如，你的路径都以/user/:id为根路径:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defroutes</span> <span class="nv">user-routes</span>
+      <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/user/:id/profile&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span> <span class="nv">...</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/user/:id/settings&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span> <span class="nv">...</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/user/:id/change-password&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span> <span class="nv">...</span><span class="p">))</span>
+</code></pre></div>
+<p>你可以这样简写:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">user-routes</span>
+      <span class="p">(</span><span class="nf">context</span> <span class="s">&quot;/user/:id&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span>
+        <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/profile&quot;</span> <span class="p">[]</span> <span class="nv">...</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/settings&quot;</span> <span class="p">[]</span> <span class="nv">...</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/change-password&quot;</span> <span class="p">[]</span> <span class="nv">...</span><span class="p">)))</span>
+</code></pre></div>
+<p>当你定义好了所有的路由，你可以将他们添加到
+noir.util.middleware/app-handler下的vector中，它在handler目录下。
+你应该注意到了，生成的项目中已经定义了一个叫app的变量，你只需要添加新的路由就可以了。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">app</span> <span class="p">(</span><span class="nf">middleware/app-handler</span>
+           <span class="c1">;;add your application routes here</span>
+           <span class="p">[</span><span class="nv">home-routes</span> <span class="nv">app-routes</span><span class="p">]</span>
+           <span class="c1">;;add custom middleware here</span>
+           <span class="ss">:middleware</span> <span class="p">[]</span>
+           <span class="c1">;;add access rules here</span>
+           <span class="c1">;;each rule should be a vector</span>
+           <span class="ss">:access-rules</span> <span class="p">[]))</span>
+</code></pre></div>
+<p>详细的文档请键Compojure官方wiki.</p>
+<h1>Restricting access</h1>
+<p>有些页面只能在特定条件下才可以访问。
+例如，你可能想定义一个只能给管理员查看的页面或者一个用户管理页面，只给
+当前用户看。
+使用lib-noir中的noir.util.route可以达到这个目的，我们可以定义访问特殊
+页面的逻辑</p>
+<h1>Marking Routes as Restricted</h1>
+<p>noir.util.route/restricted宏被用来定义访问路由的方式:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/private/:id&quot;</span> <span class="p">[</span><span class="nv">id</span><span class="p">]</span> <span class="p">(</span><span class="nf">restricted</span> <span class="s">&quot;private!&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>如果我们想定义多个路由的访问权限，可以使用def-restricted-routes宏.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">def-restricted-routes</span> <span class="nv">private-pages</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/profile&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">show-profile</span><span class="p">))</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/my-secret-page&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">show-secret-page</span><span class="p">))</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/another-secret-page&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">another-secret-page</span><span class="p">)))</span>
+</code></pre></div>
+<p>上面的代码等同于</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">defroutes</span> <span class="nv">private-pages</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/profile&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">restricted</span> <span class="p">(</span><span class="nf">show-profile</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/secret-page1&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">restricted</span> <span class="p">(</span><span class="nf">show-secret-page</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">GET</span> <span class="s">&quot;/secret-page2&quot;</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">restricted</span> <span class="p">(</span><span class="nf">another-secret-page</span><span class="p">))))</span>
+</code></pre></div>
+<p>默认情况下，受限访问的路由会检查请求是否符合所有的条件。</p>
+<h1>Specifying Access Rules</h1>
+<p>我们来看看如何创建一个路由，它只有在session中存在:user所对应的值时，
+才能访问。 首先，我们需要引用noir.util.route和noir.session.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">myapp.handler</span>
+  <span class="p">(</span><span class="ss">:require</span> <span class="nv">...</span>
+            <span class="p">[</span><span class="nv">noir.util.route</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">restricted</span><span class="p">]]</span>
+            <span class="p">[</span><span class="nv">noir.session</span> <span class="ss">:as</span> <span class="nv">session</span><span class="p">]))</span>
+</code></pre></div>
+<p>接着，我们将编写函数来实现上面我们所说的访问规则。函数必须接受request
+作为其参数并且返回true或者false来确认页面是否可以访问。
+下面就是该函数的实现，它检查当前session中是否存在user。如果没有则重定
+向。默认重定向到根路径。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">user-access</span> <span class="p">[</span><span class="nv">request</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">session/get</span> <span class="ss">:user</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">app</span>
+ <span class="p">(</span><span class="nf">middleware/app-handler</span>
+   <span class="p">[</span><span class="nv">app-routes</span><span class="p">]</span>
+   <span class="ss">:access-rules</span> <span class="p">[</span><span class="nv">user-access</span><span class="p">]))</span>
+</code></pre></div>
+<p>现在，所有的受限的处理程序在session中不存在:user时都会重定向到根目录。</p>
+<h1>Access Rule Groups</h1>
+<p>当你以map的方式来提供访问规则，则可以进行进一步的处理。</p>
+<ul>
+<li>  :uri - 符合访问规则的URI</li>
+<li>  :uris - 和:uri类似，匹配多个URI</li>
+<li>  :redirect - 重定向地址</li>
+<li>  :on-fail - 重定向可选项，可以指定一个请求错误时的处理函数，函数必须
+以request为参数</li>
+<li>  :rule - 一个规则</li>
+<li>  :rules - 多个规则</li>
+</ul>
+<p>:rules可以用在下面集中情形下。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="ss">:rules</span> <span class="p">[</span><span class="nv">rule1</span> <span class="nv">rule2</span><span class="p">]</span>
+<span class="ss">:rules</span> <span class="p">{</span><span class="ss">:any</span> <span class="p">[</span><span class="nv">rule1</span> <span class="nv">rule2</span><span class="p">]}</span>
+<span class="ss">:rules</span> <span class="p">{</span><span class="ss">:every</span> <span class="p">[</span><span class="nv">rule1</span> <span class="nv">rule2</span><span class="p">]</span> <span class="ss">:any</span> <span class="p">[</span><span class="nv">rule3</span> <span class="nv">rule4</span><span class="p">]}</span>
+</code></pre></div>
+<p>默认情况下，每个规则都必须通过才能访问成功，:any则表示只要符合任何一个
+规则即可访问。下面是一些例子:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">admin-access</span> <span class="p">[</span><span class="nv">req</span><span class="p">]</span>
+ <span class="p">(</span><span class="nf">session/get</span> <span class="ss">:admin</span><span class="p">))</span>
+<span class="ss">:access-rules</span> <span class="p">[{</span><span class="ss">:redirect</span> <span class="s">&quot;/access-denied&quot;</span>
+                <span class="ss">:rule</span> <span class="nv">user-access</span><span class="p">}]</span>
+<span class="ss">:access-rules</span> <span class="p">[{</span><span class="ss">:uris</span> <span class="p">[</span><span class="s">&quot;/user/*&quot;</span> <span class="s">&quot;/private*&quot;</span><span class="p">]</span>
+                <span class="ss">:rule</span> <span class="nv">user-access</span><span class="p">}]</span>
+<span class="ss">:access-rules</span> <span class="p">[{</span><span class="ss">:uri</span> <span class="s">&quot;/admin/*&quot;</span> <span class="ss">:rule</span> <span class="nv">admin-access</span><span class="p">}</span>
+               <span class="p">{</span><span class="ss">:uri</span> <span class="s">&quot;/user/*&quot;</span>
+                <span class="ss">:rules</span> <span class="p">{</span><span class="ss">:any</span> <span class="p">[</span><span class="nv">user-access</span> <span class="nv">admin-access</span><span class="p">]}}]</span>
+<span class="ss">:access-rules</span> <span class="p">[{</span><span class="ss">:on-fail</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">req</span><span class="p">]</span> <span class="s">&quot;access restricted&quot;</span><span class="p">)</span>
+                <span class="ss">:rule</span> <span class="nv">user-access</span><span class="p">}]</span>
+</code></pre></div>
+<h1>Cross Site Request Forgery Protection</h1>
+<p>CSRF攻击指的是第三方通过一个验证过的用户来提交动作。当你的网站包含了一
+个恶意链接或按钮或js的时候，很容易发生。
+我们可以使用Ring-Anti-Forgery来放置csrf攻击. 首先添加[ring-anti-forgery
+&quot;0.2.1&quot;]依赖。接着引入相应的包。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">myapp.handler</span>
+  <span class="p">(</span><span class="ss">:require</span>
+    <span class="nv">...</span>
+    <span class="p">[</span><span class="nv">selmer.parser</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">add-tag!</span><span class="p">]]</span>
+    <span class="p">[</span><span class="nv">ring.util.anti-forgery</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">anti-forgery-field</span><span class="p">]]</span>
+    <span class="p">[</span><span class="nv">ring.middleware.anti-forgery</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">wrap-anti-forgery</span><span class="p">]]))</span>
+</code></pre></div>
+<p>接着，我们将添加wrap-anti-forgery中间件:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">def </span><span class="nv">app</span> <span class="p">(</span><span class="nf">middleware/app-handler</span>
+           <span class="c1">;;add your application routes here</span>
+           <span class="p">[</span><span class="nv">home-routes</span> <span class="nv">app-routes</span><span class="p">]</span>
+           <span class="c1">;;add custom middleware here</span>
+           <span class="ss">:middleware</span> <span class="p">[</span><span class="nv">wrap-anti-forgery</span><span class="p">]</span>
+           <span class="c1">;;add access rules here</span>
+           <span class="c1">;;each rule should be a vector</span>
+           <span class="ss">:access-rules</span> <span class="p">[]))</span>
+</code></pre></div>
+<p>添加完后一个随机字符串将会被赋给anti-forgery-token变量。所有的POST请求
+将会包含一个叫_~anti~-forgery-token的token.
+接着我们在init函数中添加csrf标签:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">init</span>
+  <span class="nv">...</span>
+  <span class="p">(</span><span class="nf">add-tag!</span> <span class="ss">:csrf-token</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">_</span> <span class="nv">_</span><span class="p">]</span> <span class="p">(</span><span class="nf">anti-forgery-field</span><span class="p">)))</span>
+  <span class="nv">...</span><span class="p">)</span>
+</code></pre></div>
+<p>然后在模板中使用:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure">    <span class="nv">&lt;form</span> <span class="nv">name=</span><span class="s">&quot;input&quot;</span> <span class="nv">action=</span><span class="s">&quot;/login&quot;</span> <span class="nv">method=</span><span class="s">&quot;POST&quot;</span><span class="nv">&gt;</span>
+      <span class="p">{</span> <span class="nv">%</span> <span class="nv">csrf-token</span> <span class="nv">%</span><span class="p">}</span>
+      <span class="nv">Username</span><span class="err">:</span> <span class="nv">&lt;input</span> <span class="nv">type=</span><span class="s">&quot;text&quot;</span> <span class="nv">name=</span><span class="s">&quot;user&quot;</span><span class="nv">&gt;</span>
+      <span class="nv">Password</span><span class="err">:</span> <span class="nv">&lt;input</span> <span class="nv">type=</span><span class="s">&quot;password&quot;</span> <span class="nv">name=</span><span class="s">&quot;pass&quot;</span><span class="nv">&gt;</span>
+    <span class="nv">&lt;input</span> <span class="nv">type=</span><span class="s">&quot;submit&quot;</span> <span class="nv">value=</span><span class="s">&quot;Submit&quot;</span><span class="nv">&gt;</span>
+    <span class="nv">&lt;/form&gt;</span>
+</code></pre></div>
+<p>所有的POST请求如果不包含这个token，则会被拒绝。服务器返回403错误。</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Luminus手册-路由定义&amp;url=http://ivaneye.com/2013/09/18/defining_routes.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/09/18/defining_routes.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/09/18/defining_routes';
+    var disqus_title = 'Luminus手册-路由定义';
+    var disqus_url = 'http://ivaneye.com/2013/09/18/defining_routes.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/09/18/defining_routes" data-title="Luminus手册-路由定义" data-url="http://ivaneye.com/2013/09/18/defining_routes.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

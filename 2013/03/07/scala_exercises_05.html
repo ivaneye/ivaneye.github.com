@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 快学Scala习题解答—第五章 类 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/03/07/scala_exercises_05.html">
+<meta property="og:title" content=" 快学Scala习题解答—第五章 类 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 快学Scala习题解答—第五章 类 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/03/07/scala_exercises_05.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>快学Scala习题解答—第五章 类</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-03-07"> 2013-03-07
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/03/07/scala_exercises_05.html#disqus_thread" data-disqus-identifier="/2013/03/07/scala_exercises_05">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>类</h1>
+<h2>改进5.1节的Counter类,让它不要在Int.MaxValue时变成负数</h2>
+<p>加个判断就OK了</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Count</span><span class="o">{</span>
+  <span class="k">private</span> <span class="k">var</span> <span class="n">value</span> <span class="k">=</span> <span class="nc">Int</span><span class="o">.</span><span class="nc">MaxValue</span>
+  <span class="k">def</span> <span class="n">increment</span><span class="o">(){</span><span class="k">if</span><span class="o">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="nc">Int</span><span class="o">.</span><span class="nc">MaxValue</span><span class="o">)</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">value</span> <span class="o">}</span>
+  <span class="k">def</span> <span class="n">current</span> <span class="k">=</span> <span class="n">value</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>编写一个BankAccount类，加入deposit和withdraw方法，和一个只读的balance属性</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">BankAccount</span><span class="o">(</span><span class="k">val</span> <span class="n">balance</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">deposit</span><span class="o">(){}</span>
+  <span class="k">def</span> <span class="n">withdraw</span><span class="o">(){}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>编写一个Time类，加入只读属性hours和minutes，和一个检查某一时刻是否早于另一时刻的方法before(other:Time):Boolean。Time对象应该以new Time(hrs,min)方式构建。其中hrs以军用时间格式呈现(介于0和23之间)</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Time</span><span class="o">(</span><span class="k">val</span> <span class="n">hours</span><span class="k">:</span><span class="kt">Int</span><span class="o">,</span><span class="k">val</span> <span class="n">minutes</span><span class="k">:</span><span class="kt">Int</span><span class="o">){</span>
+   <span class="k">def</span> <span class="n">before</span><span class="o">(</span><span class="n">other</span><span class="k">:</span><span class="kt">Time</span><span class="o">)</span><span class="k">:</span><span class="kt">Boolean</span><span class="o">={</span>
+     <span class="n">hours</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">hours</span> <span class="o">||</span> <span class="o">(</span><span class="n">hours</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">hours</span> <span class="o">&amp;&amp;</span> <span class="n">minutes</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">minutes</span><span class="o">)</span>
+   <span class="o">}</span>
+   <span class="k">override</span> <span class="k">def</span> <span class="n">toString</span><span class="o">()</span><span class="k">:</span><span class="kt">String</span><span class="o">={</span>
+     <span class="n">hours</span> <span class="o">+</span> <span class="s">&quot; : &quot;</span> <span class="o">+</span> <span class="n">minutes</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<!-- more -->
+<h2>重新实现前一个类中的Time类，将内部呈现改成午夜起的分钟数(介于0到24*60-1之间)。不要改变公有接口。也就是说，客户端代码不应因你的修改而受影响</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"> <span class="k">class</span> <span class="nc">Time</span><span class="o">(</span><span class="k">val</span> <span class="n">hours</span><span class="k">:</span><span class="kt">Int</span><span class="o">,</span><span class="k">val</span> <span class="n">minutes</span><span class="k">:</span><span class="kt">Int</span><span class="o">){</span>
+   <span class="k">def</span> <span class="n">before</span><span class="o">(</span><span class="n">other</span><span class="k">:</span><span class="kt">Time</span><span class="o">)</span><span class="k">:</span><span class="kt">Boolean</span><span class="o">={</span>
+     <span class="n">hours</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">hours</span> <span class="o">||</span> <span class="o">(</span><span class="n">hours</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">hours</span> <span class="o">&amp;&amp;</span> <span class="n">minutes</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">minutes</span><span class="o">)</span>
+   <span class="o">}</span>
+   <span class="k">override</span> <span class="k">def</span> <span class="n">toString</span><span class="o">()</span><span class="k">:</span><span class="kt">String</span><span class="o">={</span>
+      <span class="n">hours</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">minutes</span>
+   <span class="o">}</span>
+ <span class="o">}</span>
+</code></pre></div>
+<h2>创建一个Student类，加入可读写的JavaBeans属性name(类型为String)和id(类型为Long)。有哪些方法被生产？(用javap查看。)你可以在Scala中调用JavaBeans的getter和setter方法吗？应该这样做吗？</h2>
+<p>生成了name(),name_=(),id(),id_=(),setName(),getName(),setId(),getId()
+编写代码如下</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.reflect.BeanProperty</span>
+<span class="k">class</span> <span class="nc">Student</span><span class="o">{</span>
+    <span class="nd">@BeanProperty</span> <span class="k">var</span> <span class="n">name</span><span class="k">:</span><span class="kt">String</span> <span class="o">=</span> <span class="k">_</span>
+    <span class="nd">@BeanProperty</span> <span class="k">var</span> <span class="n">id</span><span class="k">:</span><span class="kt">Long</span> <span class="o">=</span> <span class="k">_</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>javap -c Student 后显示如下</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">Compiled from <span class="s2">&quot;Student.scala&quot;</span>
+public class Student extends java.lang.Object implements scala.ScalaObject<span class="o">{</span>
+public java.lang.String name<span class="o">()</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   getfield        <span class="c">#13; //Field name:Ljava/lang/String;</span>
+   4:   areturn
+public void name_<span class="nv">$eq</span><span class="o">(</span>java.lang.String<span class="o">)</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   aload_1
+   2:   putfield        <span class="c">#13; //Field name:Ljava/lang/String;</span>
+   5:   <span class="k">return</span>
+public void setName<span class="o">(</span>java.lang.String<span class="o">)</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   aload_1
+   2:   putfield        <span class="c">#13; //Field name:Ljava/lang/String;</span>
+   5:   <span class="k">return</span>
+public long id<span class="o">()</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   getfield        <span class="c">#19; //Field id:J</span>
+   4:   lreturn
+public void id_<span class="nv">$eq</span><span class="o">(</span>long<span class="o">)</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   lload_1
+   2:   putfield        <span class="c">#19; //Field id:J</span>
+   5:   <span class="k">return</span>
+public void setId<span class="o">(</span>long<span class="o">)</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   lload_1
+   2:   putfield        <span class="c">#19; //Field id:J</span>
+   5:   <span class="k">return</span>
+public long getId<span class="o">()</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   invokevirtual   <span class="c">#25; //Method id:()J</span>
+   4:   lreturn
+public java.lang.String getName<span class="o">()</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   invokevirtual   <span class="c">#28; //Method name:()Ljava/lang/String;</span>
+   4:   areturn
+public Student<span class="o">()</span><span class="p">;</span>
+  Code:
+   0:   aload_0
+   1:   invokespecial   <span class="c">#34; //Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span>
+   4:   <span class="k">return</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>在5.2节的Person类中提供一个主构造器,将负年龄转换为0</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="k">var</span> <span class="n">age</span><span class="k">:</span><span class="kt">Int</span><span class="o">){</span>
+  <span class="n">age</span> <span class="k">=</span> <span class="k">if</span><span class="o">(</span><span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">age</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>编写一个Person类，其主构造器接受一个字符串，该字符串包含名字，空格和姓，如new Person(&quot;Fred Smith&quot;)。提供只读属性firstName和lastName。主构造器参数应该是var,val还是普通参数？为什么？</h2>
+<p>必须为val。如果为var，则对应的此字符串有get和set方法，而Person中的firstName和lastName为只读的,所以不能重复赋值。如果为var则会重复赋值而报错</p>
+<h2>创建一个Car类，以只读属性对应制造商，型号名称，型号年份以及一个可读写的属性用于车牌。提供四组构造器。每个构造器fc都要求制造商和型号为必填。型号年份和车牌可选，如果未填，则型号年份为-1，车牌为空串。你会选择哪一个作为你的主构造器？为什么？</h2>
+<p>这个没太明白题意。。。</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Car</span><span class="o">(</span><span class="k">val</span> <span class="n">maker</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span><span class="k">val</span> <span class="n">typeName</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span><span class="k">val</span> <span class="n">year</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span><span class="k">var</span> <span class="n">carLice</span><span class="k">:</span><span class="kt">String</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">){</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>在Java,C#或C++重做前一个练习。Scala相比之下精简多少？</h2>
+<p>这个就不写了。</p>
+<h2>考虑如下的类</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Employ</span><span class="o">(</span><span class="k">val</span> <span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span><span class="k">var</span> <span class="n">salary</span><span class="k">:</span><span class="kt">Double</span><span class="o">){</span>
+    <span class="k">def</span> <span class="k">this</span><span class="o">(){</span><span class="k">this</span><span class="o">(</span><span class="s">&quot;John Q. Public&quot;</span><span class="o">,</span><span class="mf">0.0</span><span class="o">)}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>重写该类,使用显示的字段定义，和一个缺省主构造器。你更倾向于使用哪种形式？为什么？</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Employ</span><span class="o">{</span>
+    <span class="k">val</span> <span class="n">name</span><span class="k">:</span><span class="kt">String</span> <span class="o">=</span> <span class="s">&quot;John Q. Public&quot;</span>
+    <span class="k">var</span> <span class="n">salary</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>个人更喜欢第二种方式，简单明了。</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=快学Scala习题解答—第五章 类&amp;url=http://ivaneye.com/2013/03/07/scala_exercises_05.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/03/07/scala_exercises_05.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/03/07/scala_exercises_05';
+    var disqus_title = '快学Scala习题解答—第五章 类';
+    var disqus_url = 'http://ivaneye.com/2013/03/07/scala_exercises_05.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/03/07/scala_exercises_05" data-title="快学Scala习题解答—第五章 类" data-url="http://ivaneye.com/2013/03/07/scala_exercises_05.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

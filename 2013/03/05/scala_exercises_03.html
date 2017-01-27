@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 快学Scala习题解答—第三章 数组相关操作 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/03/05/scala_exercises_03.html">
+<meta property="og:title" content=" 快学Scala习题解答—第三章 数组相关操作 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 快学Scala习题解答—第三章 数组相关操作 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/03/05/scala_exercises_03.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>快学Scala习题解答—第三章 数组相关操作</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-03-05"> 2013-03-05
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/03/05/scala_exercises_03.html#disqus_thread" data-disqus-identifier="/2013/03/05/scala_exercises_03">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>数组相关操作</h1>
+<h2>编写一段代码，将a设置为一个n个随机整数的数组，要求随机数介于0(包含)和n(不包含)之间</h2>
+<p>random和yield的使用</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.math.random</span>
+<span class="k">def</span> <span class="n">randomArray</span><span class="o">(</span><span class="n">n</span><span class="k">:</span><span class="kt">Int</span><span class="o">)={</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">n</span><span class="o">)</span> <span class="k">yield</span> <span class="o">(</span><span class="n">random</span> <span class="o">*</span> <span class="n">n</span><span class="o">).</span><span class="n">toInt</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">randomArray</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">))</span>
+</code></pre></div>
+<h2>编写一个循环，将整数数组中相邻的元素置换。例如,Array(1,2,3,4,5)经过置换后变为Array(2,1,4,3,5)</h2>
+<p>对数组方法的使用</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">reorderArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+  <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">toBuffer</span>
+  <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">1</span> <span class="n">until</span> <span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="o">,</span><span class="mi">2</span><span class="o">);</span><span class="n">tmp</span> <span class="k">=</span> <span class="n">t</span><span class="o">(</span><span class="n">i</span><span class="o">);</span><span class="n">j</span> <span class="k">&lt;-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="n">until</span> <span class="n">i</span><span class="o">){</span>
+    <span class="n">t</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="k">=</span> <span class="n">t</span><span class="o">(</span><span class="n">j</span><span class="o">)</span>
+    <span class="n">t</span><span class="o">(</span><span class="n">j</span><span class="o">)</span> <span class="k">=</span> <span class="n">tmp</span>
+  <span class="o">}</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">toArray</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">reorderArray</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">)).</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">))</span>
+</code></pre></div>
+<!-- more -->
+<h2>重复前一个练习，不过这一次生成一个新的值交换过的数组。用for/yield</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">reorderArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+  <span class="o">(</span><span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="o">(</span><span class="n">arr</span><span class="o">.</span><span class="n">length</span><span class="o">,</span><span class="mi">2</span><span class="o">))</span> <span class="k">yield</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.</span><span class="n">length</span><span class="o">)</span> <span class="nc">Array</span><span class="o">(</span><span class="n">arr</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">),</span><span class="n">arr</span><span class="o">(</span><span class="n">i</span><span class="o">))</span> <span class="k">else</span> <span class="nc">Array</span><span class="o">(</span><span class="n">arr</span><span class="o">(</span><span class="n">i</span><span class="o">))).</span><span class="n">flatten</span><span class="o">.</span><span class="n">toArray</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">reorderArray</span><span class="o">(</span><span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">)).</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">))</span>
+</code></pre></div>
+<p>感觉代码有点丑也难读。需要优化。</p>
+<h2>给定一个整数数组，产生一个新的数组，包含元数组中的所有正值，以原有顺序排列，之后的元素是所有零或负值，以原有顺序排列</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">//使用循环</span>
+ <span class="k">def</span> <span class="n">reorderArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+     <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="nc">ArrayBuffer</span><span class="o">[</span><span class="kt">Int</span><span class="o">]()</span>
+     <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">ArrayBuffer</span><span class="o">[</span><span class="kt">Int</span><span class="o">]()</span>
+     <span class="n">arr</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">arg</span> <span class="k">=&gt;</span> <span class="k">if</span><span class="o">(</span><span class="n">arg</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">a</span> <span class="o">+=</span> <span class="n">arg</span> <span class="k">else</span> <span class="n">b</span> <span class="o">+=</span> <span class="n">arg</span><span class="o">)</span>
+     <span class="n">a</span> <span class="o">++=</span> <span class="n">b</span>
+     <span class="n">a</span><span class="o">.</span><span class="n">toArray</span>
+ <span class="o">}</span>
+<span class="c1">//使用filter</span>
+<span class="k">def</span> <span class="n">reorderArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+  <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="k">_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="k">_</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="k">_</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="k">_</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">c</span> <span class="k">=</span> <span class="n">a</span><span class="o">.</span><span class="n">toBuffer</span>
+  <span class="n">c</span> <span class="o">++=</span> <span class="n">b</span>
+  <span class="n">c</span><span class="o">.</span><span class="n">toArray</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>如何计算Array[Double]的平均值？</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">aveArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Double</span><span class="o">])</span><span class="k">:</span><span class="kt">Double</span><span class="o">={</span>
+  <span class="n">arr</span><span class="o">.</span><span class="n">sum</span><span class="o">/</span><span class="n">arr</span><span class="o">.</span><span class="n">length</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>如何重新组织Array[Int]的元素将他们以反序排列？对于ArrayBuffer[Int]你又会怎么做呢？</h2>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">reverseArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+  <span class="n">arr</span><span class="o">.</span><span class="n">reverse</span>
+<span class="o">}</span>
+</code></pre></div>
+<h2>编写一段代码，产出数组中的所有值，去掉重复项。(提示：查看Scaladoc)</h2>
+<p>产出数组的代码就不编写了。去重只需要调用api即可</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"> <span class="k">def</span> <span class="n">distinctArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+   <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">toBuffer</span>
+   <span class="n">t</span><span class="o">.</span><span class="n">distinct</span><span class="o">.</span><span class="n">toArray</span>
+ <span class="o">}</span>
+</code></pre></div>
+<h2>重新编写3.4节结尾的示例。收集负值元素的下标，反序，去掉最后一个下标，然后对每个下标调用a.remove(i)。比较这样做的效率和3.4节中另外两种方法的效率</h2>
+<p>性能嘛，自己比较吧!</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"> <span class="k">def</span> <span class="n">removeArray</span><span class="o">(</span><span class="n">arr</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]={</span>
+   <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">toBuffer</span>
+   <span class="k">val</span> <span class="n">idx</span> <span class="k">=</span> <span class="nc">ArrayBuffer</span><span class="o">[</span><span class="kt">Int</span><span class="o">]()</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">t</span><span class="o">.</span><span class="n">length</span><span class="o">){</span>
+     <span class="k">if</span><span class="o">(</span><span class="n">t</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span><span class="n">idx</span> <span class="o">+=</span> <span class="n">i</span>
+   <span class="o">}</span>
+   <span class="n">idx</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+   <span class="n">idx</span><span class="o">.</span><span class="n">reverse</span>
+   <span class="n">idx</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
+   <span class="n">t</span><span class="o">.</span><span class="n">toArray</span>
+ <span class="o">}</span>
+</code></pre></div>
+<h2>创建一个由java.util.TimeZone.getAvailableIDs返回ide时区集合，判断条件是它们在美洲。去掉&quot;America/&quot;前缀并排序</h2>
+<p>显示的都是中文时间，后续的过滤无法操作。只列出所有的时区</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"> <span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="n">getAvailableIDs</span><span class="o">)</span> <span class="k">yield</span>
+           <span class="n">getTimeZone</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">getDisplayName</span><span class="o">()</span>
+</code></pre></div>
+<h2>引入java.awt.datatransfer.~并构建一个类型为SystemFlavorMap类型的对象~:</h2>
+<p>val flavors =
+SystemFlavorMap.getDefaultFlavorMap().asInstanceOf[SystemFlavorMap]
+然后以DataFlavor.imageFlavor为参数调用getNativesForFlavor方法，以Scala缓冲保存返回值。
+(为什么用这样一个晦涩难懂的类？因为在Java标准库中很难找到使用java.util.List的代码)</p>
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">flavors</span> <span class="k">=</span> <span class="nc">SystemFlavorMap</span><span class="o">.</span><span class="n">getDefaultFlavorMap</span><span class="o">().</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">SystemFlavorMap</span><span class="o">]</span>
+<span class="n">println</span><span class="o">(</span><span class="n">flavors</span><span class="o">.</span><span class="n">getNativesForFlavor</span><span class="o">(</span><span class="nc">DataFlavor</span><span class="o">.</span><span class="n">imageFlavor</span><span class="o">).</span><span class="n">toArray</span><span class="o">.</span><span class="n">toBuffer</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot; | &quot;</span><span class="o">)</span>
+</code></pre></div>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=快学Scala习题解答—第三章 数组相关操作&amp;url=http://ivaneye.com/2013/03/05/scala_exercises_03.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/03/05/scala_exercises_03.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/03/05/scala_exercises_03';
+    var disqus_title = '快学Scala习题解答—第三章 数组相关操作';
+    var disqus_url = 'http://ivaneye.com/2013/03/05/scala_exercises_03.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/03/05/scala_exercises_03" data-title="快学Scala习题解答—第三章 数组相关操作" data-url="http://ivaneye.com/2013/03/05/scala_exercises_03.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

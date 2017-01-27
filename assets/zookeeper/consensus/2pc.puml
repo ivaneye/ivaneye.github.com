@@ -1,0 +1,11 @@
+@startuml
+:协调者: as Admin
+:参与者: as User1
+:参与者: as User2
+:参与者: as User3
+
+Admin --> User1
+Admin --> User2
+Admin --> User3
+
+@enduml

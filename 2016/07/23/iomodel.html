@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> 高性能Server---Reactor模型 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2016/07/23/iomodel.html">
+<meta property="og:title" content=" 高性能Server---Reactor模型 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" 高性能Server---Reactor模型 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2016/07/23/iomodel.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>高性能Server---Reactor模型</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2016-07-23"> 2016-07-23
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2016/07/23/iomodel.html#disqus_thread" data-disqus-identifier="/2016/07/23/iomodel">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h2>无处不在的C/S架构</h2>
+<p>在这个充斥着云的时代,我们使用的软件可以说99%都是C/S架构的！</p>
+<ul>
+<li>你发邮件用的Outlook,Foxmail等</li>
+<li>你看视频用的优酷，土豆等</li>
+<li>你写文档用的Office365,googleDoc，Evernote等</li>
+<li>你浏览网页用的IE,Chrome等(B/S是特殊的C/S)</li>
+<li>......</li>
+</ul>
+<p>C/S架构的软件带来的一个明显的好处就是：只要有网络，你可以在任何地方干同一件事。</p>
+<p>例如：你在家里使用Office365编写了文档。到了公司，只要打开编辑地址就可以看到在家里编写的文档，进行展示或者继续编辑。甚至在手机上进行阅读与编辑。不再需要U盘拷来拷去了。</p>
+<p>C/S架构可以抽象为如下模型：</p>
+<p><img src="/assets/iomodel/client-server.png" alt=""></p>
+<ul>
+<li>C就是Client(客户端),上面的B是Browser(浏览器)</li>
+<li>S就是Server(服务器)：<strong>服务器管理某种资源，并且通过操作这种资源来为它的客户端提供某种服务</strong></li>
+</ul>
+<p>C/S架构之所以能够流行的一个主要原因就是网速的提高以及费用的降低，特别是无线网络速度的提高。试想在2G时代，大家最多就是看看文字网页，小说什么的。看图片，那简直就是奢侈！更别说看视频了！</p>
+<p>网速的提高，使得越来越多的人使用网络，例如：优酷，微信都是上亿用户量，更别说天猫双11的瞬间访问量了！这就对服务器有很高的要求！能够快速处理海量的用户请求！那服务器如何能快速的处理用户的请求呢？</p>
+<!-- more -->
+<h2>高性能服务器</h2>
+<p>高性能服务器至少要满足如下几个需求：</p>
+<ul>
+<li>效率高：既然是高性能，那处理客户端请求的效率当然要很高了</li>
+<li>高可用：不能随便就挂掉了</li>
+<li>编程简单：基于此服务器进行业务开发需要足够简单</li>
+<li>可扩展：可方便的扩展功能</li>
+<li>可伸缩：可简单的通过部署的方式进行容量的伸缩，也就是服务需要无状态</li>
+</ul>
+<p>而满足如上需求的一个基础就是高性能的IO!</p>
+<h2>Socket</h2>
+<p>无论你是发邮件，浏览网页，还是看视频～实际底层都是使用的TCP/IP，而TCP/IP的编程抽象就是Socket!</p>
+<p>我一直对Socket的中文翻译很困惑，个人觉得是我所接触的技术名词翻译里最莫名其妙的，没有之一！</p>
+<p>Socket中文翻译为&quot;套接字&quot;！什么鬼？在很长的时间里我都无法将其和网络编程关联上！后来专门找了一些资料，最后在知乎上找到了一个还算满意的答案(具体链接，请见文末的参考资料链接)！</p>
+<p>Socket的原意是插口，想表达的意思是插口与插槽的关系！&quot;send socket&quot;插到&quot;receive socket&quot;里，建立了链接，然后就可以通信了！</p>
+<p>套接字的翻译，应该是参考了套接管(如下图)！从这个层面上来看，是有那么点意思！</p>
+<p><img src="/assets/iomodel/%E5%A5%97%E6%8E%A5%E7%AE%A1.jpg" alt=""></p>
+<p>套接字这个翻译已经是标准了，不纠结这个了！</p>
+<p>我们看一下Socket之间建立链接及通信的过程！实际上就是对TCP/IP连接与通信过程的抽象:</p>
+<p><img src="/assets/iomodel/socket.png" alt=""></p>
+<ul>
+<li>服务端Socket会bind到指定的端口上，Listen客户端的&quot;插入&quot;</li>
+<li>客户端Socket会Connect到服务端</li>
+<li>当服务端Accept到客户端连接后</li>
+<li>就可以进行发送与接收消息了</li>
+<li>通信完成后即可Close</li>
+</ul>
+<p>对于IO来说，我们听得比较多的是:</p>
+<ul>
+<li>BIO:阻塞IO</li>
+<li>NIO:非阻塞IO</li>
+<li>同步IO</li>
+<li>异步IO</li>
+</ul>
+<p>以及其组合:</p>
+<ul>
+<li>同步阻塞IO</li>
+<li>同步非阻塞IO</li>
+<li>异步阻塞IO</li>
+<li>异步非阻塞IO</li>
+</ul>
+<p><strong>那么什么是阻塞IO、非阻塞IO、同步IO、异步IO呢？</strong></p>
+<ul>
+<li>一个IO操作其实分成了两个步骤：发起IO请求和实际的IO操作</li>
+<li>阻塞IO和非阻塞IO的区别在于第一步：发起IO请求是否会被阻塞，如果阻塞直到完成那么就是传统的阻塞IO;如果不阻塞，那么就是非阻塞IO</li>
+<li>同步IO和异步IO的区别就在于第二个步骤是否阻塞，如果实际的IO读写阻塞请求进程，那么就是同步IO，因此阻塞IO、非阻塞IO、IO复用、信号驱动IO都是同步IO;如果不阻塞，而是操作系统帮你做完IO操作再将结果返回给你，那么就是异步IO</li>
+</ul>
+<p>举个不太恰当的例子 ：比如你家网络断了，你打电话去中国电信报修！</p>
+<ul>
+<li>你拨号---客户端连接服务器</li>
+<li>电话通了---连接建立</li>
+<li>你说：“我家网断了,帮我修下”---发送消息</li>
+<li>说完你就在那里等，那么就是阻塞IO</li>
+<li>如果正好你有事，你放下带电话，然后处理其他事情了，过一会你来问下，修好了没---那就是非阻塞IO</li>
+<li>如果客服说：“马上帮你处理，你稍等”---同步IO</li>
+<li>如果客服说：“马上帮你处理，好了通知你”，然后挂了电话---异步IO</li>
+</ul>
+<p>本文只讨论BIO和NIO,AIO使用度没有前两者普及，暂不讨论！</p>
+<p>下面从代码层面看看BIO与NIO的流程!</p>
+<h2>BIO</h2>
+<ul>
+<li>客户端代码</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//Bind,Connect</span>
+<span class="n">Socket</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Socket</span><span class="o">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="o">,</span><span class="mi">7777</span><span class="o">);</span>    
+<span class="c1">//读写</span>
+<span class="n">PrintWriter</span> <span class="n">pw</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">PrintWriter</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+<span class="n">BufferedReader</span> <span class="n">br</span><span class="o">=</span>
+        <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">));</span>  
+<span class="n">pw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">());</span>  
+<span class="c1">//Close</span>
+<span class="n">pw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>  
+<span class="n">br</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre></div>
+<ul>
+<li>服务端代码</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Socket</span> <span class="n">socket</span><span class="o">;</span>  
+<span class="c1">//Bind,Listen</span>
+<span class="n">ServerSocket</span> <span class="n">ss</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ServerSocket</span><span class="o">(</span><span class="mi">7777</span><span class="o">);</span>  
+<span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>  
+    <span class="c1">//Accept</span>
+    <span class="n">socket</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>  
+    <span class="c1">//一般新建一个线程执行读写</span>
+    <span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span>
+            <span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">socket</span>  <span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>  
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;you input is : &quot;</span> <span class="o">+</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">());</span>  
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>上面的代码可以说是学习Java的Socket的入门级代码了</li>
+<li>代码流程和前面的图可以一一对上</li>
+</ul>
+<p>模型图如下所示：</p>
+<p><img src="/assets/iomodel/bio.png" alt=""></p>
+<h2>BIO优缺点</h2>
+<ul>
+<li>优点
+<ul>
+<li>模型简单</li>
+<li>编码简单</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>性能瓶颈低</li>
+</ul></li>
+</ul>
+<p>优缺点很明显。这里主要说下缺点：主要瓶颈在线程上。每个连接都会建立一个线程。虽然线程消耗比进程小，但是一台机器实际上能建立的有效线程有限，以Java来说，1.5以后，一个线程大致消耗1M内存！且随着线程数量的增加，CPU切换线程上下文的消耗也随之增加，在高过某个阀值后，继续增加线程，性能不增反降！而同样因为一个连接就新建一个线程，所以编码模型很简单！</p>
+<p>就性能瓶颈这一点，就确定了BIO并不适合进行高性能服务器的开发！像Tomcat这样的Web服务器，从7开始就从BIO改成了NIO，来提高服务器性能！</p>
+<h2>NIO</h2>
+<ul>
+<li>NIO客户端代码(连接)</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//获取socket通道</span>
+<span class="n">SocketChannel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">SocketChannel</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>        
+<span class="n">channel</span><span class="o">.</span><span class="na">configureBlocking</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+<span class="c1">//获得通道管理器</span>
+<span class="n">selector</span><span class="o">=</span><span class="n">Selector</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>        
+<span class="n">channel</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="k">new</span> <span class="nf">InetSocketAddress</span><span class="o">(</span><span class="n">serverIp</span><span class="o">,</span> <span class="n">port</span><span class="o">));</span>
+<span class="c1">//为该通道注册SelectionKey.OP_CONNECT事件</span>
+<span class="n">channel</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">selector</span><span class="o">,</span> <span class="n">SelectionKey</span><span class="o">.</span><span class="na">OP_CONNECT</span><span class="o">);</span>
+</code></pre></div>
+<ul>
+<li>NIO客户端代码(监听)</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+    <span class="c1">//选择注册过的io操作的事件(第一次为SelectionKey.OP_CONNECT)</span>
+   <span class="n">selector</span><span class="o">.</span><span class="na">select</span><span class="o">();</span>
+   <span class="k">while</span><span class="o">(</span><span class="n">SelectionKey</span> <span class="n">key</span> <span class="o">:</span> <span class="n">selector</span><span class="o">.</span><span class="na">selectedKeys</span><span class="o">()){</span>
+       <span class="k">if</span><span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">isConnectable</span><span class="o">()){</span>
+           <span class="n">SocketChannel</span> <span class="n">channel</span><span class="o">=(</span><span class="n">SocketChannel</span><span class="o">)</span><span class="n">key</span><span class="o">.</span><span class="na">channel</span><span class="o">();</span>
+           <span class="k">if</span><span class="o">(</span><span class="n">channel</span><span class="o">.</span><span class="na">isConnectionPending</span><span class="o">()){</span>
+               <span class="n">channel</span><span class="o">.</span><span class="na">finishConnect</span><span class="o">();</span><span class="c1">//如果正在连接，则完成连接</span>
+           <span class="o">}</span>
+           <span class="n">channel</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">selector</span><span class="o">,</span> <span class="n">SelectionKey</span><span class="o">.</span><span class="na">OP_READ</span><span class="o">);</span>
+       <span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">isReadable</span><span class="o">()){</span> <span class="c1">//有可读数据事件。</span>
+           <span class="n">SocketChannel</span> <span class="n">channel</span> <span class="o">=</span> <span class="o">(</span><span class="n">SocketChannel</span><span class="o">)</span><span class="n">key</span><span class="o">.</span><span class="na">channel</span><span class="o">();</span>
+           <span class="n">ByteBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="o">.</span><span class="na">allocate</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+           <span class="n">channel</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">);</span>
+           <span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="na">array</span><span class="o">();</span>
+           <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;recevie message from server:, size:&quot;</span>
+               <span class="o">+</span> <span class="n">buffer</span><span class="o">.</span><span class="na">position</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; msg: &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="o">);</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>NIO服务端代码(连接)</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//获取一个ServerSocket通道</span>
+<span class="n">ServerSocketChannel</span> <span class="n">serverChannel</span> <span class="o">=</span> <span class="n">ServerSocketChannel</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+<span class="n">serverChannel</span><span class="o">.</span><span class="na">configureBlocking</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+<span class="n">serverChannel</span><span class="o">.</span><span class="na">socket</span><span class="o">().</span><span class="na">bind</span><span class="o">(</span><span class="k">new</span> <span class="nf">InetSocketAddress</span><span class="o">(</span><span class="n">port</span><span class="o">));</span>
+<span class="c1">//获取通道管理器</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+<span class="c1">//将通道管理器与通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件，</span>
+<span class="n">serverChannel</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">selector</span><span class="o">,</span> <span class="n">SelectionKey</span><span class="o">.</span><span class="na">OP_ACCEPT</span><span class="o">);</span>
+</code></pre></div>
+<ul>
+<li>NIO服务端代码(监听)</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">){</span>
+    <span class="c1">//当有注册的事件到达时，方法返回，否则阻塞。</span>
+   <span class="n">selector</span><span class="o">.</span><span class="na">select</span><span class="o">();</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">SelectionKey</span> <span class="n">key</span> <span class="o">:</span> <span class="n">selector</span><span class="o">.</span><span class="na">selectedKeys</span><span class="o">()){</span>
+       <span class="k">if</span><span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">isAcceptable</span><span class="o">()){</span>
+           <span class="n">ServerSocketChannel</span> <span class="n">server</span> <span class="o">=</span>
+                <span class="o">(</span><span class="n">ServerSocketChannel</span><span class="o">)</span><span class="n">key</span><span class="o">.</span><span class="na">channel</span><span class="o">();</span>
+           <span class="n">SocketChannel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+           <span class="n">channel</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">ByteBuffer</span><span class="o">.</span><span class="na">wrap</span><span class="o">(</span>
+            <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="s">&quot;send message to client&quot;</span><span class="o">).</span><span class="na">getBytes</span><span class="o">()));</span>
+           <span class="c1">//在与客户端连接成功后，为客户端通道注册SelectionKey.OP_READ事件。</span>
+           <span class="n">channel</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">selector</span><span class="o">,</span> <span class="n">SelectionKey</span><span class="o">.</span><span class="na">OP_READ</span><span class="o">);</span>
+       <span class="o">}</span><span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">isReadable</span><span class="o">()){</span><span class="c1">//有可读数据事件</span>
+           <span class="n">SocketChannel</span> <span class="n">channel</span> <span class="o">=</span> <span class="o">(</span><span class="n">SocketChannel</span><span class="o">)</span><span class="n">key</span><span class="o">.</span><span class="na">channel</span><span class="o">();</span>
+           <span class="n">ByteBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="o">.</span><span class="na">allocate</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+           <span class="kt">int</span> <span class="n">read</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">);</span>
+           <span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="na">array</span><span class="o">();</span>
+           <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+           <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;receive message from client, size:&quot;</span>
+               <span class="o">+</span> <span class="n">buffer</span><span class="o">.</span><span class="na">position</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; msg: &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="o">);</span>
+       <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>NIO模型示例如下：</p>
+<p><img src="/assets/iomodel/nio.png" alt=""></p>
+<ul>
+<li>Acceptor注册Selector，监听accept事件</li>
+<li>当客户端连接后，触发accept事件</li>
+<li>服务器构建对应的Channel，并在其上注册Selector，监听读写事件</li>
+<li>当发生读写事件后，进行相应的读写处理</li>
+</ul>
+<h2>NIO优缺点</h2>
+<ul>
+<li>优点
+<ul>
+<li>性能瓶颈高</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>模型复杂</li>
+<li>编码复杂</li>
+<li>需处理半包问题</li>
+</ul></li>
+</ul>
+<p>NIO的优缺点和BIO就完全相反了!性能高，不用一个连接就建一个线程，可以一个线程处理所有的连接！相应的，编码就复杂很多，从上面的代码就可以明显体会到了。还有一个问题，由于是非阻塞的，应用无法知道什么时候消息读完了，就存在了半包问题！</p>
+<h2>半包问题</h2>
+<p>简单看一下下面的图就能理解半包问题了！</p>
+<p><img src="/assets/iomodel/package01.png" alt=""></p>
+<p><img src="/assets/iomodel/package02.png" alt=""></p>
+<p>我们知道TCP/IP在发送消息的时候，可能会拆包(如上图1)！这就导致接收端无法知道什么时候收到的数据是一个完整的数据。例如:发送端分别发送了ABC,DEF,GHI三条信息，发送时被拆成了AB,CDRFG,H,I这四个包进行发送，接受端如何将其进行还原呢？在BIO模型中，当读不到数据后会阻塞，而NIO中不会!所以需要自行进行处理!例如，以换行符作为判断依据，或者定长消息发生，或者自定义协议！</p>
+<p>NIO虽然性能高，但是编码复杂，且需要处理半包问题！为了方便的进行NIO开发，就有了Reactor模型!</p>
+<h2>Reactor模型</h2>
+<ul>
+<li>AWT Events</li>
+</ul>
+<p><img src="/assets/iomodel/awt.jpg" alt=""></p>
+<p>Reactor模型和AWT事件模型很像，就是将消息放到了一个队列中，通过异步线程池对其进行消费！</p>
+<h3>Reactor中的组件</h3>
+<ul>
+<li>Reactor:Reactor是IO事件的派发者。</li>
+<li>Acceptor:Acceptor接受client连接，建立对应client的Handler，并向Reactor注册此Handler。</li>
+<li>Handler:和一个client通讯的实体，按这样的过程实现业务的处理。一般在基本的Handler基础上还会有更进一步的层次划分， 用来抽象诸如decode，process和encoder这些过程。比如对Web Server而言，decode通常是HTTP请求的解析， process的过程会进一步涉及到Listener和Servlet的调用。业务逻辑的处理在Reactor模式里被分散的IO事件所打破， 所以Handler需要有适当的机制在所需的信息还不全（读到一半）的时候保存上下文，并在下一次IO事件到来的时候（另一半可读了）能继续中断的处理。为了简化设计，Handler通常被设计成状态机，按GoF的state pattern来实现。</li>
+</ul>
+<p>对应上面的NIO代码来看:</p>
+<ul>
+<li>Reactor：相当于有分发功能的Selector</li>
+<li>Acceptor：NIO中建立连接的那个判断分支</li>
+<li>Handler：消息读写处理等操作类</li>
+</ul>
+<p>Reactor从线程池和Reactor的选择上可以细分为如下几种：</p>
+<h3>Reactor单线程模型</h3>
+<p><img src="/assets/iomodel/reactor1.png" alt=""></p>
+<p>这个模型和上面的NIO流程很类似，只是将消息相关处理独立到了Handler中去了！</p>
+<p>虽然上面说到NIO一个线程就可以支持所有的IO处理。但是瓶颈也是显而易见的！我们看一个客户端的情况，如果这个客户端多次进行请求，如果在Handler中的处理速度较慢，那么后续的客户端请求都会被积压，导致响应变慢！所以引入了Reactor多线程模型!</p>
+<h3>Reactor多线程模型</h3>
+<p><img src="/assets/iomodel/reactor2.png" alt=""></p>
+<p>Reactor多线程模型就是将Handler中的IO操作和非IO操作分开，操作IO的线程称为IO线程，非IO操作的线程称为工作线程!这样的话，客户端的请求会直接被丢到线程池中，客户端发送请求就不会堵塞！</p>
+<p>但是当用户进一步增加的时候，Reactor会出现瓶颈！因为Reactor既要处理IO操作请求，又要响应连接请求！为了分担Reactor的负担，所以引入了主从Reactor模型!</p>
+<h3>主从Reactor模型</h3>
+<p><img src="/assets/iomodel/reactor3.png" alt=""></p>
+<p>主Reactor用于响应连接请求，从Reactor用于处理IO操作请求！</p>
+<h2>Netty</h2>
+<p>Netty是一个高性能NIO框架，其是对Reactor模型的一个实现！</p>
+<ul>
+<li>Netty客户端代码</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">EventLoopGroup</span> <span class="n">workerGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NioEventLoopGroup</span><span class="o">();</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">Bootstrap</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Bootstrap</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">workerGroup</span><span class="o">);</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_KEEPALIVE</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">SocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+            <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nf">TimeClientHandler</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="n">ChannelFuture</span> <span class="n">f</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">sync</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">workerGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>Netty Client Handler</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimeClientHandler</span> <span class="kd">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelRead</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Object</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ByteBuf</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">ByteBuf</span><span class="o">)</span> <span class="n">msg</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kt">long</span> <span class="n">currentTimeMillis</span> <span class="o">=</span>
+                <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">readUnsignedInt</span><span class="o">()</span> <span class="o">-</span> <span class="mi">2208988800L</span><span class="o">)</span> <span class="o">*</span> <span class="mi">1000L</span><span class="o">;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">new</span> <span class="nf">Date</span><span class="o">(</span><span class="n">currentTimeMillis</span><span class="o">));</span>
+            <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">m</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span>
+                <span class="n">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">cause</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>Netty服务端代码</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">EventLoopGroup</span> <span class="n">bossGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NioEventLoopGroup</span><span class="o">();</span>
+<span class="n">EventLoopGroup</span> <span class="n">workerGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NioEventLoopGroup</span><span class="o">();</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">ServerBootstrap</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ServerBootstrap</span><span class="o">();</span>
+    <span class="n">b</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span> <span class="n">workerGroup</span><span class="o">)</span>
+     <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="n">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+     <span class="o">.</span><span class="na">childHandler</span><span class="o">(</span><span class="k">new</span> <span class="n">ChannelInitializer</span><span class="o">&lt;</span><span class="n">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+         <span class="nd">@Override</span>
+         <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="n">SocketChannel</span> <span class="n">ch</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+             <span class="n">ch</span><span class="o">.</span><span class="na">pipeline</span><span class="o">().</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nf">TimeServerHandler</span><span class="o">());</span>
+         <span class="o">}</span>
+     <span class="o">})</span>
+     <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_BACKLOG</span><span class="o">,</span> <span class="mi">128</span><span class="o">)</span>  
+     <span class="o">.</span><span class="na">childOption</span><span class="o">(</span><span class="n">ChannelOption</span><span class="o">.</span><span class="na">SO_KEEPALIVE</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="c1">// Bind and start to accept incoming connections.</span>
+    <span class="n">ChannelFuture</span> <span class="n">f</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">port</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">sync</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">workerGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+    <span class="n">bossGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>
+<ul>
+<li>Netty Server Handler</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimeServerHandler</span> <span class="kd">extends</span> <span class="n">ChannelInboundHandlerAdapter</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelActive</span><span class="o">(</span><span class="kd">final</span> <span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">ByteBuf</span> <span class="n">time</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">alloc</span><span class="o">().</span><span class="na">buffer</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+        <span class="n">time</span><span class="o">.</span><span class="na">writeInt</span><span class="o">((</span><span class="kt">int</span><span class="o">)</span>
+            <span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">/</span> <span class="mi">1000L</span> <span class="o">+</span> <span class="mi">2208988800L</span><span class="o">));</span>
+        <span class="kd">final</span> <span class="n">ChannelFuture</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">time</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">addListener</span><span class="o">(</span><span class="k">new</span> <span class="nf">ChannelFutureListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">operationComplete</span><span class="o">(</span><span class="n">ChannelFuture</span> <span class="n">future</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">assert</span> <span class="n">f</span> <span class="o">==</span> <span class="n">future</span><span class="o">;</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="n">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span>
+        <span class="n">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">cause</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>我们从Netty服务器代码来看，与Reactor模型进行对应！</p>
+<ul>
+<li>EventLoopGroup就相当于是Reactor，bossGroup对应主Reactor,workerGroup对应从Reactor</li>
+<li>TimeServerHandler就是Handler</li>
+<li>child开头的方法配置的是客户端channel，非child开头的方法配置的是服务端channel</li>
+</ul>
+<p>具体Netty内容，请访问<a href="http://netty.io/">Netty官网</a>！</p>
+<h2>Netty的问题</h2>
+<p>Netty开发中一个很明显的问题就是回调，一是打破了线性编码习惯，
+二就是Callback Hell！</p>
+<p>看下面这个例子：</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">a</span><span class="o">.</span><span class="na">doing1</span><span class="o">();</span>  <span class="c1">//1</span>
+<span class="n">a</span><span class="o">.</span><span class="na">doing2</span><span class="o">();</span>  <span class="c1">//2</span>
+<span class="n">a</span><span class="o">.</span><span class="na">doing3</span><span class="o">();</span>  <span class="c1">//3</span>
+</code></pre></div>
+<p>1,2,3处代码如果是同步的，那么将按顺序执行！但是如果不是同步的呢？我还是希望2在1之后执行，3在2之后执行！怎么办呢？想想AJAX!我们需要写类似如下这样的代码！</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">a</span><span class="o">.</span><span class="na">doing1</span><span class="o">(</span><span class="k">new</span> <span class="nf">Callback</span><span class="o">(){</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(){</span>
+        <span class="n">a</span><span class="o">.</span><span class="na">doing2</span><span class="o">(</span><span class="k">new</span> <span class="nf">Callback</span><span class="o">(){</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">callback</span><span class="o">(){</span>
+                <span class="n">a</span><span class="o">.</span><span class="na">doing3</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">})</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div>
+<p>那有没有办法解决这个问题呢？其实不难，实现一个类似Future的功能！当Client获取结果时，进行阻塞，当得到结果后再继续往下走！实现方案，一个就是使用锁了，还有一个就是使用RingBuffer。经测试，使用RingBuffer比使用锁TPS有2000左右的提高！</p>
+<p><img src="/assets/iomodel/pigeon.png" alt=""></p>
+<h2>参考资料</h2>
+<ul>
+<li><a href="http://www.zhihu.com/question/21383903">Socket为什么要翻译成套接字？</a></li>
+<li><a href="http://www.dre.vanderbilt.edu/%7Eschmidt/PDF/reactor-siemens.pdf">Reactor论文</a></li>
+<li><a href="http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf">Doug Lea《Scalable IO in Java》</a></li>
+<li><a href="https://github.com/netty/netty">Netty源码</a></li>
+<li><a href="http://mechanitis.blogspot.com/2011/07/dissecting-disruptor-why-its-so-fast.html">剖析Disruptor:为什么会这么快？</a></li>
+<li><a href="http://ifeve.com/locks-are-bad/">剖析Disruptor:为什么会这么快？(中文)</a></li>
+<li><a href="http://ifeve.com/java-synchronized/">Java SE1.6中的Synchronized</a></li>
+<li><a href="http://www.cnblogs.com/l00l/p/4115001.html">线程安全的无锁RingBuffer实现</a></li>
+<li><a href="http://blog.csdn.net/haoel/article/details/2224055">Java NIO类库Selector机制解析（上）</a></li>
+<li><a href="http://blog.csdn.net/haoel/article/details/2224069">Java NIO类库Selector机制解析（下）</a></li>
+</ul>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=高性能Server---Reactor模型&amp;url=http://ivaneye.com/2016/07/23/iomodel.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2016/07/23/iomodel.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2016/07/23/iomodel';
+    var disqus_title = '高性能Server---Reactor模型';
+    var disqus_url = 'http://ivaneye.com/2016/07/23/iomodel.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/07/23/iomodel" data-title="高性能Server---Reactor模型" data-url="http://ivaneye.com/2016/07/23/iomodel.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

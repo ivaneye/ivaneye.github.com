@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://ivaneye.com" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Luminus手册-HTML模板 | wangyifan</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="Architecturer">
+<meta name="keywords" content="blog,java,clojure,golang,go,architectures">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://ivaneye.com/2013/09/16/html_templating.html">
+<meta property="og:title" content=" Luminus手册-HTML模板 | wangyifan">
+<meta property="og:description" content="Architecturer">
+<meta property="og:site_name" content="wangyifan">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="http://facebook.com/ivan.pig.73">
+<meta property="og:image" content="http://ivaneye.com">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://ivaneye.com">
+<meta name="twitter:title" content=" Luminus手册-HTML模板 | wangyifan">
+<meta name="twitter:description" content="Architecturer">
+<meta name="twitter:image:src" content="http://ivaneye.com">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://ivaneye.com/assets/ico/apple-touch-icon-114-516f4e19976b9e4dbb77ad9b576831fe.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://ivaneye.com/assets/ico/apple-touch-icon-72-5409b2df229305703caf583d86c845ab.png">
+<link rel="apple-touch-icon" href="http://ivaneye.com/assets/ico/apple-touch-icon-57-aa873e019cf659e0d4e6a0b5bb9f379d.png">
+<link rel="shortcut icon" href="http://ivaneye.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://ivaneye.com/2013/09/16/html_templating.html">
+<link rel="alternate" type="application/rss+xml" title="wangyifan" href="http://ivaneye.com/feed.xml">
+<link rel="stylesheet" href="/assets/main-2c2e59f696eac4fed329aacc581a5ade.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "ivaneye.com",
+  "url": "http://ivaneye.com/",
+  "description": "懒是一种态度"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = '',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', '']);
+// _gaq.push(['_trackPageview']);
+//
+// (function() {
+//   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+// })();
+</script>
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad7ba5b03bf52a9b727792c1675ffc6a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>ivaneye</strong>.com</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Luminus手册-HTML模板</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2013-09-16"> 2013-09-16
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/2013/09/16/html_templating.html#disqus_thread" data-disqus-identifier="/2013/09/16/html_templating">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> 
+      </span>
+    </div>
+  </header>
+  <h1>Templating Options</h1>
+<p>Luminus包含了Hiccup的依赖.如果你熟悉Hiccup那么可以直接使用。
+Hiccup使用clojure数据结构来描述模板。并且,Hiccup提供了丰富的API来生成
+HTML元素。 Luminus也包含了Selmer，Selmer使用了普通的文本文件来描述模板。
+你可以使用它们中的任何一个模板，或者混合使用.抑或你可以选择任何你喜欢
+的模板框架，比如Enlive或者Stencil。</p>
+<h1>HTML Templating Using Selmer</h1>
+<p>Selmer是一个类似Django模板的框架。如果你熟悉Django或者其他类似的模板语
+言，那么你会感觉很熟悉.</p>
+<h2>Creating Templates</h2>
+<p>Selmer将展示逻辑和程序逻辑分开。实际上Selmer模板就是包含了动态元素的
+HTML文件。来看下面的例子。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My First Template<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>Hello { {name}}<span class="nt">&lt;/h2&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>模板使用了一个包含了键值对的上下文环境。上下文环境中包含了我们
+需要在运行时获得的变量的值。上面的代码中，我们从上下文环境中获取名字为
+name的变量的值。
+有两个函数可以渲染模板,render和render-file。render函数接收一个字符串来
+渲染模板。而render-file接收一个字符串作为路径来渲染模板。
+如果我们将上面的模板定义保存到index.html文件中。我们就可以这样来渲染:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">ns </span><span class="nv">example.routes.home</span>
+  <span class="p">(</span><span class="ss">:use</span> <span class="p">[</span><span class="nv">selmer.parser</span> <span class="ss">:only</span> <span class="p">[</span><span class="nv">render-file</span><span class="p">]]))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nb">index </span><span class="p">[</span><span class="nv">request</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">render-file</span> <span class="s">&quot;example/views/templates/index.html&quot;</span>
+               <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;John&quot;</span><span class="p">}))</span>
+</code></pre></div>
+<!-- more -->
+<p>render-file函数将src目录作为根路径，使用相对路径来查找模板。
+上面，我们传递了一个字符串作为变量name的值。实际上，我们可以传递任何类
+型的值。比如，我们传递一个集合，在模板里我们可以使用tag来遍历这个集合。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    <span class="nt">&lt;ul&gt;</span>
+        { % for item in items %}
+        <span class="nt">&lt;li&gt;</span> { {item}} <span class="nt">&lt;/li&gt;</span>
+        { % endfor %}
+    <span class="nt">&lt;/ul&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render-file</span> <span class="s">&quot;/example/views/templates/items.html {:items (range 10)}&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>如果传递的是个map，我们可以这样访问:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;&lt;p&gt;Hello { {user.first}} { {user.last}}&lt;/p&gt;&quot;</span>
+        <span class="p">{</span><span class="ss">:user</span> <span class="p">{</span><span class="ss">:first</span> <span class="s">&quot;John&quot;</span> <span class="ss">:last</span> <span class="s">&quot;Doe&quot;</span><span class="p">}})</span>
+</code></pre></div>
+<p>如果没有指定的展示方式，那么默认调用toString方法。
+默认情况下，Selmer会缓存编译后的模板。只有当文件发生变化时，才会触发
+Selmer重新编译模板。你也可以选择Selmer是开启缓存还是关闭缓存。只需要调
+用(selmer.parser/cache-on!)或(selmer.parser/cache-off!).</p>
+<h2>Filters</h2>
+<p>Filter允许我们在渲染变量之前对其做一些处理。比如将其值变为大写，计算一
+个hash或者是计算长度。Filter的使用方法很简单，只需要在变量名后面跟一个
+&quot;|&quot;接着是Filter即可。比如：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    { {name|upper}}
+</code></pre></div>
+<p>下面是内置的filter:</p>
+<p>*add*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {add_me|add:2:3:4}}&quot;</span> <span class="p">{</span><span class="ss">:add_me</span> <span class="mi">2</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="mi">11</span>
+</code></pre></div>
+<p>*addslashes* 为了保留字符串中的转义符&quot;&quot;</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|addslashes}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;\&quot;Russian tea is best tea\&quot;&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;\&quot;Russian tea is best tea\&quot;&quot;</span>
+</code></pre></div>
+<p>*block.super* 在代码块中插入上级代码块中的内容。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure">        <span class="p">{</span> <span class="nv">%</span> <span class="nv">block</span> <span class="nv">foo</span> <span class="nv">%</span><span class="p">}</span> <span class="p">{</span> <span class="p">{</span><span class="nv">block.super</span><span class="p">}}</span> <span class="nb">some </span><span class="nv">content</span><span class="p">{</span> <span class="nv">%</span> <span class="nv">endblock</span> <span class="nv">%</span><span class="p">}</span>
+</code></pre></div>
+<p>*capitalize*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|capitalize}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;russian tea is best tea&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;Russian tea is best tea&quot;</span>
+</code></pre></div>
+<p>*center*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|center:20}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bitemyapp&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot; bitemyapp &quot;</span>
+</code></pre></div>
+<p>*count*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|count}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Yogthos&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;7&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {items|count}}&quot;</span> <span class="p">{</span><span class="ss">:items</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;4&quot;</span>
+</code></pre></div>
+<p>*date*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {creation-time|date:\&quot;yyyy-MM-dd_HH:mm:ss\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:created-at</span> <span class="p">(</span><span class="nf">java.util.Date.</span><span class="p">)})</span> <span class="nv">=&gt;</span> <span class="s">&quot;2013-07-28_20:51:48&quot;</span>
+</code></pre></div>
+<p>*default*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bitemyapp&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;bitemyapp&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="nv">nil</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;I &lt;3 ponies&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="p">[]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;[]&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{})</span> <span class="nv">=&gt;</span> <span class="s">&quot;I &lt;3 ponies&quot;</span>
+</code></pre></div>
+<p>*default-if-empty*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default-if-empty:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;bitemyapp&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;bitemyapp&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default-if-empty:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="nv">nil</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;I &lt;3 ponies&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default-if-empty:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:name</span> <span class="p">[]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;I &lt;3 ponies&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {name|default-if-empty:&quot;</span><span class="nv">I</span> <span class="nv">&lt;3</span> <span class="nv">ponies</span><span class="s">&quot;}}&quot;</span> <span class="p">{})</span> <span class="nv">=&gt;</span> <span class="s">&quot;I &lt;3 ponies&quot;</span>
+</code></pre></div>
+<p>*double-format*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {tis-a-number|double-format:2}}&quot;</span> <span class="p">{</span><span class="ss">:tis-a-number</span> <span class="mf">10.00001</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="mf">10.00</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {tis-a-number|double-format}}&quot;</span> <span class="p">{</span><span class="ss">:tis-a-number</span> <span class="mf">10.00001</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="mf">10.0</span>
+</code></pre></div>
+<p>*first*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {seq-of-some-sort|first}}&quot;</span> <span class="p">{</span><span class="ss">:seq-of-some-sort</span> <span class="p">[</span><span class="ss">:dog</span> <span class="ss">:cat</span> <span class="ss">:bird</span> <span class="ss">:bird</span> <span class="ss">:bird</span> <span class="ss">:is</span> <span class="ss">:the</span> <span class="ss">:word</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="ss">:dog</span>
+</code></pre></div>
+<p>*get-digit* 从右边返回相应位数的数据。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {tis-a-number|get-digit:1}}&quot;</span> <span class="p">{</span><span class="ss">:tis-a-number</span> <span class="mf">12.34567</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="mi">7</span>
+</code></pre></div>
+<p>*hash* 有效的hash方式: md5, sha, sha256, sha384, sha512</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {domain|hash:\&quot;md5\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:domain</span> <span class="s">&quot;example.org&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;1bdf72e04d6b50c82a48c7e4dd38cc69&quot;</span>
+</code></pre></div>
+<p>*join*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {sequence|join}}&quot;</span> <span class="p">{</span><span class="ss">:sequence</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;1234&quot;</span>
+</code></pre></div>
+<p>*json* 生成json格式，默认情况下特殊字符会被编码.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {data|json}}&quot;</span> <span class="p">{</span><span class="ss">:data</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="p">{</span><span class="ss">:foo</span> <span class="mi">27</span> <span class="ss">:dan</span> <span class="s">&quot;awesome&quot;</span><span class="p">}]})</span>
+               <span class="nv">=&gt;</span> <span class="s">&quot;[1,2,{&amp;quot;foo&amp;quot;:27,&amp;quot;dan&amp;quot;:&amp;quot;awesome&amp;quot;}]&quot;</span>
+</code></pre></div>
+<p>如果你不希望被编码则使用safe过滤器</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {f|json|safe}}&quot;</span> <span class="p">{</span><span class="ss">:f</span> <span class="p">{</span><span class="ss">:foo</span> <span class="mi">27</span> <span class="ss">:dan</span> <span class="s">&quot;awesome&quot;</span><span class="p">}})</span>
+</code></pre></div>
+<p>*last*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {sequence|last}}&quot;</span> <span class="p">{</span><span class="ss">:sequence</span> <span class="mf">12.34567</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="mi">7</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {sequence|last}}&quot;</span> <span class="p">{</span><span class="ss">:sequence</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="mi">4</span>
+</code></pre></div>
+<p>*length*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {sequence|length}}&quot;</span> <span class="p">{</span><span class="ss">:sequence</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="mi">4</span>
+</code></pre></div>
+<p>*length-is*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {sequence|length-is:4}}&quot;</span> <span class="p">{</span><span class="ss">:sequence</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="nv">true</span>
+</code></pre></div>
+<p>*linebreaks* 普通换行替换为html换行,结果在&lt;p&gt;标签内</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|linebreaks|safe}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;\nbar\nbaz&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;&lt;p&gt;&lt;br /&gt;bar&lt;br /&gt;baz&lt;/p&gt;&quot;</span>
+</code></pre></div>
+<p>*linebreaks-br* 和linebreaks功能相同，但是没有&lt;p&gt;标签</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|linebreaks-br|safe}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;\nbar\nbaz&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;bar&lt;br /&gt;baz&quot;</span>
+</code></pre></div>
+<p>*linenumbers* 显示行号</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|linenumbers&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;foo\n\bar\nbaz&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;1. foo\n2. \bar\n3. baz&quot;</span>
+</code></pre></div>
+<p>*lower*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|lower}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;FOOBaR&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;foobar&quot;</span>
+</code></pre></div>
+<p>*pluralize* 返回单词的复数</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {items|count}} item{ {items|pluralize}}&quot;</span> <span class="p">{</span><span class="ss">:items</span> <span class="p">[]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;0 items&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {items|count}} item{ {items|pluralize}}&quot;</span> <span class="p">{</span><span class="ss">:items</span> <span class="p">[</span><span class="mi">1</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;1 item&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {items|count}} item{ {items|pluralize}}&quot;</span> <span class="p">{</span><span class="ss">:items</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;2 items&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {fruit|count}} tomato{ {fruit|pluralize:\&quot;es\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:fruit</span> <span class="p">[]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;0 tomatoes&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {people|count}} lad{ {people|pluralize:\&quot;y\&quot;:\&quot;ies\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:people</span> <span class="p">[</span><span class="mi">1</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;1 lady&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {people|count}} lad{ {people|pluralize:\&quot;y\&quot;:\&quot;ies\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:people</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;2 ladies&quot;</span>
+</code></pre></div>
+<p>*rand-nth* 从集合中返回rand-nths值</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|rand-nth}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;2&quot;</span>
+</code></pre></div>
+<p>*remove* 从字符串中去除特殊字符</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|remove:\&quot;aeiou\&quot;}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;abcdefghijklmnop&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;bcdfghjklmnp&quot;</span>
+</code></pre></div>
+<p>*remove-tags* 去除html标签</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ { value|remove-tags:b:span }}&quot;</span> <span class="p">{</span><span class="ss">:value</span> <span class="s">&quot;&lt;b&gt;&lt;span&gt;foobar&lt;/span&gt;&lt;/b&gt;&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;foobar&quot;</span>
+</code></pre></div>
+<p>*safe* 默认情况下Selmer会编码所有的内容，此过滤器时Selmer不去编码</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {data}}&quot;</span> <span class="p">{</span><span class="ss">:data</span> <span class="s">&quot;&lt;foo&gt;&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;&amp;lt;foo&amp;gt;&quot;</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {data|safe}}&quot;</span> <span class="p">{</span><span class="ss">:data</span> <span class="s">&quot;&lt;foo&gt;&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;&lt;foo&gt;&quot;</span>
+</code></pre></div>
+<p>*sort*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ { value|sort }}&quot;</span> <span class="p">{</span><span class="ss">:value</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">4</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">5</span><span class="p">]})</span> <span class="nv">=&gt;</span> <span class="s">&quot;(1 2 3 4 5)&quot;</span>
+</code></pre></div>
+<p>*sort-by*</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ { value|sort-by:name }}&quot;</span> <span class="p">{</span><span class="ss">:value</span> <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;John&quot;</span><span class="p">}</span> <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;Jane&quot;</span><span class="p">}]})</span>
+                     <span class="nv">=&gt;</span> <span class="s">&quot;({:name &amp;quot;Jane&amp;quot;} {:name &amp;quot;John&amp;quot;})&quot;</span>
+</code></pre></div>
+<p>*sort-reversed* 反序排列</p>
+<p>*sort-by-reversed* 和sort-by功能相同，反序</p>
+<p>upper</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {shout|upper}}&quot;</span> <span class="p">{</span><span class="ss">:shout</span> <span class="s">&quot;hello&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span> <span class="s">&quot;HELLO&quot;</span>
+</code></pre></div>
+<h2>Defining Custom Filters</h2>
+<p>你可以使用selmer.filters/add-filter!函数来方便的添加自定义的Filter.此
+函数以元素作为参数，并返回替换后的值.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">use</span> <span class="ss">&#39;selmer.filters</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">add-filter!</span> <span class="ss">:embiginate</span> <span class="o">#</span><span class="p">(</span><span class="nf">.toUpperCase</span> <span class="nv">%</span><span class="p">))</span>
+ <span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {shout|embiginate}}&quot;</span> <span class="p">{</span><span class="ss">:shout</span> <span class="s">&quot;hello&quot;</span><span class="p">})</span>
+<span class="p">(</span><span class="nf">add-filter!</span> <span class="ss">:count</span> <span class="nv">count</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|count}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="p">(</span><span class="nb">range </span><span class="mi">3</span><span class="p">)})</span>
+</code></pre></div>
+<p>Filters可以链式使用</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">add-filter!</span> <span class="ss">:empty?</span> <span class="nv">empty?</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ {foo|upper|empty?}}&quot;</span> <span class="p">{</span><span class="ss">:foo</span> <span class="s">&quot;Hello&quot;</span><span class="p">})</span>
+</code></pre></div>
+<h2>Tags</h2>
+<p>Selmer提供了两种类型的Tag。一种是类似extends和include这样的内联tag。这
+种tag不需要结束tag。另一种形式的tag是块tag。这种tag有开始和结束tag，以
+及代码块。比如if ... endif块。 让我们先来看看默认的tag:</p>
+<p>*include* 将引用的模板内容替换其自身</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % include &quot;path/to/comments.html&quot; %}
+</code></pre></div>
+<p>你可以提供默认的参数，如果tag有匹配上上的参数，则会获取它的值。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">{</span> <span class="nv">%</span> <span class="nv">include</span> <span class="s">&quot;templates/inheritance/child.html&quot;</span> <span class="nv">with</span> <span class="nv">name=</span><span class="s">&quot;Jane Doe&quot;</span> <span class="nv">greeting=</span><span class="s">&quot;Hello!&quot;</span> <span class="nv">%</span><span class="p">}</span>
+</code></pre></div>
+<p>*block*
+定义一个块，可以使用模板继承的方式来覆盖，类似Java中的父类方法.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    { % block foo %}This text can be overridden later{ % endblock %}
+</code></pre></div>
+<p>*cycle* 循环提供的参数</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % for i in items %}&lt;li class={ % cycle \&quot;blue\&quot; \&quot;white\&quot;%}&gt;{ {i}}&lt;/li&gt;{ % endfor %}&quot;</span> <span class="p">{</span><span class="ss">:items</span> <span class="p">(</span><span class="nb">range </span><span class="mi">5</span><span class="p">)})</span>
+                        <span class="nv">=&gt;</span> <span class="s">&quot;&lt;li class=\&quot;blue\&quot;&gt;0&lt;/li&gt;&lt;li class=\&quot;white\&quot;&gt;1&lt;/li&gt;&lt;li class=\&quot;blue\&quot;&gt;2&lt;/li&gt;</span>
+<span class="s">                            &lt;li class=\&quot;white\&quot;&gt;3&lt;/li&gt;&lt;li class=\&quot;blue\&quot;&gt;4&lt;/li&gt;&quot;</span>
+</code></pre></div>
+<p>*extends* 引用父模板。父模板中的块会被子模板中相应的块覆盖。</p>
+<ul>
+<li>  Note: 子模板只能包含块。任何块以外的tag或文本都被忽略</li>
+</ul>
+<p>例如有一个叫base.html的父模板和一个叫child.html的子模板</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    { % block foo %}This text can be overridden later{ % endblock %}
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div><div class="highlight"><pre><code class="language-html" data-lang="html">    { % extends &quot;base.html&quot; %}
+    { % block foo %}
+      <span class="nt">&lt;p&gt;</span>This text will override the text in the parent<span class="nt">&lt;/p&gt;</span>
+    { % endblock %}
+</code></pre></div>
+<p>*if*</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % if condition %}yes!{ % endif %}
+{ % if condition %}yes!{ % else %}no!{ % endif %}
+</code></pre></div>
+<p>配合filter使用</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">add-filter!</span> <span class="ss">:empty?</span> <span class="nv">empty?</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % if files|empty? %}no files{ % else %}files{ % endif %}&quot;</span>
+  <span class="p">{</span><span class="ss">:files</span> <span class="p">[]})</span>
+</code></pre></div>
+<p>*ifequal* 之用当两个参数相等时才执行</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % ifequal foo bar %}yes!{ % endifequal %}
+{ % ifequal foo bar %}yes!{ % else %}no!{ % endifequal %}
+{ % ifequal foo &quot;this also works&quot; %}yes!{ % endifequal %}
+</code></pre></div>
+<p>*for* 遍历集合中的元素。同时可以使用如下参数。
+-   forloop.first
+-   forloop.last
+-   forloop.counter
+-   forloop.counter0
+-   forloop.revcounter
+-   forloop.revcounter0
+-   forloop.length</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % for x in some-list %}element: { {x}} first? { {forloop.first}} last? { {forloop.last}}{ % endfor %}
+</code></pre></div>
+<p>可以直接访问结构化的数据</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % for item in items %} <span class="nt">&lt;tr&gt;&lt;td&gt;</span>{ {item.name}}<span class="nt">&lt;/td&gt;&lt;td&gt;</span>{ {item.age}}<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span> { % endfor %}
+</code></pre></div>
+<p>*now* 当前时间</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">(render (str &quot;{ % now \&quot;&quot; date-format &quot;\&quot;%}&quot;) {}) =&gt; &quot;\&quot;01 08 2013\&quot;&quot;
+</code></pre></div>
+<p>*comment* 注释</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">(render &quot;foo bar { % comment %} baz test { {x}} { % endcomment %} blah&quot; {}) =&gt; &quot;foo bar baz test blah&quot;
+</code></pre></div>
+<p>*firstof* 取得第一个不是false的值</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">(render &quot;{ % firstof var1 var2 var3 %}&quot; {:var2 &quot;x&quot; :var3 &quot;not me&quot;}) =&gt; &quot;x&quot;
+</code></pre></div>
+<p>*script*
+生成一个html的script标签，并以servlet-context键提供的值类作为文件的前
+置目录.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">(render &quot;{ % script \&quot;/js/site.js\&quot; %}&quot; {:servlet-context &quot;/myapp&quot;}) =&gt;
+&quot;<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">\&quot;/myapp/js/site.js\&quot;</span> <span class="na">type=</span><span class="s">\&quot;text/javascript\&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>&quot;
+</code></pre></div>
+<p>*style*</p>
+<p>生成一个html的style标签，并以servlet-context键提供的值类作为文件的前置目录.</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % style \&quot;/css/screen.css\&quot; %}&quot;</span> <span class="p">{</span><span class="ss">:servlet-context</span> <span class="s">&quot;/myapp&quot;</span><span class="p">})</span> <span class="nv">=&gt;</span>
+<span class="s">&quot;&lt;link href=\&quot;/myapp/css/screen.css\&quot; rel=\&quot;stylesheet\&quot; type=\&quot;text/css\&quot; /&gt;&quot;</span>
+</code></pre></div>
+<p>*verbatim* 阻止内容中的parseeither解析</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % verbatim %}{ {if dying}}Still alive.{ {/if}}{ % endverbatim %}&quot;</span> <span class="p">{})</span> <span class="nv">=&gt;</span> <span class="s">&quot;{ {if dying}}Still alive.{ {/if}}&quot;</span>
+</code></pre></div>
+<p>*with* 向上下文map中新增一个值</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % with total=business.employees|count %}{ { total }}{ % endwith %}&quot;</span>
+         <span class="p">{</span><span class="ss">:business</span> <span class="p">{</span><span class="ss">:employees</span> <span class="p">(</span><span class="nb">range </span><span class="mi">5</span><span class="p">)}})</span>
+<span class="nv">=&gt;</span> <span class="s">&quot;5 employees&quot;</span>
+</code></pre></div>
+<h2>Defining Custom Tags</h2>
+<p>除了上面已经提供的tag。你也可以自定义tag。使用add-tag!宏就可以了。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">use</span> <span class="ss">&#39;selmer.parser</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">add-tag!</span> <span class="ss">:foo</span>
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">args</span> <span class="nv">context-map</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">str </span><span class="s">&quot;foo &quot;</span> <span class="p">(</span><span class="nb">first </span><span class="nv">args</span><span class="p">))))</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % foo quux %} { % foo baz %}&quot;</span> <span class="p">{})</span>
+<span class="p">(</span><span class="nf">add-tag!</span> <span class="ss">:bar</span>
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">args</span> <span class="nv">context-map</span> <span class="nv">content</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">str </span><span class="nv">content</span><span class="p">))</span>
+  <span class="ss">:baz</span> <span class="ss">:endbar</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">render</span> <span class="s">&quot;{ % bar %} some text { % baz %} some more text { % endbar %}&quot;</span> <span class="p">{})</span>
+</code></pre></div>
+<p>可以看出，我们定义的tag提供了一个关键字作为tag的名称后面是tag体,结尾的
+tag不是必须的。
+当没有结尾的tag时,tag不包含任何内容。这种tag获取参数类进行处理。
+当有结尾tag时，每个块内的内容都会被作为开头那个tag所对应的map的键.开头
+tag对应的map包含:args和:content键，content的内容就对应到了:content.</p>
+<h2>Template inheritance</h2>
+<p>Selmer模板可以使用块tag来引用其他的模板。有两种方法可以引用模板，一个
+是extends一个是include.</p>
+<h3>Extending Templates</h3>
+<p>当我们使用extends这个tag时，当前的模板将会将引用的模板作为父模板。
+任何在base模板中的块，会被子模板中相同名字的块给覆盖.
+子模板中的内容需要在块tag中。不在块中的内容将会被忽略。
+我们来看个例子,我们创建一个叫base.html的父模板.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{ % block title %}My amazing site{ % endblock %}<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+        { % block content %}{ % endblock %}
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>然后我们创建一个home.html模板来继承base.html。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">{ % extends &quot;base.html&quot; %}
+    { % block content %}
+        { % for entry in entries %}
+            <span class="nt">&lt;h2&gt;</span>{ { entry.title }}<span class="nt">&lt;/h2&gt;</span>
+            <span class="nt">&lt;p&gt;</span>{ { entry.body }}<span class="nt">&lt;/p&gt;</span>
+        { % endfor %}
+    { % endblock %}
+</code></pre></div>
+<p>当渲染home.html时entries的内容将会被打印出来。而在home.html中，我们没
+有定义title块，在渲染时会获取base.html中的title块的定义。</p>
+<ul>
+<li>  注意，你可以多层级的继承模板。引擎会渲染最后的那个块.</li>
+</ul>
+<h3>Including Templates</h3>
+<p>include这个tag允许你包含一个模板。
+我们还是来看一个例子，我们有一个base.html这个模板，它包含了一个叫做
+register.html的模板和一个home.html的模板：</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{ % block title %}My amazing site{ % endblock %}<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+        { % if user %}
+        { % include &quot;templates_path/home.html&quot; %}
+        { % else %}
+        { % include &quot;templates_path/register.html&quot; %}
+        { % endif %}
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>现在我们能定义register.html</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    { % block register %}
+      <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/register&quot;</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;id&quot;</span><span class="nt">&gt;</span>user id<span class="nt">&lt;/label&gt;</span>
+          <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;id&quot;</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span><span class="nt">&gt;&lt;/input&gt;</span>
+          <span class="nt">&lt;input</span> <span class="na">pass=</span><span class="s">&quot;pass&quot;</span> <span class="na">name=</span><span class="s">&quot;pass&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span><span class="nt">&gt;&lt;/input&gt;</span>
+          <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;register&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/form&gt;</span>
+    { % endblock %}
+</code></pre></div>
+<p>和home.html:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">    { % block home %}
+    <span class="nt">&lt;h1&gt;</span>Hello { {user}}<span class="nt">&lt;/h1&gt;</span>
+    { % endblock %}
+</code></pre></div>
+<p>当渲染base.html时，将会引入register.html和home.html。
+更多信息请见<a href="https://github.com/yogthos/Selmer">官方文档</a></p>
+<h1>HTML Templating Using Hiccup</h1>
+<p><a href="https://github.com/weavejester/hiccup">Hiccup</a>
+是另一个Clojure的HTML模板引擎。它的优势是我们可以使用纯正的
+Clojure代码来生成页面。也就是说我们不需要学习第三方的语法了。
+Hiccup主要使用Clojure的vector来渲染页面。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="ss">:tag-name</span> <span class="p">{</span><span class="ss">:attribute-key</span> <span class="s">&quot;attribute value&quot;</span><span class="p">}</span> <span class="nv">tag-body</span><span class="p">]</span>
+</code></pre></div>
+<p>例如，如果我们想创建一个包含内容的div，我们可以这样写：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="ss">:div</span> <span class="p">{</span><span class="ss">:id</span> <span class="s">&quot;hello&quot;</span>, <span class="ss">:class</span> <span class="s">&quot;content&quot;</span><span class="p">}</span> <span class="p">[</span><span class="ss">:p</span> <span class="s">&quot;Hello world!&quot;</span><span class="p">]]</span>
+</code></pre></div>
+<p>这将生成如下的html代码</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;hello&quot;</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;&lt;p&gt;</span>Hello world!<span class="nt">&lt;/p&gt;&lt;/div&gt;</span>
+</code></pre></div>
+<p>Hiccup提供了简化设置id和class的方法，简写如下</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">[</span><span class="ss">:div#hello.content</span> <span class="p">[</span><span class="ss">:p</span> <span class="s">&quot;Hello world!&quot;</span><span class="p">]]</span>
+</code></pre></div>
+<p>Hiccup还提供了一些帮助类函数来创建元素，比如: forms, links, images, 等
+等.所有这些函数只是简单的返回类似上面格式的vector。也就是说，如果一个
+函数无法达到你的要求，你可以手写相应代码或者获取函数的返回值进行修改。
+每个函数可以使用一个map作为其第一个参数，来描绘属性:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">image</span> <span class="p">{</span><span class="ss">:align</span> <span class="s">&quot;left&quot;</span><span class="p">}</span> <span class="s">&quot;foo.png&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>生成html代码如下</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="nv">&lt;img</span> <span class="nv">align=</span><span class="sc">\&quot;</span><span class="nv">left</span><span class="sc">\&quot;</span> <span class="nv">src=</span><span class="sc">\&quot;</span><span class="nv">foo.png</span><span class="sc">\&quot;</span><span class="nv">&gt;</span>
+</code></pre></div>
+<p>但是最佳实践还是将其保存到独立的CSS文件中。</p>
+<h2>Forms and Input</h2>
+<p>Hiccup还提供了form助手函数，看例子</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">form-to</span> <span class="p">[</span><span class="ss">:post</span> <span class="s">&quot;/login&quot;</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">text-field</span> <span class="p">{</span><span class="ss">:placeholder</span> <span class="s">&quot;screen name&quot;</span><span class="p">}</span> <span class="s">&quot;id&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">password-field</span> <span class="p">{</span><span class="ss">:placeholder</span> <span class="s">&quot;password&quot;</span><span class="p">}</span> <span class="s">&quot;pass&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">submit-button</span> <span class="s">&quot;login&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>这个函数第一个参数是一个vector，以HTTP请求类型为关键字，紧接着是请求
+url。其余的参数必须是HTML元素。生成的HTML代码如下:</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/login&quot;</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;id&quot;</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;screen name&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;pass&quot;</span> <span class="na">name=</span><span class="s">&quot;pass&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;password&quot;</span> <span class="na">type=</span><span class="s">&quot;password&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;login&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div>
+<p>最后LUminus模板在你的应用下面提供了一辅助函数。叫做md-&gt;html,这个函数能
+渲染载resources/public/目录下的markdown文件并返回一个HTML字符串。这个
+可以和Hiccup函数一起使用:</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">&lt;yourapp&gt;.util</span> <span class="ss">:as</span> <span class="nv">util</span><span class="p">])</span>
+<span class="nv">...</span>
+<span class="p">(</span><span class="nf">html</span> <span class="p">[</span><span class="ss">:div.contenr</span> <span class="p">[</span><span class="ss">:p</span> <span class="p">(</span><span class="nf">util/md-&gt;html</span> <span class="s">&quot;/md/paragraph.md&quot;</span><span class="p">)]])</span>
+</code></pre></div>
+<p>markdown生成由markdown-clj来处理，具体信息请见其<a href="https://github.com/yogthos/markdown-clj">Github</a>
+页。</p>
+<h1>Content caching</h1>
+<p>lib-noir通过cache!宏提供了基本的内存式缓存，相应的宏在noir.util.cache
+下。如果想缓存一个页面，你是需要：</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">noir.util.cache</span> <span class="ss">:as</span> <span class="nv">cache</span><span class="p">])</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">slow-loading-page</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">cache/cache!</span>
+   <span class="ss">:slow-page</span>
+   <span class="p">(</span><span class="nf">common/layout</span>
+    <span class="p">[</span><span class="ss">:div</span> <span class="s">&quot;I load slowly&quot;</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">parse-lots-of-files</span><span class="p">))))</span>
+</code></pre></div>
+<p>通过调用invalidate!来取消缓存,需要提供需要取消的缓存的key。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">cache/invalidate!</span> <span class="ss">:slow-page</span><span class="p">)</span>
+</code></pre></div>
+<p>使用clear!来清除当前所有的缓存</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">cache/clear!</span><span class="p">)</span>
+</code></pre></div>
+<p>使用set-timeout!来设置缓存时间(单位：秒)，超时后会重新加载。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">cache/set-timeout!</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>最后你可以通过set-size!来设置缓存的大小。当缓存超出了限定的大小，最先
+使用的数据将被被替换。</p>
+<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">cache/set-size!</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>  注意，缓存会在操作成功后才重新加载。也就是说，比如程序去获取一个远程
+文件，但是失败了，那么缓存是不会被重新加载的。</li>
+</ul>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>wangyifan</h4>
+      <p></p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Luminus手册-HTML模板&amp;url=http://ivaneye.com/2013/09/16/html_templating.html&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://ivaneye.com/2013/09/16/html_templating.html"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <!-- <div id="disqus_thread"></div> -->
+  <!--<script type="text/javascript">
+    var disqus_identifier = '/2013/09/16/html_templating';
+    var disqus_title = 'Luminus手册-HTML模板';
+    var disqus_url = 'http://ivaneye.com/2013/09/16/html_templating.html';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>-->
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2013/09/16/html_templating" data-title="Luminus手册-HTML模板" data-url="http://ivaneye.com/2013/09/16/html_templating.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"ivanpig"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="http://github.com/ivaneye" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://facebook.com/ivan.pig.73" class="icon-facebook" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://twitter.com/ivanpig" class="icon-twitter" target="_blank">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <!--<li>
+        <a href="" class="icon-instagram" target="_blank">
+          <i class="fa fa-instagram"></i>
+        </a>
+    </li>-->
+      <li>
+        <a href="https://cn.linkedin.com/in/ivan-wang-a6259b59" class="icon-linkedin" target="_blank">
+          <i class="fa fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>I have no special talent. I am only passionately curious.</q>
+      <small>– Albert Einstein</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 97 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>
