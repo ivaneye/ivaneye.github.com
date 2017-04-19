@@ -21,15 +21,15 @@ public class Change {
 	public void change(int i){
 		i = 2;
 	}
-	
+
 	public void change(String str){
 		str = "Hi";
 	}
-		
+
 	public void change(StringBuffer str){
 		str.append("Hi");
 	}
-    
+
     public static void main(String[] args){
         Change change = new Change();
         int i = 1;
@@ -43,7 +43,7 @@ public class Change {
 ```
 
 [slide]
-## 
+##
 
 ![](/files/jvm02.png)
 
@@ -104,7 +104,7 @@ public class Circle {
 ```
 
 [slide]
-## GC 
+## GC
 
 - YoungGC   {:&.bounceIn}
 - FullGC
@@ -255,7 +255,7 @@ javap -verbose Calc
 ```
 
 [slide]
-## 
+##
 
 ```
 public class Calc
@@ -280,7 +280,7 @@ Constant pool:
 ```
 
 [slide]
-## 
+##
 
 ```
 {
@@ -339,7 +339,7 @@ The Java Virtual Machine starts up by creating an initial class, which is specif
 - jvms8 5.3.1 5.3.2
 - JVM规范定义了两种类型的类装载器：bootstrap class loader,user-defined class loader
 
-![](/files//jvm03.png)
+![](/files/jvm03.png)
 
 [slide]
 ## 加载到哪里？
@@ -403,7 +403,7 @@ initialization method
     - 动态链接(Dynamic Linking) jvms8 2.6.3
 
 [slide]
-## 
+##
 
 ```
 public class Main
@@ -444,7 +444,7 @@ Constant pool:
 ```
 
 [slide]
-## 
+##
 
 ```
 {
@@ -468,7 +468,7 @@ Constant pool:
 ```
 
 [slide]
-## 
+##
 
 ```
 public class Calc
@@ -490,7 +490,7 @@ Constant pool:
 ```
 
 [slide]
-## 
+##
 
 ```
 {
@@ -523,7 +523,7 @@ Constant pool:
 ```
 
 [slide]
-## 
+##
 
 ![](/files/mind.png)
 
