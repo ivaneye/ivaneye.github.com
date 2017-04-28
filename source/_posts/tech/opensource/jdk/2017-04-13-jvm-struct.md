@@ -17,6 +17,7 @@ published: false
 ## 例子
 
 ```java
+//Calc.java
 public class Calc {
     public int sum(){
         int a = 1;
@@ -26,6 +27,7 @@ public class Calc {
     }
 }
 
+//Main.java
 public class Main {
     public static void main(String[] args){
         Calc calc = new Calc();
@@ -39,7 +41,28 @@ public class Main {
 
 ```
 javac Calc.java
+javac Main.java
 ```
+
+## 运行
+
+```
+java Main
+```
+
+## 代码执行流程
+
+- 加载Main
+- 执行main方法
+- 加载Calc
+- 实例化Calc
+- 执行calc.sum()方法
+    - a赋值1
+    - b赋值2
+    - c赋值
+    - 返回c
+- 结果赋值给result
+- 打印result
 
 ## 反编译
 
