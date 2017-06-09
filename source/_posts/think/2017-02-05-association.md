@@ -6,6 +6,7 @@ categories: [think]
 tags: [think,concept]
 avatarimg: "/img/head.jpg"
 author: wangyifan
+published: false
 
 ---
 
