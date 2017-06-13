@@ -9,6 +9,13 @@ theme: dark
 ## 王一帆
 
 [slide]
+## 源起
+
+- ![](write-jvm-file/talk.png)  {:&.moveIn}
+- 《自己动手写Java虚拟机》
+- JVM是如何运行的？
+
+[slide]
 ## Kotlin简介
 
 [slide]
@@ -20,12 +27,14 @@ theme: dark
 data class Customer(val name: String, val email: String, val company: String)
 ```
 
+[slide]
 - 或者使用 lambda 表达式来过滤列表：
 
 ```kotlin
 val positiveNumbers = list.filter { it > 0 }
 ```
 
+[slide]
 - 想要单例？创建一个 object 就可以了：
 
 ```kotlin
@@ -44,6 +53,7 @@ var output: String
 output = null   // 编译错误
 ```
 
+[slide]
 - Kotlin 可以保护你避免对可空类型的误操作
 
 ```kotlin
@@ -51,6 +61,7 @@ val name: String? = null    // 可控类型
 println(name.length())      // 编译错误
 ```
 
+[slide]
 - 并且如果你检查类型是正确的，编译器会为你做自动类型转换
 
 ```kotlin
@@ -79,6 +90,7 @@ Flowable
     .subscribe(::println, Throwable::printStackTrace)
 ```
 
+[slide]
 - 无论是 JVM 还是 JavaScript 目标平台，都可用 Kotlin 写代码然后部署到你想要的地方
 
 ```kotlin
@@ -99,6 +111,13 @@ fun onLoad() {
 ![](write-jvm-file/tooling2.png)
 
 [slide]
+## 吸引我的地方
+
+- JetBrains
+- 谷歌宣布Kotlin作为Android主力语言
+- 扩展方法
+
+[slide]
 ## Java/Class路径查找
 
 [slide]
@@ -107,6 +126,7 @@ fun onLoad() {
 [slide]
 ## 整体结构
 
+- 图见XMind
 - 长度+内容
 - 优缺点
 - 类似的结构
