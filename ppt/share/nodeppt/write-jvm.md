@@ -11,9 +11,9 @@ theme: dark
 [slide]
 ## 源起
 
-- ![](write-jvm-file/talk.png)  {:&.moveIn}
-- 《自己动手写Java虚拟机》
+- 《自己动手写Java虚拟机》 {:&.moveIn}
 - JVM是如何运行的？
+- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/12046408.jpg)
 
 [slide]
 ## Kotlin简介
@@ -104,11 +104,9 @@ fun onLoad() {
 [slide]
 ## 工具化
 
-一门语言需要工具化，而在 JetBrains，这正是我们做得最好的地方！
-
-![](write-jvm-file/tooling1.png)
-
-![](write-jvm-file/tooling2.png)
+- 一门语言需要工具化，而在 JetBrains，这正是我们做得最好的地方！
+- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/35271960.jpg)
+- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/58573621.jpg)
 
 [slide]
 ## 吸引我的地方
@@ -121,15 +119,53 @@ fun onLoad() {
 ## Java/Class路径查找
 
 [slide]
-## Class文件结构
+## 从Nio看Class文件结构
 
 [slide]
-## 整体结构
+## Class文件结构
 
-- 图见XMind
-- 长度+内容
-- 优缺点
-- 类似的结构
+|类型|名称|数量|
+|---|---|---|
+|u4|magic|1|
+|u2|minor_version|1|
+|u2|major_version|1|
+|u2|constant_pool_count|1|
+|cp_info|constant_pool|constant_pool_count - 1|
+|u2|access_flags|1|
+|u2|this_class|1|
+|u2|super_class|1|
+
+[slide]
+## Class文件结构(续)
+
+|类型|名称|数量|
+|---|---|---|
+|u2|interfaces_count|1|
+|u2|interfaces|interfaces_count|
+|u2|fields_count|1|
+|field_info|fields|fields_count|
+|u2|methods_count|1|
+|method_info|methods|methods_count|
+|u2|attributes_count|1|
+|attribute_info|attributes|attributes_count|
+
+[slide]
+## 说明
+
+- u2,u4：无符号2/4字节
+- constant_pool:
+- constant_pool长度：
+
+[slide]
+## 结构优缺点
+
+- 结构紧凑
+
+[slide]
+## 类似结构 
+
+- HTTP请求结构
+- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/11321780.jpg)
 
 [slide]
 ## magic
