@@ -294,6 +294,11 @@ public class Test {
 [slide]
 ## 关键配置
 
+[slide]
+## 架构
+
+![](http://orixnpicm.bkt.clouddn.com/17-6-15/15243263.jpg)
+![](http://orixnpicm.bkt.clouddn.com/17-6-15/97705141.jpg)
 
 [slide]
 # 问题及解决
