@@ -1,4 +1,4 @@
-title: Hydra实现与使用
+title: Hydra使用与实现
 speaker: 王一帆
 url: http://ivaneye.com
 transition: stick
@@ -37,7 +37,33 @@ theme: dark
 ```
 
 - hydra-annotation-api为Hydra提供的服务开发包！
-- 注意:服务节点默认提供了Spring支持(还包括数据源等支持)，此处scope请设置为provided，重要！！！
+- 注意：服务节点默认提供了Spring支持(还包括数据源等支持)，此处scope请设置为**provided**，重要！！！
+
+[slide]
+## 服务节点默认支持
+
+- Spring
+    - spring-orm:spring-jdbc,spring-tx
+    - spring-aspects:aspectjweaver
+    - spring-web:spring-beans,spring-aop,aopalliance,spring-core
+    - spring-context-support:spring-context
+- commons-dbcp2:commons-pool2
+- velocity:commons-collections
+- commons-lang
+- ojdbc6
+- mysql-connector-java
+- slf4j-log4j12:slf4j-api,log4j
+
+[slide]
+## 问题
+
+如果在项目中引入了服务节点默认提供的依赖，且没有设置provided。则可能会出现**找不到对象**的问题!
+
+
+[slide]
+## 原因
+
+![](http://orixnpicm.bkt.clouddn.com/17-6-15/97705141.jpg)
 
 [slide]
 ## 几点说明
@@ -51,7 +77,7 @@ Hydra依据Maven的依赖关系来管理服务依赖:
 [slide]
 ## 版本管理
 
-如果需要自定义版本信息，请配置jar插件。如果不需要自定义版本信息，可忽略此步骤！
+如果需要自定义版本信息，请配置jar插件。如果不需要自定义版本信息，可忽略此步骤(**请不要这么干**)！
 
 ```xml
 <plugin>
@@ -98,6 +124,13 @@ public class HelloImpl implements Hello {
 ```
 
 [slide]
+## 说明
+
+- 接口和实现最好放在不同的模块下，例如:prj-api,prj-impl
+- prj-api提供给客户端使用。客户端和服务端基于接口编程，开发解耦
+- HydraService注解标注的类才会被发布为服务
+
+[slide]
 ## Step3:编写spring-context.xml
 
 - 在resources目录下，新建spring-context.xml文件,文件名及文件路径不能变！
@@ -120,16 +153,30 @@ public class HelloImpl implements Hello {
 - **name-generator必须配置，用以生成服务名称!**
 
 [slide]
+## 说明
+
+- 此配置和spring项目的配置完全相同，就是借助了Spring的加载机制，进行服务的发布操作
+- base-package配置服务所在的包，扫描查找HydraService注解
+- HydraServiceBeanNameGenerator继承了AnnotationBeanNameGenerator，覆写了determineBeanNameFromAnnotation方法，针对被HydraService注解的类，生成的beanName为该类的全限定名。而不是类名首字母小写。例如上面的beanName就是com.focustech.hydra.Hello
+- 注意是Hello不是HelloImpl。HydraService使用接口作为服务名，而不是实现类作为服务名。
+- 如果一个实现类实现了多个接口，那么默认找第一个接口。可以通过interfaces来指定接口
+- 此全限定名就是用来和从客户端发送的服务调用请求进行对应匹配的
+
+[slide]
 ## Step4:打包
 
 ```
 mvn clean deploy
 ```
 
+- 建议每次都clean，好像eclipse的Maven编译不clean的话，有老代码不会更新
+
 [slide]
 ## 调试
 
 - 基于Maven插件，提供了与运行时相同环境的测试环境
+- 包括：公共bean配置，服务集发布，服务列表查询，客户端查询
+- 不包括：黑白名单配置，服务权重配置等功能，本地测试没需求
 
 [slide]
 ## 调试方法
@@ -176,9 +223,20 @@ mvn clean deploy
 ```
 
 [slide]
+## 说明
+
+- **这个插件需要配置在服务所在的模块中！**
+- hydra_version：插件启动时所构建的hydra环境是哪个版本的
+- hydra_maven_local_repository：hydra从Maven下载的jar放到哪里
+- hydra_base_serviceassembly：基础jar包。注意这里是替换。如果你需要新增基础jar包，你需要包含hydra-assembly-base，逗号隔开。因为这是替换
+- registry_localcallbackaddr：注册到注册中心的Ip地址
+- hydra_beans：配置的公共bean
+- hydra_deploy_service：除了项目服务集，如果要发布其它服务集，可以在这里配置
+
+[slide]
 ## 执行
 
-- **在服务所在项目根目录下执行**：
+- **在服务所在模块目录下执行**：
 ```
 clean hydra-servicenode-runner:run
 ```
@@ -191,6 +249,7 @@ clean hydra-servicenode-runner:run
     - ls client : 打印注册过来的客户端
     - exit/quit : 退出
     - help : 帮助
+- 在target目录下构建hydra目录结构
 - 下载服务所需要的所有依赖包，包括配置的hydra_base_serviceassembly和hydra_deploy_service
 - 启动服务节点
 - 依据hydra_beans创建公共bean
@@ -198,7 +257,7 @@ clean hydra-servicenode-runner:run
 - 所有服务注册到内存注册中心中
 
 [slide]
-## 测试
+## 测试调用
 
 - 使用客户端调用
 - 编写测试代码(与客户端代码相同)
@@ -206,7 +265,7 @@ clean hydra-servicenode-runner:run
 [slide]
 # 客户端开发(基于Spring)
 
-- 引入依赖
+- 引入依赖(支持硬编码，Spring,LTW方式，引入不同的依赖)
 - 配置
 - 调用
 
@@ -229,7 +288,7 @@ clean hydra-servicenode-runner:run
 ```
 
 [slide]
-## 配置
+## 配置一
 
 - Spring配置文件添加如下配置:
 ```xml
@@ -239,13 +298,23 @@ clean hydra-servicenode-runner:run
 </bean>
 ```
 
+- 指向hello-api中的接口所在的包
+- 在启动时，会针对这些接口自动生成代理类，添加到Spring容器中(类似Mybatis的Mapper构建流程)
+- 生成的代理类，作用是构建消息，发生到指定的服务节点
+
+[slide]
+## 配置二
+
 - strategy.properties
 ```properties
 App=hydra_client
 SubscribeAddress=192.168.6.78
-SubscribePot=8997
+SubscribePort=8997
 ...
 ```
+
+- App是应用名，和ip构成唯一id。为了解决一台机器上部署两个应用的场景（这里老版本Hydra有个问题，注册中心为其配置的字段长度较短，无法支持较长的App名称。导致客户端注册失败！现已修改为100，可检查hydra_client表的name字段确认。）
+- SubscribeAddress和SubscribePort确定注册到哪个注册中心上去
 
 [slide]
 ## 调用
@@ -263,7 +332,21 @@ public class Test {
 }
 ```
 
-- **当在本地测试环境中实现了Hello接口，那么测试时Spring自动注入本地实现！**
+[slide]
+## 做了什么
+
+- 应用启动时扫描接口包，生成代理类。注意：**当在本地测试环境中实现了Hello接口，那么测试时Spring自动注入本地实现！**，后续调用就是直接调用本地实现
+- 如果没有调用BeanFactory.init()方法，那么在第一次调用服务的时候会进行初始化！
+- 初始化的动作如下
+    - 加载strategy.properties
+    - 从注册中心获取服务列表
+    - 将服务列表保存到cache/cache3目录下*.hydra文件里
+- 构建调用信息：接口的全限定名+方法名+方法参数+接口所在的jar的版本
+- 根据接口全限定名+接口，到服务列表中找匹配的服务
+    - 是否全匹配
+    - 如果不匹配，找版本号最新的
+- 将调用信息发送到匹配到的服务节点去
+- 服务端执行服务，返回结果
 
 [slide]
 # 环境部署
@@ -310,6 +393,7 @@ public class Test {
 - 整体架构
 - 通信
 - 协议
+- 序列化
 - 流程
 
 [slide]
@@ -334,6 +418,21 @@ public class Test {
     - timeout
 - 协议体
     - 调用的具体服务信息
+
+[slide]
+## 序列化
+
+- **protostuff** {:&.moveIn}
+- 为什么选择protostuff?
+- 序列化不需要结构描述文件（例如:protobuf的*.proto）！
+
+[slide]
+## 取舍
+
+- 由于Hydra是框架，无法知道业务数据结构，也就没法提前定义结构描述文件。所以只能运行时去获取数据结构
+- 导致的问题是，如果客户端与服务端两边的序列化数据结构不相同，则会报序列化错误！
+- 所以必须要保证客户端与服务端两边的Model是一致的！
+- 这也是要在服务上设置版本号的一个原因
 
 [slide]
 ## 发布流程
@@ -411,6 +510,14 @@ public class Test {
 - **服务节点**：首先解析协议头，找到对应的容器id。将请求直接丢给对应容器处理
 - **服务节点**：容器根据服务名称，找到对应的方法进行调用。将调用结果返回
 - **客户端**：接收到结果，进行后续处理
+
+[slide]
+## 超时
+
+- 客户端发送服务调用后，会等待服务端的响应
+- 此时客户端维护了一个超时监控列表，会有线程不断的扫描这个列表。当超过设置的超时间后还没有得到响应就会抛超时异常
+    - **client-side**：如果消息本身没发出去，则报客户端超时。出现此类问题，一般为连接问题。及客户端与服务端的连接不通导致
+    - **server-side**：如果消息发送出去了，但是指定时间内没有得到响应，则报服务端超时。出现此类问题，一是可能服务本身调用超时，需查看服务端日志，根据requestId找到对应的日志查看执行时间；二是服务端队列阻塞。可以到UMC查看队列信息来确定。
 
 [slide]
 # 日志
