@@ -57,7 +57,7 @@ output = null   // 编译错误
 - Kotlin 可以保护你避免对可空类型的误操作
 
 ```kotlin
-val name: String? = null    // 可控类型
+val name: String? = null    // 可空类型
 println(name.length())      // 编译错误
 ```
 
@@ -116,7 +116,109 @@ fun onLoad() {
 - 扩展方法
 
 [slide]
+## join
+
+```java
+List<String> list = new ArrayList<String>(){{
+    this.add("a");    
+    this.add("b");    
+    this.add("c");    
+}};
+```
+```java
+StringUtils.join(list,",");
+```
+
+[slide]
+## 扩展方法
+
+```kotlin
+infix fun Collection<String>.join(s : String):String{
+    val sb = StringBuffer()
+    this.fold(sb){a,b -> a.append(b).append(s)}
+    return sb.substring(0,sb.length - 1)
+}
+```
+```kotlin
+list.join(",")
+```
+
+[slide]
+## 目录
+
+- 类的查找
+    - 虚拟机如何查找类
+    - 设计虚拟机查找类
+- 解析
+    - 类结构
+        - magic
+        - 主版本，从版本
+        - 常量池
+        - 类访问标识符，this_class,super_class
+        - 接口
+        - 字段
+        - 方法
+        - 属性
+    - 解析思路
+- 整体代码
+
+[slide]
 ## Java/Class路径查找
+
+```java
+public class A {
+    public void print() {
+        System.out.println("Using Class A") ;
+    }
+}
+```
+```java
+public class B {
+    public void print() {
+        System.out.println("Using Class B") ;
+    }
+}
+```
+```java
+public class Main {
+    public static void main(String args[]) {
+        A a1 = new A() ;
+        a1.print() ;
+        B b1 = new B() ;
+        b1.print() ;
+    }
+}
+```
+```
+java –verbose:class Main
+```
+```
+...
+[Loaded Main from file:/E:/code/temp/]
+...
+[Loaded A from file:/E:/code/temp/]
+Using Class A
+[Loaded B from file:/E:/code/temp/]
+Using Class B
+...
+```
+
+```java
+public class Main {
+    public static void main(String args[]) {
+        A a1 = new A() ;
+        B b1 ;
+    }
+}
+```
+```
+...
+[Loaded Main from file:/E:/code/temp/]
+...
+[Loaded A from file:/E:/code/temp/]
+Using Class A
+...
+```
 
 [slide]
 ## 从Nio看Class文件结构
@@ -162,7 +264,7 @@ fun onLoad() {
 - 结构紧凑
 
 [slide]
-## 类似结构 
+## 类似结构
 
 - HTTP请求结构
 - ![](http://orixnpicm.bkt.clouddn.com/17-6-14/11321780.jpg)

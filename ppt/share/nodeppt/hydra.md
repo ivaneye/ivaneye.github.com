@@ -5,7 +5,7 @@ transition: stick
 theme: dark
 
 [slide]
-# Hydra实现与使用
+# Hydra使用与实现
 ## 王一帆
 
 [slide]
