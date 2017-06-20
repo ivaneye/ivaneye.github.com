@@ -400,7 +400,9 @@ class DirFinder : Finder {
 - windows后缀判断文件类型的弊端
 
 [slide]
-##
+## 项目地址
+
+[https://github.com/ivaneye/kt-jvm](https://github.com/ivaneye/kt-jvm)
 
 [slide]
 # 谢谢
