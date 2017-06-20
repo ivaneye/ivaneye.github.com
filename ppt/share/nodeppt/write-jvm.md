@@ -345,7 +345,14 @@ class DirFinder : Finder {
 [slide]
 ## 如何从URL读取Class?
 
-- 从Nio看Class文件结构
+- Class文件需要是一个什么样的结构，才方便网络传输？
+
+[slide]
+## Nio传输消息的方式
+
+- 定长
+- 特定结束符
+- 自定义结构
 
 [slide]
 ## Class文件结构
