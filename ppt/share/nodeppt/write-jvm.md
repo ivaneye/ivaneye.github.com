@@ -151,6 +151,7 @@ list.join(",")
     - 设计虚拟机查找类
 - 解析
     - 类结构
+        - 整体结构
         - magic
         - 主版本，从版本
         - 常量池
@@ -160,10 +161,12 @@ list.join(",")
         - 方法
         - 属性
     - 解析思路
-- 整体代码
+        - 整体解析思路
+        - 特殊结构解析
+- 代码演示
 
 [slide]
-## Java/Class路径查找
+## 简单示例
 
 ```java
 public class A {
@@ -189,6 +192,10 @@ public class Main {
     }
 }
 ```
+
+[slide]
+## 加载过程
+
 ```
 java –verbose:class Main
 ```
@@ -196,6 +203,7 @@ java –verbose:class Main
 ...
 [Loaded Main from file:/E:/code/temp/]
 ...
+[Loaded java.lang.Void from C:\Program Files\Java\jdk1.8.0_45\jre\lib\rt.jar]
 [Loaded A from file:/E:/code/temp/]
 Using Class A
 [Loaded B from file:/E:/code/temp/]
@@ -203,25 +211,141 @@ Using Class B
 ...
 ```
 
-```java
-public class Main {
-    public static void main(String args[]) {
-        A a1 = new A() ;
-        B b1 ;
+[slide]
+## 加载方式
+
+- 双亲委托模型
+
+[slide]
+## 加载路径
+
+- jar
+- 文件
+- URL
+- ...
+
+[slide]
+
+```kotlin
+class ClassPath {
+    lateinit var bootClassPathFinder: Finder
+    lateinit var extClassPathFinder: Finder
+    lateinit var userClassPathFinder: Finder
+
+    constructor(cpStr: String) {
+        parseBootAndExtClasspath()
+        parseUserClasspath(cpStr)
+    }
+
+    private fun parseBootAndExtClasspath() {
+        val javaHome = System.getenv().filter {
+                "JAVA_HOME".equals(it.key)
+            }["JAVA_HOME"] ?: throw RuntimeException("Can not find JAVA_HOME")
+        val jreLibPath = "$javaHome/jre/lib"
+        val jreExtPath = "$javaHome/jre/lib/ext"
+        bootClassPathFinder = DirFinder(jreLibPath)
+        extClassPathFinder = DirFinder(jreExtPath)
+    }
+
+    private fun parseUserClasspath(cpStr: String) {
+        userClassPathFinder = DirFinder(cpStr)
+    }
+
+    fun readClass(className: String): ByteArray? {
+        try {
+            var result = bootClassPathFinder.readClass(className)
+            if (result == null) {
+                result = extClassPathFinder.readClass(className)
+            }
+            if (result == null) {
+                result = userClassPathFinder.readClass(className)
+            }
+            return result
+        } catch(e: Exception) {
+            e.printStackTrace()
+            return null
+        }
     }
 }
 ```
-```
-...
-[Loaded Main from file:/E:/code/temp/]
-...
-[Loaded A from file:/E:/code/temp/]
-Using Class A
-...
+
+[slide]
+## Finder
+
+```kotlin
+interface Finder {
+    /**
+     * 从指定路径读取类内容，返回字节数组
+     */
+    fun readClass(className: String): ByteArray?
+}
 ```
 
 [slide]
-## 从Nio看Class文件结构
+## JarFinder
+
+```kotlin
+class JarFinder(val jarPath: String):Finder {
+    override fun readClass(className: String): ByteArray? {
+        val zipFile = ZipFile(jarPath)
+        for(e in zipFile.entries()){
+            if(e.name.contains(className)){
+                return zipFile.getInputStream(e).use { it.readBytes() }
+            }
+        }
+        return null
+    }
+}
+```
+
+[slide]
+## FileFinder
+
+```kotlin
+class FileFinder(val libPath: String) : Finder {
+    override fun readClass(className: String): ByteArray? {
+        if (libPath.replace(Regex.fromLiteral("\\"),"/").contains(className)) {
+            return File(libPath).readBytes()
+        }
+        return null
+    }
+}
+```
+
+[slide]
+## DirFinder
+
+```kotlin
+class DirFinder : Finder {
+
+    val finders = ArrayList<Finder>()
+
+    constructor(cpStr: String) {
+        val dir = File(cpStr)
+        val files = dir.walk().filter { file -> file.name.endsWith(".jar") || file.name.endsWith(".class") }
+        files.forEach { f ->
+            if (f.name.endsWith(".jar")) {
+                finders.add(JarFinder(f.absolutePath))
+            } else if (f.name.endsWith(".class")) {
+                finders.add(FileFinder(f.absolutePath))
+            }
+        }
+    }
+
+    override fun readClass(className: String): ByteArray? {
+        for(f in finders){
+            var result = f.readClass(className)
+            if (result != null) return result;
+        }
+        return null
+    }
+}
+```
+
+[slide]
+## 如何从URL读取Class?
+
+- 从Nio看Class文件结构
 
 [slide]
 ## Class文件结构
