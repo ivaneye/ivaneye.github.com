@@ -1,6 +1,6 @@
 ---
 typora-root-url: ./
-typora-copy-images-to: write-jvm-file
+typora-copy-images-to: files/write-jvm
 ---
 
 title: 使用Kotlin实现一个虚拟机
@@ -59,6 +59,7 @@ output = null   // 编译错误
 ```
 
 [slide]
+
 - Kotlin 可以保护你避免对可空类型的误操作
 
 ```kotlin
@@ -107,6 +108,7 @@ fun onLoad() {
 ```
 
 [slide]
+
 ## 工具化
 
 - 一门语言需要工具化，而在 JetBrains，这正是我们做得最好的地方！
@@ -348,11 +350,13 @@ class DirFinder : Finder {
 ```
 
 [slide]
+
 ## 如何从URL读取Class?
 
 - Class文件需要是一个什么样的结构，才方便网络传输？
 
 [slide]
+
 ## Nio传输消息的方式
 
 - 定长
@@ -374,7 +378,7 @@ class DirFinder : Finder {
 | u2      | super_class         | 1                       |
 
 [slide]
-## Class文件结构(续)
+## Class文件结构(续) 
 
 | 类型             | 名称               | 数量               |
 | -------------- | ---------------- | ---------------- |
@@ -400,6 +404,7 @@ class DirFinder : Finder {
 - 结构紧凑
 
 [slide]
+
 ## 类似结构
 
 - HTTP请求结构
