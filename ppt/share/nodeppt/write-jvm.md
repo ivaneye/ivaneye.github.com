@@ -1,3 +1,8 @@
+---
+typora-root-url: ./
+typora-copy-images-to: write-jvm-file
+---
+
 title: 使用Kotlin实现一个虚拟机
 speaker: 王一帆
 url: http://ivaneye.com
@@ -13,7 +18,7 @@ theme: dark
 
 - 《自己动手写Java虚拟机》 {:&.moveIn}
 - JVM是如何运行的？
-- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/12046408.jpg)
+- ![](/files/write-jvm/talk.png)
 
 [slide]
 ## Kotlin简介
@@ -105,8 +110,8 @@ fun onLoad() {
 ## 工具化
 
 - 一门语言需要工具化，而在 JetBrains，这正是我们做得最好的地方！
-- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/35271960.jpg)
-- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/58573621.jpg)
+- ![](/files/write-jvm/tooling1.png)
+- ![](/files/write-jvm/tooling2.png)
 
 [slide]
 ## 吸引我的地方
@@ -357,30 +362,30 @@ class DirFinder : Finder {
 [slide]
 ## Class文件结构
 
-|类型|名称|数量|
-|---|---|---|
-|u4|magic|1|
-|u2|minor_version|1|
-|u2|major_version|1|
-|u2|constant_pool_count|1|
-|cp_info|constant_pool|constant_pool_count - 1|
-|u2|access_flags|1|
-|u2|this_class|1|
-|u2|super_class|1|
+| 类型      | 名称                  | 数量                      |
+| ------- | ------------------- | ----------------------- |
+| u4      | magic               | 1                       |
+| u2      | minor_version       | 1                       |
+| u2      | major_version       | 1                       |
+| u2      | constant_pool_count | 1                       |
+| cp_info | constant_pool       | constant_pool_count - 1 |
+| u2      | access_flags        | 1                       |
+| u2      | this_class          | 1                       |
+| u2      | super_class         | 1                       |
 
 [slide]
 ## Class文件结构(续)
 
-|类型|名称|数量|
-|---|---|---|
-|u2|interfaces_count|1|
-|u2|interfaces|interfaces_count|
-|u2|fields_count|1|
-|field_info|fields|fields_count|
-|u2|methods_count|1|
-|method_info|methods|methods_count|
-|u2|attributes_count|1|
-|attribute_info|attributes|attributes_count|
+| 类型             | 名称               | 数量               |
+| -------------- | ---------------- | ---------------- |
+| u2             | interfaces_count | 1                |
+| u2             | interfaces       | interfaces_count |
+| u2             | fields_count     | 1                |
+| field_info     | fields           | fields_count     |
+| u2             | methods_count    | 1                |
+| method_info    | methods          | methods_count    |
+| u2             | attributes_count | 1                |
+| attribute_info | attributes       | attributes_count |
 
 [slide]
 ## 说明
@@ -398,7 +403,7 @@ class DirFinder : Finder {
 ## 类似结构
 
 - HTTP请求结构
-- ![](http://orixnpicm.bkt.clouddn.com/17-6-14/11321780.jpg)
+- ![](/files/write-jvm/http.jpg)
 
 [slide]
 ## magic

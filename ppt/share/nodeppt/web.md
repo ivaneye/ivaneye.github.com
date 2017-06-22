@@ -21,7 +21,7 @@ theme: dark
 [slide]
 - http://www.example.com/hello.html
 
-![](/web_file/03.jpg) {:&.moveIn}
+![](/files/web/03.jpg) {:&.moveIn}
 
 [slide]
 # 解析主机名
@@ -67,7 +67,7 @@ Accept-Encoding: gzip, deflate
 
 [slide]
 <!-- 整体流程 -->
-![](/web_file/02.jpg)
+![](/files/web/02.jpg)
 <!-- 访问网站流程,阐述数据在各个流程里的角色，确认重要性 10P -->
 
 [slide]
@@ -319,7 +319,7 @@ Accept-Encoding: gzip, deflate
 - 网络层：地址管理与路由选择
 - 数据链路层：互连设备之间传送和识别数据帧
 - 物理层：以0,1代表电压的高低、灯光的闪灭
-<!-- 类似JavaIO的装饰模式和高阶函数 -->
+  <!-- 类似JavaIO的装饰模式和高阶函数 -->
 
 **在处理由上层传过来的数据时可以附上当前分层的协议所必须的首部信息**
 
@@ -336,7 +336,7 @@ BufferedInputStream bi = new BufferedInputStream(
 
 - 动态地给一个对象添加一些额外的职责
 
-![](/web_file/decorator.jpg)
+![](/files/web/decorator.jpg)
 
 [slide]
 # 高阶函数
@@ -388,17 +388,17 @@ Collections.sort(names, (first, second) -> first.length() - second.length());
 [slide]
 # 代理
 
-![](/web_file/proxy.jpg)
+![](/files/web/proxy.jpg)
 
 [slide]
 # 反向代理
 
-![](/web_file/nproxy.jpg)
+![](/files/web/nproxy.jpg)
 
 [slide]
 # CDN
 
-![](/web_file/cdn.jpg)
+![](/files/web/cdn.jpg)
 
 <!-- 如何发送数据，HTTP协议,TCP/IP.OSI七层模型，20P -->
 
@@ -434,7 +434,7 @@ OutputStream output = socket.getOutputStream();
 [slide]
 # 模型
 
-![](/web_file/04.png)
+![](/files/web/04.png)
 
 [slide]
 # 阻塞IO/非阻塞IO/同步IO/异步IO
@@ -485,14 +485,14 @@ while(true){
 [slide]
 # 模型[NIO]
 
-![](/web_file/06.png)
+![](/files/web/06.png)
 
 [slide]
 # 半包问题
 
-![](/web_file/07.png)
+![](/files/web/07.png)
 
-![](/web_file/08.png)
+![](/files/web/08.png)
 
 [slide]
 # Reactor模型
@@ -500,7 +500,7 @@ while(true){
 [slide]
 # AWT EVENTS
 
-![](/web_file/09.jpg)
+![](/files/web/09.jpg)
 
 [slide]
 # Reactor中的组件
@@ -512,17 +512,17 @@ while(true){
 [slide]
 # Reactor单线程模型
 
-![](/web_file/10.png)
+![](/files/web/10.png)
 
 [slide]
 # Reactor多线程模型
 
-![](/web_file/11.png)
+![](/files/web/11.png)
 
 [slide]
 # 主从Reactor模型
 
-![](/web_file/12.png)
+![](/files/web/12.png)
 
 [slide]
 # 解析http请求[Java]
@@ -597,7 +597,7 @@ Request
 
 - 定义一组对象，针对特定的对象编写特定的方法
 - 定义一组函数，操作少量的数据结构
-<!-- 表达式问题 -->
+  <!-- 表达式问题 -->
 
 [slide]
 # 表达式问题
@@ -608,14 +608,14 @@ Request
 [slide]
 # 面向对象：轻松添加新的行（类型）
 
-![](/web_file/press01.png)
+![](/files/web/press01.png)
 
 - java.util.List 接口中的每一列都表示一种方法。为简单起见，它包括四种方法：List.add、List.get、List.clear 和 List.size。前四行中的每一行都表示实现 java.util.List 的一个类： ArrayList、LinkedList、Stack 和 Vector。这些行和列交叉处的单元格表示每一种类的方法的现有实现（通过标准 Java 类库提供）。在底部添加的第五行表示您可以编写的实现 java.util.List 的新类。对于行上的每一个单元格来说，您都可以编写在 java.util.List 中相应方法的您自己的实现，特定于您的新类。
 
 [slide]
 # 函数语言：轻松添加新的列（函数）
 
-![](/web_file/press02.png)
+![](/files/web/press02.png)
 
 - 列表示 Clojure 的标准集合 API 中的函数：conj、nth、empty 和 count。同样，行表示 Clojure 的内置集合类型：list、vector、map 和 set。这些行和列交叉处的单元格表示 Clojure 提供的这些函数的现有实现。通过定义新的函数，您可以向表添加新的列。假设您的新函数是用 Clojure 的内置函数编写的，则它将能够自动支持所有相同的类型。
 
@@ -904,7 +904,7 @@ def setup_routing():
 # 观察者模式
 
 <!-- 从观察者模式到监听器 -->
-![](/web_file/observer.jpg)
+![](/files/web/observer.jpg)
 
 - 定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时, 所有依赖于它的对象都得到通知并被自动更新。
 
@@ -1066,7 +1066,7 @@ public class Client {
 - [接口方法] valueBound()与valueUnbound()
 - [接收事件] HttpSessionBindingEvent
 - [触发场景] 实现HttpSessionBindingListener接口的类别，其实例如果被加入至session（HttpSession）对象的属性中，则会 呼叫 valueBound()，如果被从session（HttpSession）对象的属性中移除，则会呼叫valueUnbound()，实现HttpSessionBindingListener接口的类别不需在web.xml中设定。
-<!-- 默认Listener End -->
+  <!-- 默认Listener End -->
 
 [slide]
 # ContextLoaderListener
@@ -1250,7 +1250,7 @@ public static void main(String[] args) {
 [slide]
 # Servlet架构
 
-![](/web_file/10.jpg)
+![](/files/web/10.jpg)
 
 [slide]
 # 模块化
@@ -1261,7 +1261,7 @@ public static void main(String[] args) {
 [slide]
 # ClassLoader
 
-![](/web_file/classloader.jpg)
+![](/files/web/classloader.jpg)
 
 [slide]
 # 双亲委托模型
@@ -1328,19 +1328,19 @@ Java Web服务器需要解决以下四个问题：
 [slide]
 # Tomcat5
 
-![](/web_file/tomcat5.jpg)
+![](/files/web/tomcat5.jpg)
 
 
 [slide]
 # Tomcat6
 
-![](/web_file/tomcat6.jpg)
+![](/files/web/tomcat6.jpg)
 
 
 [slide]
 # Tomcat7
 
-![](/web_file/tomcat7.png)
+![](/files/web/tomcat7.png)
 
 [slide]
 # 对比
@@ -1393,7 +1393,7 @@ Java Web服务器需要解决以下四个问题：
 [slide]
 # OSGi ClassLoader
 
-![](/web_file/OSGi_ClassLoader.png)
+![](/files/web/OSGi_ClassLoader.png)
 
 [slide]
 # Cookie与Session
@@ -1478,7 +1478,7 @@ try{
 [slide]
 # JDBC架构
 
-![](/web_file/db01.gif)
+![](/files/web/db01.gif)
 
 [slide]
 # Class.forName作用
@@ -1786,7 +1786,7 @@ public void testJNDI() {
 [slide]
 # 架构
 
-![](/web_file/jndiarch.gif)
+![](/files/web/jndiarch.gif)
 
 [slide]
 # JNDI API
@@ -1871,7 +1871,7 @@ throws ServletException, IOException{
 
 [slide]
 
-![](/web_file/Web.png)
+![](/files/web/Web.png)
 
 [slide]
 # 考试

@@ -1,3 +1,8 @@
+---
+typora-root-url: ./
+typora-copy-images-to: files\hydra
+---
+
 title: Hydra使用与实现
 speaker: 王一帆
 url: http://ivaneye.com
@@ -63,7 +68,7 @@ theme: dark
 [slide]
 ## 原因
 
-![](http://orixnpicm.bkt.clouddn.com/17-6-15/97705141.jpg)
+![container](/files/hydra/container.jpg)
 
 [slide]
 ## 几点说明
@@ -148,7 +153,7 @@ public class HelloImpl implements Hello {
 
   <context:component-scan base-package="com.focustech.hello" name-generator="com.focustech.hydra.processor.HydraServiceBeanNameGenerator"/>
  </beans>
- ```
+```
 
 - **name-generator必须配置，用以生成服务名称!**
 
@@ -398,16 +403,16 @@ public class Test {
 
 [slide]
 
-![](http://orixnpicm.bkt.clouddn.com/17-6-15/15243263.jpg)
+![](/files/hydra/hydra.jpg)
 
 [slide]
 
-![](http://orixnpicm.bkt.clouddn.com/17-6-15/97705141.jpg)
+![container](/files/hydra/container.jpg)
 
 [slide]
 ## 通信
 
-![](http://orixnpicm.bkt.clouddn.com/17-6-16/31668494.jpg)
+![nio](/files/hydra/nio.jpg)
 
 [slide]
 ## 协议
