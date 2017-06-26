@@ -364,6 +364,30 @@ class DirFinder : Finder {
 - 自定义结构
 
 [slide]
+
+## Class结构
+
+- 整体：自定义结构
+- 局部：定长头+自定义体
+
+[slide]
+
+## 结构优缺点
+
+- 优点
+  - 结构紧凑
+  - 易于扩展
+- 缺点
+  - 不易于阅读
+
+[slide]
+
+## 类似结构
+
+- HTTP请求结构
+- ![](/files/write-jvm/http.jpg)
+
+[slide]
 ## Class文件结构
 
 | 类型      | 名称                  | 数量                      |
@@ -392,29 +416,142 @@ class DirFinder : Finder {
 | attribute_info | attributes       | attributes_count |
 
 [slide]
-## 说明
 
-- u2,u4：无符号2/4字节
-- constant_pool:
-- constant_pool长度：
+## u1/u2/u4
 
-[slide]
-## 结构优缺点
-
-- 结构紧凑
+- 无符号1/2/4字节
+- 为什么使用无符号类型？Java里明明就不默认支持无符号类型！
+- Kotlin里怎么表示无符号类型？
+- 延伸：为什么用补码这么诡异的方式来表示负数？
 
 [slide]
 
-## 类似结构
+## 为什么使用无符号类型？
 
-- HTTP请求结构
-- ![](/files/write-jvm/http.jpg)
+- 没有负数的需求
 
 [slide]
+
+## Kotlin里怎么表示无符号类型？
+
+```kotlin
+//转化为无符号整型
+fun Byte.toPositiveInt() = toInt() and 0xFF
+//转化为无符号长整型
+fun Byte.toPositiveLong() = toLong() and 0xFF
+```
+
+```kotlin
+class U1(val data: Byte) {
+    fun toInt(): Int {
+        return data.toPositiveInt()
+    }
+}
+class U2(val data: ByteArray) {...}
+class U4(val data: ByteArray) {...}
+```
+
+[slide]
+
+## 为什么用补码这么诡异的方式来表示负数？
+
+- 当第一个字符为0时表示正数，当第一个字符为1时表示负数，不是很容易理解吗？
+- 为什么用补码表示负数？
+
+```
+//首位为符号位
+10000001         // -1
+00000001         // 1
+//补码形式,取反加一
+11111111         // -1
+```
+
+[slide]
+
+## 权衡的结果
+
+- 假设10000001表示-1，那么10000010表示什么？-2吧？
+- -1 + 1 结果是多少？0吧？
+- 0 = -1 + 1 = 10000001 + 00000001 = 10000010 = -2
+- 0 = -2 ?!
+- 假设11111111表示-1
+- 那么 -1 + 1 = 
+
+```
+   11111111 
++  00000001 
+--------------
+  100000000    =    0
+  ^
+  溢出
+```
+
+**方便计算机的计算！**
+
+[slide]
+
+## 换一种理解方式
+
+- -1 + 1 = (0 - 1) + 1 = (1,0000,0000 - 0000,0001) + 0000,0001 = 1111,1111 + 0000,0001 = 1,0000,0000 = 0
+
+[slide]
+
 ## magic
+
+- CAFEBABE
+- 快速检查Class文件
+
+[slide]
+
+## 类似功能
 
 - 文件类型判断
 - windows后缀判断文件类型的弊端
+
+[slide]
+
+## 说明
+
+- constant_pool_count:常量池长度
+- constant_pool：下标从1开始，长度为常量池长度 - 1，或者更短
+
+[slide]
+
+##  一些信息
+
+- constant_pool长度为u2
+- interfaces_count长度为u2
+- fields_count长度为u2
+- methods_count长度为u2
+- attributes_count长度为u2
+
+u2 = 2^16 - 1 = 65535
+
+** 如果超出了65535会怎么样？**
+
+[slide]
+
+## 一个测试
+
+```java
+public class Temp{
+	private int _0=0;
+	private int _1=1;
+	private int _2=2;    
+    ......
+    private int _65532=65532;
+	private int _65533=65533;
+	private int _65534=65534;
+}
+```
+
+[slide]
+
+## 结果
+
+![1498459723147](/files/write-jvm/1498459723147.png)
+
+
 
 [slide]
 ## 项目地址
