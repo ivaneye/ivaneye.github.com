@@ -496,6 +496,67 @@ class U4(val data: ByteArray) {...}
 
 [slide]
 
+## 代码实现
+
+```kotlin
+class ClassInfo {
+    lateinit var magic: U4
+    lateinit var minorVersion: U2
+    lateinit var majorVersion: U2
+    lateinit var constantPoolCount: U2
+    lateinit var cpInfos: Map<Int, Constant>   //constant包中的对象，这里为什么使用Map？
+    lateinit var accessFlags: U2
+    lateinit var thisClass: U2
+    lateinit var superClass: U2
+    lateinit var interfacesCount: U2
+    var interfaceInfos: Array<U2> = emptyArray()   // 常量池中的索引
+    lateinit var fieldsCount: U2
+    var fieldInfos: Array<FieldInfo> = emptyArray()
+    lateinit var methodsCount: U2
+    var methodInfos: Array<MethodInfo> = emptyArray()
+    lateinit var attributesCount: U2
+    var attributeInfos: Array<Attribute> = emptyArray()
+  ...
+}
+```
+
+[slide]
+
+## CommonReader
+
+```kotlin
+class CommonReader(var data: ByteArray) {
+
+    fun readU1(): U1 {
+        val result = U1(data[0])
+        data = data.drop(1).toByteArray()
+        return result
+    }
+
+    fun readU2(): U2 {
+        return U2(readByteArray(2))
+    }
+
+    fun readU4(): U4 {
+        return U4(readByteArray(4))
+    }
+
+    fun readByteArray(size: Int): ByteArray {
+        val result = data.sliceArray(IntRange(0, size - 1))
+        drop(size)
+        return result
+    }
+
+    fun drop(size: Int) {
+        data = data.drop(size).toByteArray()
+    }
+}
+```
+
+
+
+[slide]
+
 ## magic
 
 - CAFEBABE
@@ -503,17 +564,328 @@ class U4(val data: ByteArray) {...}
 
 [slide]
 
-## 类似功能
+## 解析代码
 
-- 文件类型判断
-- windows后缀判断文件类型的弊端
+```kotlin
+private fun readMagic() {
+  classInfo.magic = commonReader.readU4()
+}
+```
+
+
 
 [slide]
 
-## 说明
+## 类似功能
+
+- 文件类型判断
+
+1. JPEG/JPG - 文件头标识 (2 bytes): \$ff, \$d8 (SOI) (JPEG 文件标识) - 文件结束标识 (2 bytes): \$ff, $d9 (EOI) 
+2. TGA - 未压缩的前5字节   00 00 02 00 00 - RLE压缩的前5字节   00 00 10 00 00
+3. PNG - 文件头标识 (8 bytes)   89 50 4E 47 0D 0A 1A 0A
+4. GIF - 文件头标识 (6 bytes)   47 49 46 38 39(37) 61                         G  I  F  8  9 (7)  a
+5. BMP - 文件头标识 (2 bytes)   42 4D                         B  M
+6. PCX - 文件头标识 (1 bytes)   0A
+7. TIFF - 文件头标识 (2 bytes)  4D 4D 或 49 49
+8. ICO - 文件头标识 (8 bytes)   00 00 01 00 01 00 20 20 
+9. CUR - 文件头标识 (8 bytes)   00 00 02 00 01 00 20 20
+10. IFF - 文件头标识 (4 bytes)   46 4F 52 4D                        F  O  R  M
+11. ANI - 文件头标识 (4 bytes)   52 49 46 46                         R  I  F  F
+
+[slide]
+
+## 优势/劣势
+
+- 优势   {:&.moveIn}
+  - 不宜修改
+  - 准确
+- 劣势
+  - ![1498543957108](/files/write-jvm/1498543957108.png)
+
+
+
+[slide]
+
+## minor_version/major_version
+
+- 检查兼容性
+- java.lang.UnsupportedClassVersionError
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readMinorVersion() {
+  classInfo.minorVersion = commonReader.readU2()
+}
+
+private fun readMajorVersion() {
+  classInfo.majorVersion = commonReader.readU2()
+}
+```
+
+
+
+[slide]
+
+## 常量池
 
 - constant_pool_count:常量池长度
 - constant_pool：下标从1开始，长度为常量池长度 - 1，或者更短
+- 如果class文件中的其他地方引用了索引为0的常量池项， 就说明它不引用任何常量池项
+- **常量的通用结构:tag(u1) + info[]。tag指定类型，info[]中为该类型的内容**
+
+[slide]
+
+## 常量类型
+
+| **常量池中数据项类型**               | **Tag** | **类型描述**                                 |
+| --------------------------- | ------- | ---------------------------------------- |
+| CONSTANT_Utf8               | 1       | UTF-8编码的Unicode字符串                       |
+| CONSTANT_Integer            | 3       | int类型字面值                                 |
+| CONSTANT_Float              | 4       | float类型字面值                               |
+| CONSTANT_Long               | 5       | long类型字面值                                |
+| CONSTANT_Double             | 6       | double类型字面值                              |
+| CONSTANT_Class              | 7       | 对一个类或接口的符号引用                             |
+| CONSTANT_String             | 8       | String类型字面值                              |
+| CONSTANT_Fieldref           | 9       | 对一个字段的符号引用                               |
+| CONSTANT_Methodref          | 10      | 对一个类中声明的方法的符号引用                          |
+| CONSTANT_InterfaceMethodref | 11      | 对一个接口中声明的方法的符号引用                         |
+| CONSTANT_NameAndType        | 12      | 对一个字段或方法的部分符号引用                          |
+| CONSTANT_MethodHandle       | 15      | 表示方法句柄                                   |
+| CONSTANT_MethodType         | 16      | 表示方法类型                                   |
+| CONSTANT_InvokeDynamic      | 18      | 表示 invokedynamic 指令所使用到的引导方法,引导方法使用到动态调用名称、参数和请求返回类型、以及可以选择性的附加被称为静态参数(Static Arguments)的常量序列 |
+
+[slide]
+
+## 代码结构
+
+![1498550491304](/files/write-jvm/1498550491304.png)
+
+[slide]
+
+## CONSTANT_Long/CONSTANT_Double
+
+- tag(u1) + high_bytes(u4) + low_bytes(u4)
+- 在class文件的常量池表中，所有的8字节常量均占两个表成员的空间(jvm-spec 4.4.5)
+- 这是一个历史原因，JVM开始开发时还是32位机为主流
+
+[slide]
+
+## 代码
+
+```kotlin
+class ConstantLong(val tag: U1, val highBytes: U4, val lowBytes: U4, val classInfo: ClassInfo) : Constant {
+    override fun type(): String {
+        return "Long"
+    }
+
+    override fun value(): String {
+        return "${U8(highBytes.toByteArray(), lowBytes.toByteArray()).toLong()}L"
+    }
+
+    override fun toString(): String {
+        return "${type()}    ${value()}"
+    }
+}
+```
+
+[slide]
+
+## 代码
+
+```kotlin
+class ConstantNameAndType(val tag: U1, val nameIndex: U2, val descIndex: U2, val classInfo: ClassInfo) : Constant {
+    override fun type(): String {
+        return "NameAndType"
+    }
+
+    override fun value(): String {
+        return "\"${classInfo.cpInfos[nameIndex.toInt()]!!.value()}\":${classInfo.cpInfos[descIndex.toInt()]!!.value()}"
+    }
+
+    override fun toString(): String {
+        return "${type()}    #${nameIndex.toInt()}:#${descIndex.toInt()}    // ${value()}"
+    }
+}
+```
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readConstantPool() {
+        //常量池下标从1开始
+        val cpInfoMap = HashMap<Int, Constant>()
+        var i = 1
+        while (i < classInfo.constantPoolCount()) {
+            val tag = commonReader.readU1()
+            when (tag.toInt()) {
+                1 -> {
+                    val length = commonReader.readU2()
+                    cpInfoMap.put(i, ConstantUtf8(tag, length, commonReader.readByteArray(length.toInt()), classInfo))
+                }
+                3 -> {
+                    cpInfoMap.put(i, ConstantInteger(tag, commonReader.readU4(), classInfo))
+                }
+                4 -> {
+                    cpInfoMap.put(i, ConstantFloat(tag, commonReader.readU4(), classInfo))
+                }
+                5 -> {
+                    cpInfoMap.put(i, ConstantLong(tag, commonReader.readU4(), commonReader.readU4(), classInfo))
+                    i += 1
+                }
+                6 -> {
+                    cpInfoMap.put(i, ConstantDouble(tag, commonReader.readU4(), commonReader.readU4(), classInfo))
+                    i += 1
+                }
+              ...
+            }
+        }
+}
+```
+
+[slide]
+
+## access_flag
+
+- 用于识别一些类或接口层次的访问信息，包括：这个Class是类还是接口，是否定义为public类型，abstract类型，如果是类的话，是否声明为final，等等
+
+| 标志名称           | 标志值    | 含义                                       |
+| -------------- | ------ | ---------------------------------------- |
+| ACC_PUBLIC     | 0x0001 | 是否为public类型                              |
+| ACC_FINAL      | 0x0010 | 是否被声明为final，只有类可以设置，接口不能设置该标志            |
+| ACC_SUPER      | 0x0020 | 是否允许使用invokespecial字节码指令（查了一下该命令的作用为"调用超类的构造方法，实例的构造方法，私有方法"），JDK1.2以后的编译器编译出来的class文件该标志都为真 |
+| ACC_INTERFACE  | 0x0200 | 标识这是一个接口                                 |
+| ACC_ABSTRACT   | 0x0400 | 是否被声明为abstract类型，对于接口和抽象类来说此标志为真，其他类为假   |
+| ACC_SYNTHETIC  | 0x1000 | 标识这个类并非由用户代码生成                           |
+| ACC_ANNOTATION | 0x2000 | 标识这是一个注解                                 |
+| ACC_ENUM       | 0x4000 | 标识这是一个枚举                                 |
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readAccessFlag() {
+  classInfo.accessFlags = commonReader.readU2()
+}
+```
+
+[slide]
+
+##  this_class、super_class、interfaces
+
+- this_class和super_class都是一个u2类型的数据
+- interfaces是一组u2类型的数据集合
+- Class文件中由这三项数据来确定这个类的继承关系。
+- 各自指向一个类型为COMNSTANT_Class_info的类描述符常量，通过该常量中的索引值找到定义在COMNSTANT_Utf8_info类型的常量中的全限定名字符串
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readThisClass() {
+  classInfo.thisClass = commonReader.readU2()
+}
+
+private fun readSuperClass() {
+  classInfo.superClass = commonReader.readU2()
+}
+
+private fun readInterfacesCount() {
+  classInfo.interfacesCount = commonReader.readU2()
+}
+
+private fun readInterfaces() {
+  val count = classInfo.interfacesCount.toInt()
+  if (count > 0) {
+    val arr = ArrayList<U2>()
+    for (i in IntRange(0, count - 1)) {
+      arr.add(commonReader.readU2())
+    }
+    classInfo.interfaceInfos = arr.toTypedArray()
+  }
+}
+```
+
+[slide]
+
+## fields/methods
+
+- fields描述接口或类中声明的变量
+- methods描述解扩或类里生命的变量
+- 两者结构相同
+
+	u2 access_flags
+	u2 name_index
+	u2 descriptor_index
+	u2 attributes_count
+	attribute_info attributes[attributes_count]
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readFieldCount() {
+  classInfo.fieldsCount = commonReader.readU2()
+}
+
+private fun readFields() {
+  val count = classInfo.fieldsCount.toInt()
+  if (count > 0) {
+    val arr = ArrayList<FieldInfo>()
+    for (i in IntRange(0, count - 1)) {
+      val accFlag = commonReader.readU2()
+      val nameIdx = commonReader.readU2()
+      val descIdx = commonReader.readU2()
+      val attrCount = commonReader.readU2()
+      val attrs = readAttributes(attrCount.toInt())
+      val fieldInfo = FieldInfo(accFlag, nameIdx, descIdx, attrCount, attrs, classInfo)
+      arr.add(fieldInfo)
+    }
+    classInfo.fieldInfos = arr.toTypedArray()
+  }
+}
+```
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readMethodCount() {
+  classInfo.methodsCount = commonReader.readU2()
+}
+
+private fun readMethods() {
+  val count = classInfo.methodsCount.toInt()
+  if (count > 0) {
+    val arr = ArrayList<MethodInfo>()
+    for (i in IntRange(0, count - 1)) {
+      val accFlag = commonReader.readU2()
+      val nameIdx = commonReader.readU2()
+      val descIdx = commonReader.readU2()
+      val attrCount = commonReader.readU2()
+      val attrs = readAttributes(attrCount.toInt())
+      val methodInfo = MethodInfo(accFlag, nameIdx, descIdx, attrCount, attrs, classInfo)
+      arr.add(methodInfo)
+    }
+    classInfo.methodInfos = arr.toTypedArray()
+  }
+}
+```
+
+[slide]
+
+## attributes
+
+
+
+
 
 [slide]
 
