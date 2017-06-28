@@ -613,6 +613,24 @@ private fun readMagic() {
 
 [slide]
 
+## major版本对应关系：
+
+| version     | major | hex  |
+| ----------- | ----- | ---- |
+| Java SE 9   | 53    | 0x35 |
+| Java SE 8   | 52    | 0x34 |
+| Java SE 7   | 51    | 0x33 |
+| Java SE 6.0 | 50    | 0x32 |
+| Java SE 5.0 | 49    | 0x31 |
+| JDK 1.4     | 48    | 0x30 |
+| JDK 1.3     | 47    | 0x2F |
+| JDK 1.2     | 46    | 0x2E |
+| JDK 1.1     | 45    | 0x2D |
+
+ 
+
+[slide]
+
 ## 解析代码
 
 ```kotlin
@@ -820,12 +838,12 @@ private fun readInterfaces() {
 - methods描述解扩或类里生命的变量
 - 两者结构相同
 
-	u2 access_flags
-	u2 name_index
-	u2 descriptor_index
-	u2 attributes_count
-	attribute_info attributes[attributes_count]
-[slide]
+  u2 access_flags
+  u2 name_index
+  u2 descriptor_index
+  u2 attributes_count
+  attribute_info attributes[attributes_count]
+  [slide]
 
 ## 解析代码
 
@@ -883,9 +901,54 @@ private fun readMethods() {
 
 ## attributes
 
+- 属性计数器，attributes_count的值表示当前 Class 文件attributes表的成员个数
+- attributes表中每一项都是一个attribute_info 结构的数据项
+- 任一 Java 虚拟机实现可以自动忽略 Class 文件的 attributes表中的若干 （甚至全部） 它不可识别的属性项
+- 任何规范未定义的属性不能影响Class文件的语义，只能提供附加的描述信息 
 
+[slide]
 
+## Jvm8属性
 
+![1498621119526](/files/write-jvm/1498621119526.png)
+
+[slide]
+
+## 属性通用结构
+
+![1498621208613](/files/write-jvm/1498621208613.png)
+
+[slide]
+
+## 解析代码
+
+```kotlin
+private fun readAttributes() {
+  val count = classInfo.attributesCount.toInt()
+  classInfo.attributeInfos = readAttributes(count)
+}
+
+private fun readAttributes(count: Int): Array<Attribute> {
+  if (count > 0) {
+    val arr = ArrayList<Attribute>()
+    for (i in IntRange(0, count - 1)) {
+      val attributeNameIndex = commonReader.readU2()
+      val name = classInfo.cpInfos[attributeNameIndex.toInt()]!!.value()
+      when (name) {
+        "ConstantValue" -> {
+          val attr = ConstantValue()
+          attr.attributeNameIndex = attributeNameIndex
+          attr.attributeLength = commonReader.readU4()
+          attr.constantValueIndex = commonReader.readU2()
+          attr.classInfo = classInfo
+          arr.add(attr)
+        }
+        ...
+      }
+    }
+  }
+}
+```
 
 [slide]
 
@@ -923,12 +986,58 @@ public class Temp{
 
 ![1498459723147](/files/write-jvm/1498459723147.png)
 
+[slide]
+
+## 后续
+
+- 一个个孤立的类如何连接起来？
+
+[slide]
+
+## Code属性
+
+```kotlin
+"Code" -> {
+  val attr = Code()
+  attr.attributeNameIndex = attributeNameIndex
+  attr.attributeLength = commonReader.readU4()
+  attr.maxStack = commonReader.readU2()
+  attr.maxLocals = commonReader.readU2()
+  attr.codeLength = commonReader.readU4()
+  //解析code
+  val codeArr = ArrayList<U1>()
+  for (i in IntRange(0, attr.codeLength.toInt() - 1)) {
+    codeArr.add(commonReader.readU1())
+  }
+  attr.code = codeArr.toTypedArray()
+  attr.exceptionTableLength = commonReader.readU2()
+  //解析exceptionTable
+  val exceptionArr = ArrayList<ExceptionTable>()
+  for (i in IntRange(0, attr.exceptionTableLength.toInt() - 1)) {
+    val exceptionTable = ExceptionTable()
+    exceptionTable.startPc = commonReader.readU2()
+    exceptionTable.endPc = commonReader.readU2()
+    exceptionTable.handlerPc = commonReader.readU2()
+    exceptionTable.cacheType = commonReader.readU2()
+    exceptionArr.add(exceptionTable)
+  }
+  attr.exceptionTable = exceptionArr.toTypedArray()
+  attr.attributesCount = commonReader.readU2()
+  attr.attributes = readAttributes(attr.attributesCount.toInt())
+  arr.add(attr)
+}
+```
+
 
 
 [slide]
+
 ## 项目地址
 
 [https://github.com/ivaneye/kt-jvm](https://github.com/ivaneye/kt-jvm)
 
+
+
 [slide]
+
 # 谢谢
