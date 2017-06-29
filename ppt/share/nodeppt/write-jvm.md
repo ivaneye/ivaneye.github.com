@@ -21,7 +21,7 @@ theme: dark
 - ![](/files/write-jvm/talk.png)
 
 [slide]
-## Kotlin简介
+## 为什么用Kotlin?
 
 [slide]
 ## 简洁
@@ -156,20 +156,16 @@ list.join(",")
 - 类的查找
     - 虚拟机如何查找类
     - 设计虚拟机查找类
-- 解析
-    - 类结构
-        - 整体结构
-        - magic
-        - 主版本，从版本
-        - 常量池
-        - 类访问标识符，this_class,super_class
-        - 接口
-        - 字段
-        - 方法
-        - 属性
-    - 解析思路
-        - 整体解析思路
-        - 特殊结构解析
+- 类结构及解析
+    - 整体结构
+    - magic
+    - 主版本，从版本
+    - 常量池
+    - 类访问标识符，this_class,super_class
+    - 接口
+    - 字段
+    - 方法
+    - 属性
 - 代码演示
 
 [slide]
@@ -223,13 +219,44 @@ Using Class B
 
 - 双亲委托模型
 
+  ​
+
+  ![jvm03](/files/write-jvm/jvm03.png)
+
 [slide]
+
+```kotlin
+class ClassPath {
+    
+    ...
+  
+    fun readClass(className: String): ByteArray? {
+        try {
+            var result = bootClassPathFinder.readClass(className)
+            if (result == null) {
+                result = extClassPathFinder.readClass(className)
+            }
+            if (result == null) {
+                result = userClassPathFinder.readClass(className)
+            }
+            return result
+        } catch(e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+    }
+}
+```
+
+[slide]
+
 ## 加载路径
 
-- jar
-- 文件
-- URL
-- ...
+- ClassPath
+  - jar
+  - 文件
+  - URL
+  - ...
 
 [slide]
 
@@ -257,26 +284,12 @@ class ClassPath {
     private fun parseUserClasspath(cpStr: String) {
         userClassPathFinder = DirFinder(cpStr)
     }
-
-    fun readClass(className: String): ByteArray? {
-        try {
-            var result = bootClassPathFinder.readClass(className)
-            if (result == null) {
-                result = extClassPathFinder.readClass(className)
-            }
-            if (result == null) {
-                result = userClassPathFinder.readClass(className)
-            }
-            return result
-        } catch(e: Exception) {
-            e.printStackTrace()
-            return null
-        }
-    }
+    ... 
 }
 ```
 
 [slide]
+
 ## Finder
 
 ```kotlin
@@ -384,51 +397,50 @@ class DirFinder : Finder {
 
 ## 类似结构
 
-- HTTP请求结构
+- HTTP消息结构  {:&.moveIn}
 - ![](/files/write-jvm/http.jpg)
 
 [slide]
 ## Class文件结构
 
-| 类型      | 名称                  | 数量                      |
-| ------- | ------------------- | ----------------------- |
-| u4      | magic               | 1                       |
-| u2      | minor_version       | 1                       |
-| u2      | major_version       | 1                       |
-| u2      | constant_pool_count | 1                       |
-| cp_info | constant_pool       | constant_pool_count - 1 |
-| u2      | access_flags        | 1                       |
-| u2      | this_class          | 1                       |
-| u2      | super_class         | 1                       |
-
-[slide]
-## Class文件结构(续) 
-
-| 类型             | 名称               | 数量               |
-| -------------- | ---------------- | ---------------- |
-| u2             | interfaces_count | 1                |
-| u2             | interfaces       | interfaces_count |
-| u2             | fields_count     | 1                |
-| field_info     | fields           | fields_count     |
-| u2             | methods_count    | 1                |
-| method_info    | methods          | methods_count    |
-| u2             | attributes_count | 1                |
-| attribute_info | attributes       | attributes_count |
+```
+ClassFile {
+    u4 magic;
+    u2 minor_version;
+    u2 major_version;
+    u2 constant_pool_count;
+    cp_info constant_pool[constant_pool_count-1];
+    u2 access_flags;
+    u2 this_class;
+    u2 super_class;
+    u2 interfaces_count;
+    u2 interfaces[interfaces_count];
+    u2 fields_count;
+    field_info fields[fields_count];
+    u2 methods_count;
+    method_info methods[methods_count];
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
 
 [slide]
 
 ## u1/u2/u4
 
 - 无符号1/2/4字节
-- 为什么使用无符号类型？Java里明明就不默认支持无符号类型！
-- Kotlin里怎么表示无符号类型？
+
+
+
+- 为什么使用无符号类型？Java里明明就不默认支持无符号类型！  {:&.moveIn}
+- Java/Kotlin里怎么表示无符号类型？
 - 延伸：为什么用补码这么诡异的方式来表示负数？
 
 [slide]
 
 ## 为什么使用无符号类型？
 
-- 没有负数的需求
+- 没有负数的需求  {:&.moveIn}
 
 [slide]
 
@@ -455,7 +467,7 @@ class U4(val data: ByteArray) {...}
 
 ## 为什么用补码这么诡异的方式来表示负数？
 
-- 当第一个字符为0时表示正数，当第一个字符为1时表示负数，不是很容易理解吗？
+- 当第一个字符为0时表示正数，当第一个字符为1时表示负数，不是很容易理解吗？ 
 - 为什么用补码表示负数？
 
 ```
@@ -468,16 +480,21 @@ class U4(val data: ByteArray) {...}
 
 [slide]
 
-## 权衡的结果
+## 硬件工程师偷懒的结果
 
-- 假设10000001表示-1，那么10000010表示什么？-2吧？
-- -1 + 1 结果是多少？0吧？
+- 假设10000001表示-1，那么10000010表示什么？  {:&.moveIn}
+- -2
+- -1 + 1 结果是多少？
+- 0
 - 0 = -1 + 1 = 10000001 + 00000001 = 10000010 = -2
 - 0 = -2 ?!
 - 假设11111111表示-1
-- 那么 -1 + 1 = 
+- 那么 -1 + 1 = ？
+
+[slide]
 
 ```
+.
    11111111 
 +  00000001 
 --------------
@@ -650,9 +667,16 @@ private fun readMajorVersion() {
 ## 常量池
 
 - constant_pool_count:常量池长度
-- constant_pool：下标从1开始，长度为常量池长度 - 1，或者更短
+- constant_pool：下标从1开始，长度为常量池长度 - 1，**或者更短**
 - 如果class文件中的其他地方引用了索引为0的常量池项， 就说明它不引用任何常量池项
-- **常量的通用结构:tag(u1) + info[]。tag指定类型，info[]中为该类型的内容**
+- **常量的通用结构如下。tag指定类型，info[]中为该类型的内容**
+
+```
+cp_info {
+    u1 tag;
+    u1 info[];
+}
+```
 
 [slide]
 
@@ -711,7 +735,7 @@ class ConstantLong(val tag: U1, val highBytes: U4, val lowBytes: U4, val classIn
 
 [slide]
 
-## 代码
+## ClassInfo的作用
 
 ```kotlin
 class ConstantNameAndType(val tag: U1, val nameIndex: U2, val descIndex: U2, val classInfo: ClassInfo) : Constant {
@@ -784,6 +808,14 @@ private fun readConstantPool() {
 
 [slide]
 
+## 类似用途
+
+- Linux文件权限管理   {:&.moveIn}
+- 读取的权限等于4，用r表示；写入的权限等于2，用w表示；执行的权限等于1，用x表示
+- chmod 777 test.txt
+
+[slide]
+
 ## 解析代码
 
 ```kotlin
@@ -835,15 +867,41 @@ private fun readInterfaces() {
 ## fields/methods
 
 - fields描述接口或类中声明的变量
+
 - methods描述解扩或类里生命的变量
+
 - 两者结构相同
 
-  u2 access_flags
-  u2 name_index
-  u2 descriptor_index
-  u2 attributes_count
-  attribute_info attributes[attributes_count]
-  [slide]
+
+[slide]
+
+## Fields
+
+```
+field_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
+
+[slide]
+
+## Methods
+
+```
+method_info {
+    u2 access_flags;
+    u2 name_index;
+    u2 descriptor_index;
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+}
+```
+
+[slide]
 
 ## 解析代码
 
@@ -901,7 +959,7 @@ private fun readMethods() {
 
 ## attributes
 
-- 属性计数器，attributes_count的值表示当前 Class 文件attributes表的成员个数
+- attributes_count的值表示当前 Class 文件attributes表的成员个数
 - attributes表中每一项都是一个attribute_info 结构的数据项
 - 任一 Java 虚拟机实现可以自动忽略 Class 文件的 attributes表中的若干 （甚至全部） 它不可识别的属性项
 - 任何规范未定义的属性不能影响Class文件的语义，只能提供附加的描述信息 
@@ -916,7 +974,13 @@ private fun readMethods() {
 
 ## 属性通用结构
 
-![1498621208613](/files/write-jvm/1498621208613.png)
+```
+attr_info {
+    u2 attribute_name_index;
+    u4 attribute_length;
+    u1 info[attribute_length];
+}
+```
 
 [slide]
 
@@ -973,8 +1037,8 @@ public class Temp{
 	private int _0=0;
 	private int _1=1;
 	private int _2=2;    
-    ......
-    private int _65532=65532;
+        ......
+        private int _65532=65532;
 	private int _65533=65533;
 	private int _65534=65534;
 }

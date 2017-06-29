@@ -11,7 +11,7 @@ theme: dark
 [slide]
 ## 一次编译，到处运行
 
-![](/files/jvm01.png)  {:&.moveIn}
+![](/files/jvm/jvm01.png)  {:&.moveIn}
 
 [slide]
 ## 传值还是传引用？
@@ -45,7 +45,7 @@ public class Change {
 [slide]
 ##
 
-![](/files/jvm02.png)
+![](/files/jvm/jvm02.png)
 
 [slide]
 ## 字符串比较
@@ -128,7 +128,7 @@ public class Circle {
 [slide]
 ## JVM
 
-![](/files/jvm03.jpg)
+![](/files/jvm/jvm03.jpg)
 
 [slide]
 ## 例子
@@ -200,22 +200,22 @@ cp_info {
 [slide]
 ## Constant pool tags
 
- |Constant Type| Value |
- |:-------|:------:|
- |CONSTANT_Class |7|
-|CONSTANT_Fieldref |9|
-|CONSTANT_Methodref |10|
-|CONSTANT_InterfaceMethodref |11|
-|CONSTANT_String |8|
-|CONSTANT_Integer |3|
-|CONSTANT_Float |4|
-|CONSTANT_Long |5|
-|CONSTANT_Double |6|
-|CONSTANT_NameAndType |12|
-|CONSTANT_Utf8 |1|
-|CONSTANT_MethodHandle |15|
-|CONSTANT_MethodType |16|
-|CONSTANT_InvokeDynamic |18|
+| Constant Type               | Value |
+| :-------------------------- | :---: |
+| CONSTANT_Class              |   7   |
+| CONSTANT_Fieldref           |   9   |
+| CONSTANT_Methodref          |  10   |
+| CONSTANT_InterfaceMethodref |  11   |
+| CONSTANT_String             |   8   |
+| CONSTANT_Integer            |   3   |
+| CONSTANT_Float              |   4   |
+| CONSTANT_Long               |   5   |
+| CONSTANT_Double             |   6   |
+| CONSTANT_NameAndType        |  12   |
+| CONSTANT_Utf8               |   1   |
+| CONSTANT_MethodHandle       |  15   |
+| CONSTANT_MethodType         |  16   |
+| CONSTANT_InvokeDynamic      |  18   |
 
 [slide]
 ## Fields
@@ -339,7 +339,7 @@ The Java Virtual Machine starts up by creating an initial class, which is specif
 - jvms8 5.3.1 5.3.2
 - JVM规范定义了两种类型的类装载器：bootstrap class loader,user-defined class loader
 
-![](/files/jvm03.png)
+![](/files/jvm/jvm03.png)
 
 [slide]
 ## 加载到哪里？
@@ -525,7 +525,7 @@ Constant pool:
 [slide]
 ##
 
-![](/files/mind.png)
+![](/files/jvm/mind.png)
 
 [slide]
 ## 参考资料
