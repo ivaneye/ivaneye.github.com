@@ -9,6 +9,8 @@ author: wangyifan
 published: true
 ---
 
+[TOC]
+
 ## 成也Class,败也Class
 
 Java自95年发布以来，借由“一次编译，到处运行”的特性，在企业级开发中获得了巨大的成功。
