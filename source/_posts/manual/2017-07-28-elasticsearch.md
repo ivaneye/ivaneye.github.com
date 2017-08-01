@@ -52,7 +52,89 @@ cd elasticsearch-5.5.1/bin
 ./elasticsearch
 ```
 
-## ElasticSearch的CRUD命令
+## ElasticSearch文档的CRUD命令
+
+- 创建/索引
+
+```
+PUT twitter/tweet/1
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+```
+
+- 获取
+
+```
+GET twitter/tweet/1
+```
+
+- 多索引获取
+
+```
+GET _mget
+{
+    "docs" : [
+        {
+            "_index" : "test",
+            "_type" : "type",
+            "_id" : "1"
+        },
+        {
+            "_index" : "test",
+            "_type" : "type",
+            "_id" : "2"
+        }
+    ]
+}
+```
+
+
+
+- 根据id删除
+
+```
+DELETE /twitter/tweet/1
+```
+
+- 基于搜索的删除
+
+```
+POST twitter/_delete_by_query
+{
+  "query": { 
+    "match": {
+      "message": "some message"
+    }
+  }
+}
+```
+
+- 更新
+
+```
+//新建一个文档
+PUT test/type1/1
+{
+    "counter" : 1,
+    "tags" : ["red"]
+}
+//更新count为4
+POST test/type1/1/_update
+{
+    "script" : {
+        "inline": "ctx._source.counter += params.count",
+        "lang": "painless",
+        "params" : {
+            "count" : 4
+        }
+    }
+}
+```
+
+
 
 ## ElasticSearch的搜索
 
